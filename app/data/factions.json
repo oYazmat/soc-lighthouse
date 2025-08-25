@@ -1,0 +1,13 @@
+[
+  { "name": "Drifter", "ignored": false },
+  { "name": "Aggression", "ignored": true },
+  { "name": "Discipline", "ignored": true },
+  { "name": "Fortitude", "ignored": true },
+  { "name": "Alacrity", "ignored": true },
+  { "name": "The Union", "ignored": false },
+  { "name": "Iria", "ignored": false },
+  { "name": "Papal States", "ignored": false },
+  { "name": "Sword of Convallaria", "ignored": false },
+  { "name": "Vlder", "ignored": false },
+  { "name": "Night Crimson", "ignored": false }
+]

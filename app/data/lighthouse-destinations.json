@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "mapName": "Waverun City - Anthem of the Knights",
+    "levelUnlock": 1,
+    "leaders": [32, 33, 29, 17]
+  },
+  {
+    "id": 2,
+    "mapName": "Mornrays Castle - Banner of the Kingdom",
+    "levelUnlock": 5,
+    "leaders": [11, 36, 40, 42]
+  },
+  {
+    "id": 3,
+    "mapName": "Lightgloam City - Radiant Judgement",
+    "levelUnlock": 9,
+    "leaders": [7, 16, 44, 47]
+  },
+  {
+    "id": 4,
+    "mapName": "Town of Convallaria - Above the Scales",
+    "levelUnlock": 16,
+    "leaders": [1, 9, 20, 22]
+  },
+  {
+    "id": 5,
+    "mapName": "Waverun City - Night Crimson",
+    "levelUnlock": 22,
+    "leaders": [50, 43, 41, 26]
+  }
+]

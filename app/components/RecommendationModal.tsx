@@ -14,7 +14,7 @@ import {
 import { useState } from "react";
 import Step1Lighthouse from "./steps/Step1Lighthouse";
 import Step2SpecialSpots from "./steps/Step2SpecialSpots";
-import Step3 from "./steps/Step3";
+import Step3TeamRecommendations from "./steps/Step3TeamRecommendations";
 import Step4 from "./steps/Step4";
 import Step5 from "./steps/Step5";
 import { useSoCContext } from "../context/SoCContext";
@@ -27,7 +27,7 @@ interface RecommendationModalProps {
 const steps = [
   "Enter Lighthouse Level",
   "Special Logistic Spots",
-  "Step 3",
+  "Team Recommendations",
   "Step 4",
   "Step 5",
 ];
@@ -42,7 +42,7 @@ export default function RecommendationModal({
   const stepComponents = [
     <Step1Lighthouse key="step1" />,
     <Step2SpecialSpots key="step2" />,
-    <Step3 key="step3" />,
+    <Step3TeamRecommendations key="step3" />,
     <Step4 key="step4" />,
     <Step5 key="step5" />,
   ];
@@ -74,7 +74,7 @@ export default function RecommendationModal({
 
       <DialogContent dividers>
         <Alert severity="warning" sx={{ mb: 2 }}>
-          Make sure your characters are filled or updated before starting!
+          Make sure your characters are filled or updated!
         </Alert>
 
         <Stepper activeStep={activeStep} sx={{ mb: 3 }}>

@@ -3,7 +3,7 @@
 import { Typography, Box } from "@mui/material";
 import { useSoCContext } from "~/context/SoCContext";
 
-export default function Step3() {
+export default function Step3TeamRecommendations() {
   const { matchedSpots } = useSoCContext();
 
   if (!matchedSpots || matchedSpots.length === 0) {
