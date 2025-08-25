@@ -1,0 +1,16 @@
+[
+  { "rank": 0, "power": 3000 },
+  { "rank": 1, "power": 3500 },
+  { "rank": 2, "power": 4000 },
+  { "rank": 3, "power": 4500 },
+  { "rank": 4, "power": 5000 },
+  { "rank": 5, "power": 5500 },
+  { "rank": 6, "power": 6000 },
+  { "rank": 7, "power": 6500 },
+  { "rank": 8, "power": 7000 },
+  { "rank": 9, "power": 7500 },
+  { "rank": 10, "power": 8000 },
+  { "rank": 11, "power": 9000 },
+  { "rank": 12, "power": 10000 },
+  { "rank": 13, "power": 15000 }
+]

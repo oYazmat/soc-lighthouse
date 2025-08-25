@@ -1,0 +1,29 @@
+[
+  { "rarity": "Legendary", "stars": 0, "powerPercent": 0 },
+  { "rarity": "Legendary", "stars": 1, "powerPercent": 30 },
+  { "rarity": "Legendary", "stars": 2, "powerPercent": 35 },
+  { "rarity": "Legendary", "stars": 3, "powerPercent": 40 },
+  { "rarity": "Legendary", "stars": 4, "powerPercent": 45 },
+  { "rarity": "Legendary", "stars": 5, "powerPercent": 50 },
+
+  { "rarity": "Epic", "stars": 0, "powerPercent": 0 },
+  { "rarity": "Epic", "stars": 1, "powerPercent": 24 },
+  { "rarity": "Epic", "stars": 2, "powerPercent": 27 },
+  { "rarity": "Epic", "stars": 3, "powerPercent": 30 },
+  { "rarity": "Epic", "stars": 4, "powerPercent": 33 },
+  { "rarity": "Epic", "stars": 5, "powerPercent": 36 },
+
+  { "rarity": "Rare", "stars": 0, "powerPercent": 0 },
+  { "rarity": "Rare", "stars": 1, "powerPercent": 20 },
+  { "rarity": "Rare", "stars": 2, "powerPercent": 22 },
+  { "rarity": "Rare", "stars": 3, "powerPercent": 24 },
+  { "rarity": "Rare", "stars": 4, "powerPercent": 26 },
+  { "rarity": "Rare", "stars": 5, "powerPercent": 28 },
+
+  { "rarity": "Common", "stars": 0, "powerPercent": 0 },
+  { "rarity": "Common", "stars": 1, "powerPercent": 18 },
+  { "rarity": "Common", "stars": 2, "powerPercent": 19 },
+  { "rarity": "Common", "stars": 3, "powerPercent": 20 },
+  { "rarity": "Common", "stars": 4, "powerPercent": 21 },
+  { "rarity": "Common", "stars": 5, "powerPercent": 22 }
+]
