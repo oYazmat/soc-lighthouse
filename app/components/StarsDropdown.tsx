@@ -1,5 +1,6 @@
 import { Select, MenuItem, Box } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
 
 interface StarsDropdownProps {
   value: number;
@@ -9,9 +10,13 @@ interface StarsDropdownProps {
 export default function StarsDropdown({ value, onChange }: StarsDropdownProps) {
   const renderStars = (count: number) => (
     <Box sx={{ display: "flex", alignItems: "center" }}>
-      {Array.from({ length: count }, (_, i) => (
-        <StarIcon key={i} fontSize="small" sx={{ color: "#FFD700" }} />
-      ))}
+      {Array.from({ length: 5 }, (_, i) =>
+        i < count ? (
+          <StarIcon key={i} fontSize="small" sx={{ color: "#FFD700" }} />
+        ) : (
+          <StarBorderIcon key={i} fontSize="small" sx={{ color: "#FFD700" }} />
+        )
+      )}
     </Box>
   );
 

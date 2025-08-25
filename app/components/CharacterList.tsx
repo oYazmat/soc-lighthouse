@@ -12,10 +12,10 @@ import {
   Chip,
   Box,
 } from "@mui/material";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import charactersData from "../data/characters.json";
 import StarsDropdown from "./StarsDropdown";
-import RankDropdown from "./RankDropdownProps";
+import RankDropdown from "./RankDropdown";
 import CharacterFilters from "./CharacterFilters";
 
 // 🔑 helper to convert names into kebab-case file names
@@ -38,12 +38,38 @@ const rarityOrder: Record<string, number> = {
   Common: 4,
 };
 
+const LOCAL_STORAGE_KEY = "characterState";
+
 export default function CharacterList() {
   const [filters, setFilters] = useState({
     name: "",
     rarity: [] as string[],
     factions: [] as string[],
   });
+
+  // 🔑 Track stars & rank per character, load from localStorage initially
+  const [characterState, setCharacterState] = useState<
+    Record<number, { stars: number; rank: number }>
+  >(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+      return stored ? JSON.parse(stored) : {};
+    }
+    return {};
+  });
+
+  useEffect(() => {
+    const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (stored) {
+      setCharacterState(JSON.parse(stored));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(characterState));
+    }
+  }, [characterState]);
 
   // Collect all unique factions from the data
   const allFactions = useMemo(() => {
@@ -78,9 +104,27 @@ export default function CharacterList() {
       });
   }, [filters]);
 
-  const handleStarsChange = (val: number) => console.log("Stars changed:", val);
+  // Handlers to update state
+  const handleStarsChange = (id: number, stars: number) => {
+    setCharacterState((prev) => {
+      const prevState = prev[id] || { stars: 0, rank: 0 };
+      const updated = {
+        ...prev,
+        [id]: {
+          stars,
+          rank: stars === 0 ? 0 : prevState.rank, // reset rank if stars is 0
+        },
+      };
+      return updated;
+    });
+  };
 
-  const handleRankChange = (val: number) => console.log("Rank changed:", val);
+  const handleRankChange = (id: number, rank: number) => {
+    setCharacterState((prev) => {
+      const updated = { ...prev, [id]: { ...prev[id], rank } };
+      return updated;
+    });
+  };
 
   return (
     <>
@@ -98,39 +142,52 @@ export default function CharacterList() {
               <TableCell>Name</TableCell>
               <TableCell>Rarity</TableCell>
               <TableCell>Stars</TableCell>
-              <TableCell>Rank</TableCell>
+              <TableCell sx={{ minWidth: 80 }}>Rank</TableCell>
               <TableCell>Factions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredCharacters.map((character) => (
-              <TableRow key={character.id}>
-                <TableCell>
-                  <Avatar
-                    src={`/images/characters/${toKebabCase(
-                      character.name
-                    )}.png`}
-                    alt={character.name}
-                    sx={{ width: 40, height: 40 }}
-                  />
-                </TableCell>
-                <TableCell>{character.name}</TableCell>
-                <TableCell>{character.rarity}</TableCell>
-                <TableCell>
-                  <StarsDropdown value={0} onChange={handleStarsChange} />
-                </TableCell>
-                <TableCell>
-                  <RankDropdown value={0} onChange={handleRankChange} />
-                </TableCell>
-                <TableCell>
-                  <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
-                    {character.factions.map((faction: string) => (
-                      <Chip key={faction} label={faction} size="small" />
-                    ))}
-                  </Box>
-                </TableCell>
-              </TableRow>
-            ))}
+            {filteredCharacters.map((character) => {
+              const state = characterState[character.id] || {
+                stars: 0,
+                rank: 0,
+              };
+              const isRankDisabled = !state.stars; // disabled if stars is 0
+
+              return (
+                <TableRow key={character.id}>
+                  <TableCell>
+                    <Avatar
+                      src={`/images/characters/${toKebabCase(character.name)}.png`}
+                      alt={character.name}
+                      sx={{ width: 40, height: 40 }}
+                    />
+                  </TableCell>
+                  <TableCell>{character.name}</TableCell>
+                  <TableCell>{character.rarity}</TableCell>
+                  <TableCell>
+                    <StarsDropdown
+                      value={state.stars}
+                      onChange={(val) => handleStarsChange(character.id, val)}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <RankDropdown
+                      value={state.rank}
+                      onChange={(val) => handleRankChange(character.id, val)}
+                      disabled={isRankDisabled} // <-- disable if stars is 0
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+                      {character.factions.map((faction: string) => (
+                        <Chip key={faction} label={faction} size="small" />
+                      ))}
+                    </Box>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>
