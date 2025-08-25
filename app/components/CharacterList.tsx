@@ -11,18 +11,15 @@ import {
   Avatar,
   Chip,
   Box,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
 } from "@mui/material";
-import { useState, useMemo, useEffect } from "react";
+import { useMemo, useState } from "react";
 import charactersData from "../data/characters.json";
 import StarsDropdown from "./StarsDropdown";
 import RankDropdown from "./RankDropdown";
 import CharacterFilters, {
   type CharacterFilterValues,
 } from "./CharacterFilters";
+import { useSoCContext } from "../context/SoCContext";
 
 // 🔑 helper to convert names into kebab-case file names
 function toKebabCase(str: string): string {
@@ -44,39 +41,15 @@ const rarityOrder: Record<string, number> = {
   Common: 4,
 };
 
-const LOCAL_STORAGE_KEY = "characterState";
-
 export default function CharacterList() {
+  const { characterState, setCharacterState } = useSoCContext();
+
   const [filters, setFilters] = useState<CharacterFilterValues>({
     name: "",
     rarity: [],
     factions: [],
     ownership: "All", // default value
   });
-
-  // 🔑 Track stars & rank per character, load from localStorage initially
-  const [characterState, setCharacterState] = useState<
-    Record<number, { stars: number; rank: number }>
-  >(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
-      return stored ? JSON.parse(stored) : {};
-    }
-    return {};
-  });
-
-  useEffect(() => {
-    const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (stored) {
-      setCharacterState(JSON.parse(stored));
-    }
-  }, []);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(characterState));
-    }
-  }, [characterState]);
 
   // Collect all unique factions from the data
   const allFactions = useMemo(() => {
