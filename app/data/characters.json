@@ -1,0 +1,599 @@
+[
+  {
+    "id": 1,
+    "name": "Acambe",
+    "rarity": "Legendary",
+    "factions": ["Drifter", "Discipline"]
+  },
+  {
+    "id": 2,
+    "name": "Afra",
+    "rarity": "Legendary",
+    "factions": ["Drifter", "Fortitude"]
+  },
+  {
+    "id": 3,
+    "name": "Agata",
+    "rarity": "Legendary",
+    "factions": ["Drifter", "Alacrity"]
+  },
+  {
+    "id": 4,
+    "name": "Alexei",
+    "rarity": "Legendary",
+    "factions": ["Drifter", "Aggression"]
+  },
+  {
+    "id": 5,
+    "name": "Auguste",
+    "rarity": "Legendary",
+    "factions": ["The Union", "Aggression"]
+  },
+  {
+    "id": 6,
+    "name": "Ayishah",
+    "rarity": "Legendary",
+    "factions": ["Iria", "Fortitude"]
+  },
+  {
+    "id": 7,
+    "name": "Beryl",
+    "rarity": "Legendary",
+    "factions": ["Papal States", "Sword of Convallaria", "Aggression"]
+  },
+  {
+    "id": 8,
+    "name": "Caris",
+    "rarity": "Legendary",
+    "factions": ["Papal States", "Aggression"]
+  },
+  {
+    "id": 9,
+    "name": "Cocoa",
+    "rarity": "Legendary",
+    "factions": ["Vlder", "Fortitude"]
+  },
+  {
+    "id": 10,
+    "name": "Col",
+    "rarity": "Legendary",
+    "factions": ["Papal States", "Drifter", "Alacrity"]
+  },
+  {
+    "id": 11,
+    "name": "Dantalion",
+    "rarity": "Legendary",
+    "factions": ["Iria", "Fortitude"]
+  },
+  {
+    "id": 12,
+    "name": "Edda",
+    "rarity": "Legendary",
+    "factions": ["Drifter", "Iria", "Discipline"]
+  },
+  {
+    "id": 13,
+    "name": "Estra",
+    "rarity": "Legendary",
+    "factions": ["Drifter", "Alacrity"]
+  },
+  {
+    "id": 14,
+    "name": "Faycal",
+    "rarity": "Legendary",
+    "factions": ["Sword of Convallaria", "Iria", "Alacrity"]
+  },
+  {
+    "id": 15,
+    "name": "Flavia",
+    "rarity": "Legendary",
+    "factions": ["Drifter", "Discipline"]
+  },
+  {
+    "id": 16,
+    "name": "Garcia",
+    "rarity": "Legendary",
+    "factions": ["Papal States", "Fortitude"]
+  },
+  {
+    "id": 17,
+    "name": "Gloria",
+    "rarity": "Legendary",
+    "factions": ["The Union", "Fortitude"]
+  },
+  {
+    "id": 18,
+    "name": "Guzman",
+    "rarity": "Legendary",
+    "factions": ["Drifter", "Aggression"]
+  },
+  {
+    "id": 19,
+    "name": "Hasna",
+    "rarity": "Legendary",
+    "factions": ["Drifter", "Alacrity"]
+  },
+  {
+    "id": 20,
+    "name": "Homa",
+    "rarity": "Legendary",
+    "factions": ["Drifter", "Aggression"]
+  },
+  {
+    "id": 21,
+    "name": "Iggy",
+    "rarity": "Legendary",
+    "factions": ["Vlder", "Alacrity"]
+  },
+  {
+    "id": 22,
+    "name": "Inanna",
+    "rarity": "Legendary",
+    "factions": ["Iria", "Sword of Convallaria", "Discipline"]
+  },
+  {
+    "id": 23,
+    "name": "Inanna of Convallaria",
+    "rarity": "Legendary",
+    "factions": ["Iria", "Sword of Convallaria", "Fortitude"]
+  },
+  {
+    "id": 24,
+    "name": "Kiya",
+    "rarity": "Legendary",
+    "factions": ["Vlder", "Night Crimson", "Alacrity"]
+  },
+  {
+    "id": 25,
+    "name": "Kvare",
+    "rarity": "Legendary",
+    "factions": ["Iria", "Night Crimson", "Fortitude"]
+  },
+  {
+    "id": 26,
+    "name": "Layla",
+    "rarity": "Legendary",
+    "factions": ["Night Crimson", "Iria", "Discipline"]
+  },
+  {
+    "id": 27,
+    "name": "Leonide",
+    "rarity": "Legendary",
+    "factions": ["Papal States", "Discipline"]
+  },
+  {
+    "id": 28,
+    "name": "LilyWill",
+    "rarity": "Legendary",
+    "factions": ["Vlder", "Alacrity"]
+  },
+  {
+    "id": 29,
+    "name": "Lutfi",
+    "rarity": "Legendary",
+    "factions": ["Iria", "The Union", "Alacrity"]
+  },
+  {
+    "id": 30,
+    "name": "Luvata",
+    "rarity": "Legendary",
+    "factions": ["Papal States", "Aggression"]
+  },
+  {
+    "id": 31,
+    "name": "Magnus",
+    "rarity": "Legendary",
+    "factions": ["Iria", "Fortitude"]
+  },
+  {
+    "id": 32,
+    "name": "Maitha",
+    "rarity": "Legendary",
+    "factions": ["Iria", "Sword of Convallaria"]
+  },
+  {
+    "id": 33,
+    "name": "Miguel",
+    "rarity": "Legendary",
+    "factions": ["Papal States", "Drifter", "Discipline"]
+  },
+  {
+    "id": 34,
+    "name": "Momo",
+    "rarity": "Legendary",
+    "factions": ["Vlder", "Sword of Convallaria", "Fortitude"]
+  },
+  {
+    "id": 35,
+    "name": "Nergal",
+    "rarity": "Legendary",
+    "factions": ["Iria", "Alacrity"]
+  },
+  {
+    "id": 36,
+    "name": "NonoWill",
+    "rarity": "Legendary",
+    "factions": ["Sword of Convallaria", "Vlder", "Aggression"]
+  },
+  {
+    "id": 37,
+    "name": "Nungal",
+    "rarity": "Legendary",
+    "factions": ["Iria", "Alacrity"]
+  },
+  {
+    "id": 38,
+    "name": "Nydia",
+    "rarity": "Legendary",
+    "factions": ["The Union", "Alacrity"]
+  },
+  {
+    "id": 39,
+    "name": "Pamina",
+    "rarity": "Legendary",
+    "factions": ["Night Crimson", "Iria", "Fortitude"]
+  },
+  {
+    "id": 40,
+    "name": "Rawiyah",
+    "rarity": "Legendary",
+    "factions": ["Sword of Convallaria", "Iria", "Alacrity"]
+  },
+  {
+    "id": 41,
+    "name": "Rawiyah Nostalgia",
+    "rarity": "Legendary",
+    "factions": ["Iria", "Night Crimson", "Aggression"]
+  },
+  {
+    "id": 42,
+    "name": "Safiyyah",
+    "rarity": "Legendary",
+    "factions": ["Iria", "Discipline"]
+  },
+  {
+    "id": 43,
+    "name": "Safiyyah Promise",
+    "rarity": "Legendary",
+    "factions": ["Iria", "Night Crimson", "Discipline"]
+  },
+  {
+    "id": 44,
+    "name": "Samantha",
+    "rarity": "Legendary",
+    "factions": ["Papal States", "Aggression"]
+  },
+  {
+    "id": 45,
+    "name": "SchackLulu",
+    "rarity": "Legendary",
+    "factions": ["Vlder", "Alacrity"]
+  },
+  {
+    "id": 46,
+    "name": "Simona",
+    "rarity": "Legendary",
+    "factions": ["The Union", "Discipline"]
+  },
+  {
+    "id": 47,
+    "name": "Taair",
+    "rarity": "Legendary",
+    "factions": ["Papal States", "Discipline"]
+  },
+  {
+    "id": 48,
+    "name": "Team Meteor",
+    "rarity": "Legendary",
+    "factions": ["Papal States", "Fortitude"]
+  },
+  {
+    "id": 49,
+    "name": "Teadon",
+    "rarity": "Legendary",
+    "factions": ["The Union", "Fortitude"]
+  },
+  {
+    "id": 50,
+    "name": "Tristan",
+    "rarity": "Legendary",
+    "factions": ["Night Crimson", "The Union", "Aggression"]
+  },
+  {
+    "id": 51,
+    "name": "Xavier",
+    "rarity": "Legendary",
+    "factions": ["Iria", "Fortitude"]
+  },
+  {
+    "id": 52,
+    "name": "Abyss",
+    "rarity": "Epic",
+    "factions": ["Drifter", "Fortitude"]
+  },
+  {
+    "id": 53,
+    "name": "Agile Eye",
+    "rarity": "Epic",
+    "factions": ["Vlder", "Alacrity"]
+  },
+  {
+    "id": 54,
+    "name": "Angel",
+    "rarity": "Epic",
+    "factions": ["Papal States", "Aggression"]
+  },
+  {
+    "id": 55,
+    "name": "Ballista",
+    "rarity": "Epic",
+    "factions": ["The Union", "Aggression"]
+  },
+  {
+    "id": 56,
+    "name": "Bitterwort",
+    "rarity": "Epic",
+    "factions": ["Night Crimson", "Iria", "Discipline"]
+  },
+  {
+    "id": 57,
+    "name": "Blade",
+    "rarity": "Epic",
+    "factions": ["Papal States", "Alacrity"]
+  },
+  {
+    "id": 58,
+    "name": "Butterfly",
+    "rarity": "Epic",
+    "factions": ["Vlder", "Alacrity"]
+  },
+  {
+    "id": 59,
+    "name": "Candlelight",
+    "rarity": "Epic",
+    "factions": ["Iria", "Discipline"]
+  },
+  {
+    "id": 60,
+    "name": "Crimson Falcon",
+    "rarity": "Epic",
+    "factions": ["Iria", "Alacrity"]
+  },
+  {
+    "id": 61,
+    "name": "Darkin",
+    "rarity": "Epic",
+    "factions": ["Night Crimson", "Iria", "Alacrity"]
+  },
+  {
+    "id": 62,
+    "name": "Divine Grace",
+    "rarity": "Epic",
+    "factions": ["Papal States", "Discipline"]
+  },
+  {
+    "id": 63,
+    "name": "Enforcer",
+    "rarity": "Epic",
+    "factions": ["Iria", "Alacrity"]
+  },
+  {
+    "id": 64,
+    "name": "Flame Sorceress",
+    "rarity": "Epic",
+    "factions": ["Drifter", "Aggression"]
+  },
+  {
+    "id": 65,
+    "name": "Flare",
+    "rarity": "Epic",
+    "factions": ["The Union", "Fortitude"]
+  },
+  {
+    "id": 66,
+    "name": "Lash",
+    "rarity": "Epic",
+    "factions": ["Papal States", "Aggression"]
+  },
+  {
+    "id": 67,
+    "name": "Lightning",
+    "rarity": "Epic",
+    "factions": ["The Union", "Fortitude"]
+  },
+  {
+    "id": 68,
+    "name": "Might",
+    "rarity": "Epic",
+    "factions": ["The Union", "Discipline"]
+  },
+  {
+    "id": 69,
+    "name": "Night Raven",
+    "rarity": "Epic",
+    "factions": ["Iria", "Alacrity"]
+  },
+  {
+    "id": 70,
+    "name": "Nightingale",
+    "rarity": "Epic",
+    "factions": ["Drifter", "Fortitude"]
+  },
+  {
+    "id": 71,
+    "name": "Spear of Iria \"Rayshot\"",
+    "rarity": "Epic",
+    "factions": ["Night Crimson", "Iria", "Aggression"]
+  },
+  {
+    "id": 72,
+    "name": "Stinger",
+    "rarity": "Epic",
+    "factions": ["Iria", "Alacrity"]
+  },
+  {
+    "id": 73,
+    "name": "Stormbreaker",
+    "rarity": "Epic",
+    "factions": ["Sword of Convallaria", "Drifter", "Aggression"]
+  },
+  {
+    "id": 74,
+    "name": "Suppression",
+    "rarity": "Epic",
+    "factions": ["Papal States", "Fortitude"]
+  },
+  {
+    "id": 75,
+    "name": "Tempest",
+    "rarity": "Epic",
+    "factions": ["The Union", "Fortitude"]
+  },
+  {
+    "id": 76,
+    "name": "Darklight Fire Priest",
+    "rarity": "Rare",
+    "factions": ["Drifter"]
+  },
+  {
+    "id": 77,
+    "name": "Darklight Ice Priest",
+    "rarity": "Rare",
+    "factions": ["Drifter"]
+  },
+  { "id": 78, "name": "K.A. Archer", "rarity": "Rare", "factions": ["Iria"] },
+  {
+    "id": 79,
+    "name": "K.A. Fire Conjurer",
+    "rarity": "Rare",
+    "factions": ["Iria"]
+  },
+  { "id": 80, "name": "K.A. Guard", "rarity": "Rare", "factions": ["Iria"] },
+  {
+    "id": 81,
+    "name": "K.A. Light Conjurer",
+    "rarity": "Rare",
+    "factions": ["Iria"]
+  },
+  { "id": 82, "name": "K.A. Pikeman", "rarity": "Rare", "factions": ["Iria"] },
+  {
+    "id": 83,
+    "name": "Knighted Guard",
+    "rarity": "Rare",
+    "factions": ["The Union"]
+  },
+  {
+    "id": 84,
+    "name": "Knighted Pikeman",
+    "rarity": "Rare",
+    "factions": ["The Union"]
+  },
+  {
+    "id": 85,
+    "name": "Papal Guard",
+    "rarity": "Rare",
+    "factions": ["Papal States"]
+  },
+  {
+    "id": 86,
+    "name": "Papal Ice Priest",
+    "rarity": "Rare",
+    "factions": ["Papal States"]
+  },
+  {
+    "id": 87,
+    "name": "Papal Pikeman",
+    "rarity": "Rare",
+    "factions": ["Papal States"]
+  },
+  {
+    "id": 88,
+    "name": "Vlderian Scout",
+    "rarity": "Rare",
+    "factions": ["Vlder"]
+  },
+  {
+    "id": 89,
+    "name": "Outlaw Archer",
+    "rarity": "Common",
+    "factions": ["Drifter"]
+  },
+  {
+    "id": 90,
+    "name": "Outlaw Assassin",
+    "rarity": "Common",
+    "factions": ["Drifter"]
+  },
+  {
+    "id": 91,
+    "name": "Outlaw Axeman",
+    "rarity": "Common",
+    "factions": ["Drifter"]
+  },
+  {
+    "id": 92,
+    "name": "Outlaw Crossbowman",
+    "rarity": "Common",
+    "factions": ["Drifter"]
+  },
+  {
+    "id": 93,
+    "name": "Outlaw Guard",
+    "rarity": "Common",
+    "factions": ["Drifter"]
+  },
+  {
+    "id": 94,
+    "name": "Outlaw Pikeman",
+    "rarity": "Common",
+    "factions": ["Drifter"]
+  },
+  {
+    "id": 95,
+    "name": "Recruited Archer",
+    "rarity": "Common",
+    "factions": ["Drifter"]
+  },
+  {
+    "id": 96,
+    "name": "Recruited Assassin",
+    "rarity": "Common",
+    "factions": ["Drifter"]
+  },
+  {
+    "id": 97,
+    "name": "Recruited Guard",
+    "rarity": "Common",
+    "factions": ["Drifter"]
+  },
+  {
+    "id": 98,
+    "name": "Recruited Pikeman",
+    "rarity": "Common",
+    "factions": ["Drifter"]
+  },
+  {
+    "id": 99,
+    "name": "Rico",
+    "rarity": "Legendary",
+    "factions": ["Drifter", "Aggression"]
+  },
+  {
+    "id": 100,
+    "name": "Senshi",
+    "rarity": "Legendary",
+    "factions": ["Drifter", "Discipline"]
+  },
+  {
+    "id": 101,
+    "name": "Marcille",
+    "rarity": "Legendary",
+    "factions": ["Drifter", "Aggression"]
+  },
+  {
+    "id": 102,
+    "name": "Falin",
+    "rarity": "Legendary",
+    "factions": ["Drifter", "Fortitude"]
+  }
+]
