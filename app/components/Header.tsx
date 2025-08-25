@@ -18,7 +18,7 @@ export default function Header({
     >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography variant="h6" noWrap component="div">
-          Sword of Convallaria
+          Sword of Convallaria - Lighthouse Calculator
         </Typography>
 
         {/* Dark mode toggle */}
