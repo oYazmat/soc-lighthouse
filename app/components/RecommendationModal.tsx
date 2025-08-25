@@ -26,7 +26,7 @@ interface RecommendationModalProps {
 
 const steps = [
   "Enter Lighthouse Level",
-  "Step 2",
+  "Special Logistic Spots",
   "Step 3",
   "Step 4",
   "Step 5",

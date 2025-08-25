@@ -1,0 +1,131 @@
+[
+  { "id": 1, "levelUnlock": 2, "specialChar1": null, "specialChar2": null },
+  { "id": 2, "levelUnlock": 4, "specialChar1": null, "specialChar2": null },
+  { "id": 3, "levelUnlock": 6, "specialChar1": null, "specialChar2": null },
+  { "id": 4, "levelUnlock": 8, "specialChar1": null, "specialChar2": null },
+  {
+    "id": 5,
+    "levelUnlock": 10,
+    "specialChar1": 35,
+    "specialChar2": 37,
+    "bonusLight": 5
+  },
+  {
+    "id": 6,
+    "levelUnlock": 12,
+    "specialChar1": 31,
+    "specialChar2": 51,
+    "bonusEvents": true
+  },
+  { "id": 7, "levelUnlock": 13, "specialChar1": null, "specialChar2": null },
+  { "id": 8, "levelUnlock": 15, "specialChar1": null, "specialChar2": null },
+  { "id": 9, "levelUnlock": 17, "specialChar1": null, "specialChar2": null },
+  { "id": 10, "levelUnlock": 18, "specialChar1": null, "specialChar2": null },
+  {
+    "id": 11,
+    "levelUnlock": 20,
+    "specialChar1": 12,
+    "specialChar2": 39,
+    "bonusYield": 5
+  },
+  {
+    "id": 12,
+    "levelUnlock": 21,
+    "specialChar1": 5,
+    "specialChar2": 46,
+    "bonusLogistics": 5
+  },
+  { "id": 13, "levelUnlock": 23, "specialChar1": null, "specialChar2": null },
+  { "id": 14, "levelUnlock": 24, "specialChar1": null, "specialChar2": null },
+  { "id": 15, "levelUnlock": 26, "specialChar1": null, "specialChar2": null },
+  { "id": 16, "levelUnlock": 27, "specialChar1": null, "specialChar2": null },
+  {
+    "id": 17,
+    "levelUnlock": 28,
+    "specialChar1": 27,
+    "specialChar2": 28,
+    "bonusLight": 5
+  },
+  {
+    "id": 18,
+    "levelUnlock": 29,
+    "specialChar1": 4,
+    "specialChar2": 21,
+    "bonusEvents": true
+  },
+  { "id": 19, "levelUnlock": 30, "specialChar1": null, "specialChar2": null },
+  { "id": 20, "levelUnlock": 31, "specialChar1": null, "specialChar2": null },
+  { "id": 21, "levelUnlock": 32, "specialChar1": null, "specialChar2": null },
+  { "id": 22, "levelUnlock": 34, "specialChar1": null, "specialChar2": null },
+  {
+    "id": 23,
+    "levelUnlock": 35,
+    "specialChar1": 18,
+    "specialChar2": 10,
+    "bonusYield": 5
+  },
+  {
+    "id": 24,
+    "levelUnlock": 36,
+    "specialChar1": 34,
+    "specialChar2": 19,
+    "bonusLogistics": 5
+  },
+  { "id": 25, "levelUnlock": 37, "specialChar1": null, "specialChar2": null },
+  { "id": 26, "levelUnlock": 38, "specialChar1": null, "specialChar2": null },
+  { "id": 27, "levelUnlock": 39, "specialChar1": null, "specialChar2": null },
+  { "id": 28, "levelUnlock": 41, "specialChar1": null, "specialChar2": null },
+  {
+    "id": 29,
+    "levelUnlock": 42,
+    "specialChar1": 45,
+    "specialChar2": 24,
+    "bonusLight": 5
+  },
+  {
+    "id": 30,
+    "levelUnlock": 43,
+    "specialChar1": 49,
+    "specialChar2": 3,
+    "bonusEvents": true
+  },
+  { "id": 31, "levelUnlock": 44, "specialChar1": null, "specialChar2": null },
+  { "id": 32, "levelUnlock": 45, "specialChar1": null, "specialChar2": null },
+  { "id": 33, "levelUnlock": 46, "specialChar1": null, "specialChar2": null },
+  { "id": 34, "levelUnlock": 47, "specialChar1": null, "specialChar2": null },
+  {
+    "id": 35,
+    "levelUnlock": 48,
+    "specialChar1": 8,
+    "specialChar2": 14,
+    "bonusYield": 5
+  },
+  {
+    "id": 36,
+    "levelUnlock": 49,
+    "specialChar1": null,
+    "specialChar2": null,
+    "bonusLogistics": 5
+  },
+  { "id": 37, "levelUnlock": 50, "specialChar1": null, "specialChar2": null },
+  { "id": 38, "levelUnlock": 51, "specialChar1": null, "specialChar2": null },
+  { "id": 39, "levelUnlock": 52, "specialChar1": null, "specialChar2": null },
+  { "id": 40, "levelUnlock": 53, "specialChar1": null, "specialChar2": null },
+  { "id": 41, "levelUnlock": 54, "specialChar1": null, "specialChar2": null },
+  { "id": 42, "levelUnlock": 55, "specialChar1": null, "specialChar2": null },
+  { "id": 43, "levelUnlock": 56, "specialChar1": null, "specialChar2": null },
+  { "id": 44, "levelUnlock": 57, "specialChar1": null, "specialChar2": null },
+  { "id": 45, "levelUnlock": 58, "specialChar1": null, "specialChar2": null },
+  { "id": 46, "levelUnlock": 59, "specialChar1": null, "specialChar2": null },
+  { "id": 47, "levelUnlock": 60, "specialChar1": null, "specialChar2": null },
+  { "id": 48, "levelUnlock": 61, "specialChar1": null, "specialChar2": null },
+  { "id": 49, "levelUnlock": 62, "specialChar1": null, "specialChar2": null },
+  { "id": 50, "levelUnlock": 63, "specialChar1": null, "specialChar2": null },
+  { "id": 51, "levelUnlock": 64, "specialChar1": null, "specialChar2": null },
+  { "id": 52, "levelUnlock": 65, "specialChar1": null, "specialChar2": null },
+  { "id": 53, "levelUnlock": 66, "specialChar1": null, "specialChar2": null },
+  { "id": 54, "levelUnlock": 67, "specialChar1": null, "specialChar2": null },
+  { "id": 55, "levelUnlock": 68, "specialChar1": null, "specialChar2": null },
+  { "id": 56, "levelUnlock": 69, "specialChar1": null, "specialChar2": null },
+  { "id": 57, "levelUnlock": 70, "specialChar1": null, "specialChar2": null }
+]

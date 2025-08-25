@@ -7,10 +7,16 @@ import {
   useEffect,
   type ReactNode,
 } from "react";
+import type { Character } from "~/interfaces/character";
+import type { LighthouseSpot } from "~/interfaces/LighthouseSpot";
 
 interface CharacterState {
   stars: number;
   rank: number;
+}
+
+export interface MatchedSpot extends LighthouseSpot {
+  selectedChar: Character & { stars: number; rank: number };
 }
 
 interface SoCContextType {
@@ -20,6 +26,8 @@ interface SoCContextType {
   >;
   lighthouseLevel: number | "";
   setLighthouseLevel: React.Dispatch<React.SetStateAction<number | "">>;
+  matchedSpots: MatchedSpot[];
+  setMatchedSpots: React.Dispatch<React.SetStateAction<MatchedSpot[]>>;
 }
 
 const SoCContext = createContext<SoCContextType | undefined>(undefined);
@@ -32,6 +40,9 @@ export function SoCProvider({ children }: { children: ReactNode }) {
     Record<number, CharacterState>
   >({});
   const [lighthouseLevel, setLighthouseLevel] = useState<number | "">(1);
+
+  // New state for matched spots
+  const [matchedSpots, setMatchedSpots] = useState<MatchedSpot[]>([]);
 
   // Load character state from localStorage
   useEffect(() => {
@@ -74,6 +85,8 @@ export function SoCProvider({ children }: { children: ReactNode }) {
         setCharacterState,
         lighthouseLevel,
         setLighthouseLevel,
+        matchedSpots,
+        setMatchedSpots,
       }}
     >
       {children}

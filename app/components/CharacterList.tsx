@@ -8,7 +8,6 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Avatar,
   Chip,
   Box,
 } from "@mui/material";
@@ -20,19 +19,8 @@ import CharacterFilters, {
   type CharacterFilterValues,
 } from "./CharacterFilters";
 import { useSoCContext } from "../context/SoCContext";
-
-// 🔑 helper to convert names into kebab-case file names
-function toKebabCase(str: string): string {
-  return str
-    .replace(/["']/g, "")
-    .replace(/\./g, "-")
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/([a-z])([A-Z])/g, "$1-$2")
-    .toLowerCase()
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "");
-}
+import type { Character } from "~/interfaces/character";
+import CharacterAvatar from "./CharacterAvatar";
 
 const rarityOrder: Record<string, number> = {
   Legendary: 1,
@@ -40,6 +28,8 @@ const rarityOrder: Record<string, number> = {
   Rare: 3,
   Common: 4,
 };
+
+const characters = charactersData as Character[];
 
 export default function CharacterList() {
   const { characterState, setCharacterState } = useSoCContext();
@@ -54,15 +44,13 @@ export default function CharacterList() {
   // Collect all unique factions from the data
   const allFactions = useMemo(() => {
     const set = new Set<string>();
-    charactersData.forEach((c) =>
-      c.factions.forEach((f: string) => set.add(f))
-    );
+    characters.forEach((c) => c.factions.forEach((f: string) => set.add(f)));
     return Array.from(set).sort();
   }, []);
 
   // Filter + sort characters
   const filteredCharacters = useMemo(() => {
-    return charactersData
+    return characters
       .filter((c) => {
         const matchesName = c.name
           .toLowerCase()
@@ -144,11 +132,7 @@ export default function CharacterList() {
               return (
                 <TableRow key={character.id}>
                   <TableCell>
-                    <Avatar
-                      src={`/images/characters/${toKebabCase(character.name)}.png`}
-                      alt={character.name}
-                      sx={{ width: 40, height: 40 }}
-                    />
+                    <CharacterAvatar name={character.name} size={40} />
                   </TableCell>
                   <TableCell>{character.name}</TableCell>
                   <TableCell>{character.rarity}</TableCell>
