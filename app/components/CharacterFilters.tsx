@@ -8,14 +8,9 @@ import {
   Chip,
   OutlinedInput,
 } from "@mui/material";
+import type { CharacterFilterValues } from "~/interfaces/CharacterFilterValues";
 
 // Define a reusable interface for the filter values
-export interface CharacterFilterValues {
-  name: string;
-  rarity: string[];
-  factions: string[];
-  ownership?: "All" | "Owned" | "Not Owned";
-}
 
 // Update CharacterFiltersProps to use it
 interface CharacterFiltersProps {

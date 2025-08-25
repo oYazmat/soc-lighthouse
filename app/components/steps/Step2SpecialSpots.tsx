@@ -4,10 +4,11 @@ import { Box, Typography } from "@mui/material";
 import { useEffect } from "react";
 import lighthouseSpotsData from "../../data/lighthouse-spots.json";
 import charactersData from "../../data/characters.json";
-import { useSoCContext, type MatchedSpot } from "../../context/SoCContext";
+import { useSoCContext } from "../../context/SoCContext";
 import type { LighthouseSpot } from "~/interfaces/LighthouseSpot";
 import type { Character } from "~/interfaces/character";
 import CharacterAvatar from "../CharacterAvatar";
+import type { MatchedSpot } from "~/interfaces/MatchedSpot";
 
 const lighthouseSpots = lighthouseSpotsData as LighthouseSpot[];
 const characters = charactersData as Character[];

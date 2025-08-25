@@ -7,16 +7,11 @@ import {
   useEffect,
   type ReactNode,
 } from "react";
-import type { Character } from "~/interfaces/character";
-import type { LighthouseSpot } from "~/interfaces/LighthouseSpot";
+import type { MatchedSpot } from "~/interfaces/MatchedSpot";
 
 interface CharacterState {
   stars: number;
   rank: number;
-}
-
-export interface MatchedSpot extends LighthouseSpot {
-  selectedChar: Character & { stars: number; rank: number };
 }
 
 interface SoCContextType {

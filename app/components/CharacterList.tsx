@@ -15,12 +15,11 @@ import { useMemo, useState } from "react";
 import charactersData from "../data/characters.json";
 import StarsDropdown from "./StarsDropdown";
 import RankDropdown from "./RankDropdown";
-import CharacterFilters, {
-  type CharacterFilterValues,
-} from "./CharacterFilters";
+import CharacterFilters from "./CharacterFilters";
 import { useSoCContext } from "../context/SoCContext";
 import type { Character } from "~/interfaces/character";
 import CharacterAvatar from "./CharacterAvatar";
+import type { CharacterFilterValues } from "~/interfaces/CharacterFilterValues";
 
 const rarityOrder: Record<string, number> = {
   Legendary: 1,
