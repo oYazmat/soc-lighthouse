@@ -11,24 +11,30 @@ import {
   Avatar,
   Chip,
   Box,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
 import { useState, useMemo, useEffect } from "react";
 import charactersData from "../data/characters.json";
 import StarsDropdown from "./StarsDropdown";
 import RankDropdown from "./RankDropdown";
-import CharacterFilters from "./CharacterFilters";
+import CharacterFilters, {
+  type CharacterFilterValues,
+} from "./CharacterFilters";
 
 // 🔑 helper to convert names into kebab-case file names
 function toKebabCase(str: string): string {
   return str
-    .replace(/["']/g, "") // remove quotes
-    .replace(/\./g, "-") // dots to dashes
-    .replace(/[^\w\s-]/g, "") // remove other punctuation
-    .replace(/\s+/g, "-") // spaces to dashes
-    .replace(/([a-z])([A-Z])/g, "$1-$2") // camelCase to kebab-case
+    .replace(/["']/g, "")
+    .replace(/\./g, "-")
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/([a-z])([A-Z])/g, "$1-$2")
     .toLowerCase()
-    .replace(/-+/g, "-") // collapse multiple dashes
-    .replace(/^-|-$/g, ""); // trim leading/trailing dash
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
 const rarityOrder: Record<string, number> = {
@@ -41,10 +47,11 @@ const rarityOrder: Record<string, number> = {
 const LOCAL_STORAGE_KEY = "characterState";
 
 export default function CharacterList() {
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<CharacterFilterValues>({
     name: "",
-    rarity: [] as string[],
-    factions: [] as string[],
+    rarity: [],
+    factions: [],
+    ownership: "All", // default value
   });
 
   // 🔑 Track stars & rank per character, load from localStorage initially
@@ -93,41 +100,48 @@ export default function CharacterList() {
 
         const matchesFaction =
           filters.factions.length === 0 ||
-          filters.factions.every((f) => c.factions.includes(f));
+          filters.factions.some((f) => c.factions.includes(f));
 
-        return matchesName && matchesRarity && matchesFaction;
+        const stars = characterState[c.id]?.stars || 0;
+        const matchesOwnership =
+          !filters.ownership || filters.ownership === "All"
+            ? true
+            : filters.ownership === "Owned"
+              ? stars > 0
+              : stars === 0;
+
+        return (
+          matchesName && matchesRarity && matchesFaction && matchesOwnership
+        );
       })
       .sort((a, b) => {
         const rarityDiff = rarityOrder[a.rarity] - rarityOrder[b.rarity];
         if (rarityDiff !== 0) return rarityDiff;
         return a.name.localeCompare(b.name);
       });
-  }, [filters]);
+  }, [filters, characterState]);
 
   // Handlers to update state
   const handleStarsChange = (id: number, stars: number) => {
     setCharacterState((prev) => {
       const prevState = prev[id] || { stars: 0, rank: 0 };
-      const updated = {
+      return {
         ...prev,
         [id]: {
           stars,
           rank: stars === 0 ? 0 : prevState.rank, // reset rank if stars is 0
         },
       };
-      return updated;
     });
   };
 
   const handleRankChange = (id: number, rank: number) => {
-    setCharacterState((prev) => {
-      const updated = { ...prev, [id]: { ...prev[id], rank } };
-      return updated;
-    });
+    setCharacterState((prev) => ({ ...prev, [id]: { ...prev[id], rank } }));
   };
 
   return (
     <>
+      {/* Character Filters */}
       <CharacterFilters
         filters={filters}
         onChange={setFilters}
@@ -141,7 +155,7 @@ export default function CharacterList() {
               <TableCell>Image</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Rarity</TableCell>
-              <TableCell>Stars</TableCell>
+              <TableCell sx={{ minWidth: 100 }}>Stars</TableCell>
               <TableCell sx={{ minWidth: 80 }}>Rank</TableCell>
               <TableCell>Factions</TableCell>
             </TableRow>
@@ -152,7 +166,7 @@ export default function CharacterList() {
                 stars: 0,
                 rank: 0,
               };
-              const isRankDisabled = !state.stars; // disabled if stars is 0
+              const isRankDisabled = !state.stars;
 
               return (
                 <TableRow key={character.id}>
@@ -175,7 +189,7 @@ export default function CharacterList() {
                     <RankDropdown
                       value={state.rank}
                       onChange={(val) => handleRankChange(character.id, val)}
-                      disabled={isRankDisabled} // <-- disable if stars is 0
+                      disabled={isRankDisabled}
                     />
                   </TableCell>
                   <TableCell>

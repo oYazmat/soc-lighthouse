@@ -1,73 +1,116 @@
-"use client";
+import {
+  Box,
+  TextField,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Select,
+  Chip,
+  OutlinedInput,
+} from "@mui/material";
 
-import { TextField, Box, Autocomplete } from "@mui/material";
-
-interface CharacterFiltersProps {
-  filters: {
-    name: string;
-    rarity: string[];
-    factions: string[];
-  };
-  onChange: (newFilters: {
-    name: string;
-    rarity: string[];
-    factions: string[];
-  }) => void;
-  allFactions: string[];
+// Define a reusable interface for the filter values
+export interface CharacterFilterValues {
+  name: string;
+  rarity: string[];
+  factions: string[];
+  ownership?: "All" | "Owned" | "Not Owned";
 }
 
-const rarities = ["Legendary", "Epic", "Rare", "Common"];
+// Update CharacterFiltersProps to use it
+interface CharacterFiltersProps {
+  filters: CharacterFilterValues;
+  onChange: (filters: CharacterFilterValues) => void;
+  allFactions: string[];
+  allRarities?: string[];
+}
 
 export default function CharacterFilters({
   filters,
   onChange,
   allFactions,
+  allRarities = ["Legendary", "Epic", "Rare", "Common"],
 }: CharacterFiltersProps) {
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange({ ...filters, name: e.target.value });
-  };
-
-  const handleRarityChange = (_: any, value: string[]) => {
-    onChange({ ...filters, rarity: value });
-  };
-
-  const handleFactionChange = (_: any, value: string[]) => {
-    onChange({ ...filters, factions: value });
-  };
-
   return (
-    <Box sx={{ display: "flex", gap: 2, mb: 2, flexWrap: "wrap" }}>
-      {/* Name Filter */}
+    <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", mb: 2 }}>
+      {/* Name filter */}
       <TextField
-        label="Filter by Name"
+        label="Name"
         value={filters.name}
-        onChange={handleNameChange}
+        onChange={(e) => onChange({ ...filters, name: e.target.value })}
         size="small"
       />
 
-      {/* Rarity Filter */}
-      <Autocomplete
-        multiple
-        options={rarities}
-        value={filters.rarity}
-        onChange={handleRarityChange}
-        renderInput={(params) => (
-          <TextField {...params} label="Filter by Rarity" size="small" />
-        )}
-        sx={{ minWidth: 200 }}
-      />
+      {/* Rarity filter */}
+      <FormControl size="small" sx={{ minWidth: 120 }}>
+        <InputLabel>Rarity</InputLabel>
+        <Select
+          multiple
+          value={filters.rarity}
+          onChange={(e) =>
+            onChange({ ...filters, rarity: e.target.value as string[] })
+          }
+          input={<OutlinedInput label="Rarity" />}
+          renderValue={(selected) => (
+            <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap" }}>
+              {(selected as string[]).map((value) => (
+                <Chip key={value} label={value} size="small" />
+              ))}
+            </Box>
+          )}
+        >
+          {allRarities.map((rarity) => (
+            <MenuItem key={rarity} value={rarity}>
+              {rarity}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
 
-      {/* Faction Filter */}
-      <Autocomplete
-        multiple
-        options={allFactions}
-        value={filters.factions}
-        onChange={handleFactionChange}
-        renderInput={(params) => (
-          <TextField {...params} label="Filter by Faction" size="small" />
-        )}
-        sx={{ minWidth: 200 }}
-      />
+      {/* Factions filter */}
+      <FormControl size="small" sx={{ minWidth: 150 }}>
+        <InputLabel>Factions</InputLabel>
+        <Select
+          multiple
+          value={filters.factions}
+          onChange={(e) =>
+            onChange({ ...filters, factions: e.target.value as string[] })
+          }
+          input={<OutlinedInput label="Factions" />}
+          renderValue={(selected) => (
+            <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap" }}>
+              {(selected as string[]).map((value) => (
+                <Chip key={value} label={value} size="small" />
+              ))}
+            </Box>
+          )}
+        >
+          {allFactions.map((faction) => (
+            <MenuItem key={faction} value={faction}>
+              {faction}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      {/* Ownership filter */}
+      <FormControl size="small" sx={{ minWidth: 120 }}>
+        <InputLabel>Ownership</InputLabel>
+        <Select
+          value={filters.ownership || "All"}
+          onChange={(e) =>
+            onChange({
+              ...filters,
+              ownership: e.target.value as "All" | "Owned" | "Not Owned",
+            })
+          }
+          label="Ownership"
+        >
+          <MenuItem value="All">All</MenuItem>
+          <MenuItem value="Owned">Owned</MenuItem>
+          <MenuItem value="Not Owned">Not Owned</MenuItem>
+        </Select>
+      </FormControl>
     </Box>
   );
 }

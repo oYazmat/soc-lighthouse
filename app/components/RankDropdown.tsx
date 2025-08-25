@@ -13,7 +13,7 @@ export default function RankDropdown({
 }: RankDropdownProps) {
   return (
     <Select
-      value={value}
+      value={value || 0}
       onChange={(e) => onChange(Number(e.target.value))}
       size="small"
       disabled={disabled}
