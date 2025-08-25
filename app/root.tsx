@@ -9,12 +9,23 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import SoCLayout from "./components/SoCLayout";
 
 export const links: Route.LinksFunction = () => [];
+
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "Sword of Convallaria - Lighthouse Calculator" },
+    {
+      name: "description",
+      content: "Welcome to Sword of Convallaria - Lighthouse Calculator!",
+    },
+  ];
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -26,7 +37,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <SoCLayout children={children} />
         <ScrollRestoration />
         <Scripts />
       </body>
