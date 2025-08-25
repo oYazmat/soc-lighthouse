@@ -1,5 +1,5 @@
-import { Typography } from "@mui/material";
+import CharacterList from "./CharacterList";
 
 export default function MyCharacters() {
-  return <Typography>Welcome to the My Characters section.</Typography>;
+  return <CharacterList />;
 }
