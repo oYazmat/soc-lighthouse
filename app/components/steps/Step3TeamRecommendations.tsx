@@ -7,18 +7,23 @@ import {
   calculateFactionTeams,
   calculateOwnedCharacterPower,
 } from "~/utils/characters";
-import { CHARACTERS } from "~/utils/data-loader";
+import { CHARACTERS, LIGHTHOUSE_LEVELS } from "~/utils/data-loader";
 import type { FactionTeam } from "~/interfaces/FactionTeam";
 import type { CharacterWithPower } from "~/interfaces/CharacterWithPower";
 import LighthouseDestinationsTabs from "../LighthouseDestinationsTabs";
 
 export default function Step3TeamRecommendations() {
-  const { matchedSpots, characterState } = useSoCContext();
+  const { matchedSpots, characterState, lighthouseLevel } = useSoCContext();
   const [charactersWithPower, setCharactersWithPower] = useState<
     CharacterWithPower[]
   >([]);
   const [factionTeams, setFactionTeams] = useState<FactionTeam[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const charactersAllowed = lighthouseLevel
+    ? (LIGHTHOUSE_LEVELS.find((lvl) => lvl.level === lighthouseLevel)
+        ?.characters ?? 1)
+    : 1;
 
   useEffect(() => {
     let active = true;
@@ -42,7 +47,12 @@ export default function Step3TeamRecommendations() {
         ownedCharacters,
         characterState
       );
-      const teams = await calculateFactionTeams(charsWithPower);
+
+      // Pass charactersAllowed as team size
+      const teams = await calculateFactionTeams(
+        charsWithPower,
+        charactersAllowed
+      );
 
       if (!active) return;
 
@@ -56,7 +66,7 @@ export default function Step3TeamRecommendations() {
     return () => {
       active = false;
     };
-  }, [characterState, matchedSpots]);
+  }, [characterState, matchedSpots, charactersAllowed]);
 
   return (
     <Box sx={{ mt: 2 }}>

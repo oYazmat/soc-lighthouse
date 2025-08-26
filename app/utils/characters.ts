@@ -43,7 +43,8 @@ function combinations<T>(array: T[], size: number): T[][] {
 }
 
 export async function calculateFactionTeams(
-  characters: CharacterWithPower[]
+  characters: CharacterWithPower[],
+  teamSize: number
 ): Promise<FactionTeam[]> {
   const factionTeams: FactionTeam[] = [];
   const validFactions = FACTIONS.filter((f) => !f.ignored).map((f) => f.name);
@@ -54,8 +55,9 @@ export async function calculateFactionTeams(
     );
     if (charsInFaction.length === 0) continue;
 
-    const teamSize = charsInFaction.length >= 4 ? 4 : charsInFaction.length;
-    const combos = combinations(charsInFaction, teamSize);
+    const size =
+      charsInFaction.length >= teamSize ? teamSize : charsInFaction.length;
+    const combos = combinations(charsInFaction, size);
 
     combos.forEach((team) => {
       const basePowerSum = team.reduce((sum, c) => sum + c.basePower, 0);
