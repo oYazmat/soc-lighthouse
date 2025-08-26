@@ -4,15 +4,12 @@ import { Typography, Box, CircularProgress } from "@mui/material";
 import { useSoCContext } from "~/context/SoCContext";
 import { useEffect, useState } from "react";
 import {
+  buildLeaderTeams,
   calculateFactionTeams,
   calculateOwnedCharacterPower,
-  getBestTeamForLeader,
+  selectBestTeamsPerDestination,
 } from "~/utils/characters";
-import {
-  CHARACTERS,
-  LIGHTHOUSE_LEVELS,
-  LIGHTHOUSE_DESTINATIONS,
-} from "~/utils/data-loader";
+import { CHARACTERS, LIGHTHOUSE_LEVELS } from "~/utils/data-loader";
 import LighthouseDestinationsTabs from "../LighthouseDestinationsTabs";
 import type { LeaderTeam } from "~/interfaces/LeaderTeam";
 
@@ -58,46 +55,14 @@ export default function Step3TeamRecommendations() {
       );
       if (!active) return;
 
-      // Build leaderTeams
-      const leaderTeamsMap: Record<number, LeaderTeam> = {};
-      LIGHTHOUSE_DESTINATIONS.forEach((dest) => {
-        dest.leaders.forEach((leaderId) => {
-          const { team, membersWithoutLeader } = getBestTeamForLeader(
-            leaderId,
-            factionTeams
-          );
-          if (team) {
-            leaderTeamsMap[leaderId] = { leaderId, team, membersWithoutLeader };
-          }
-        });
-      });
+      const leaderTeamsMap = buildLeaderTeams(factionTeams);
       setLeaderTeams(leaderTeamsMap);
 
       // Select the leader with the highest combinedPower per destination
-      const selected: Record<number, LeaderTeam> = {};
-      LIGHTHOUSE_DESTINATIONS.forEach((dest) => {
-        // Skip if destination is locked
-        if (dest.levelUnlock > Number(lighthouseLevel)) return;
-
-        let bestLeader: LeaderTeam | null = null;
-
-        dest.leaders.forEach((leaderId) => {
-          const lt = leaderTeamsMap[leaderId];
-          if (!lt || !lt.team) return;
-
-          if (!bestLeader) {
-            bestLeader = lt;
-          } else if (bestLeader.team) {
-            if (lt.team.combinedPower > bestLeader.team.combinedPower) {
-              bestLeader = lt;
-            }
-          }
-        });
-
-        if (bestLeader) {
-          selected[dest.id] = bestLeader;
-        }
-      });
+      const selected = selectBestTeamsPerDestination(
+        lighthouseLevel,
+        leaderTeamsMap
+      );
 
       setSelectedTeams(selected);
       setLoading(false);

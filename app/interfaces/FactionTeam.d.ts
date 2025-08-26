@@ -1,3 +1,5 @@
+import type { CharacterWithPower } from "./CharacterWithPower";
+
 export interface FactionTeam {
   faction: string;
   characters: CharacterWithPower[];

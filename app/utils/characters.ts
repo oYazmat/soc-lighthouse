@@ -1,8 +1,14 @@
 import type { Character } from "~/interfaces/character";
 import type { CharacterState } from "~/interfaces/CharacterState";
 import type { CharacterWithPower } from "~/interfaces/CharacterWithPower";
-import { RANK_POWERS, RARITY_AND_STARS_POWERS, FACTIONS } from "./data-loader";
+import {
+  RANK_POWERS,
+  RARITY_AND_STARS_POWERS,
+  FACTIONS,
+  LIGHTHOUSE_DESTINATIONS,
+} from "./data-loader";
 import type { FactionTeam } from "~/interfaces/FactionTeam";
+import type { LeaderTeam } from "~/interfaces/LeaderTeam";
 
 export function calculateOwnedCharacterPower(
   ownedCharacters: Character[],
@@ -119,4 +125,53 @@ export function getBestTeamForLeader(
       (char) => char.id !== leaderId
     ),
   };
+}
+
+export function buildLeaderTeams(
+  factionTeams: FactionTeam[]
+): Record<number, LeaderTeam> {
+  const leaderTeamsMap: Record<number, LeaderTeam> = {};
+  LIGHTHOUSE_DESTINATIONS.forEach((dest) => {
+    dest.leaders.forEach((leaderId) => {
+      const { team, membersWithoutLeader } = getBestTeamForLeader(
+        leaderId,
+        factionTeams
+      );
+      if (team) {
+        leaderTeamsMap[leaderId] = { leaderId, team, membersWithoutLeader };
+      }
+    });
+  });
+  return leaderTeamsMap;
+}
+
+export function selectBestTeamsPerDestination(
+  lighthouseLevel: number | "",
+  leaderTeamsMap: Record<number, LeaderTeam>
+): Record<number, LeaderTeam> {
+  const selected: Record<number, LeaderTeam> = {};
+  LIGHTHOUSE_DESTINATIONS.forEach((dest) => {
+    // Skip if destination is locked
+    if (dest.levelUnlock > Number(lighthouseLevel)) return;
+
+    let bestLeader: LeaderTeam | null = null;
+
+    dest.leaders.forEach((leaderId) => {
+      const lt = leaderTeamsMap[leaderId];
+      if (!lt || !lt.team) return;
+
+      if (!bestLeader) {
+        bestLeader = lt;
+      } else if (bestLeader.team) {
+        if (lt.team.combinedPower > bestLeader.team.combinedPower) {
+          bestLeader = lt;
+        }
+      }
+    });
+
+    if (bestLeader) {
+      selected[dest.id] = bestLeader;
+    }
+  });
+  return selected;
 }
