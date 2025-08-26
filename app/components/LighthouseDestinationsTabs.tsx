@@ -1,45 +1,27 @@
-"use client";
-
+import { Tabs, Tab, Box, Typography } from "@mui/material";
+import { useState } from "react";
 import {
-  Tabs,
-  Tab,
-  Box,
-  Typography,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  TableContainer,
-  TableHead,
-  Paper,
-} from "@mui/material";
-import { useState, useEffect } from "react";
-import { LIGHTHOUSE_DESTINATIONS, CHARACTERS } from "~/utils/data-loader";
-import CharacterAvatar from "./CharacterAvatar";
+  LIGHTHOUSE_DESTINATIONS,
+  LIGHTHOUSE_LEVELS,
+  CHARACTERS,
+} from "~/utils/data-loader";
+import LighthouseDestinationTable from "./LighthouseDestinationTable";
 import { useSoCContext } from "~/context/SoCContext";
 
 export default function LighthouseDestinationsTabs() {
-  const { characterState, lighthouseLevel } = useSoCContext();
+  const { lighthouseLevel } = useSoCContext();
   const [selectedTab, setSelectedTab] = useState(0);
-  const [ownedLeaders, setOwnedLeaders] = useState<number[]>([]); // store owned leader IDs
 
   const sortedDestinations = [...LIGHTHOUSE_DESTINATIONS].sort(
     (a, b) => a.levelUnlock - b.levelUnlock
   );
 
-  const maxCharactersPerRow = 4; // Leader + 4 characters
+  const maxCharactersPerRow = 4;
 
-  // Update owned leaders when tab changes
-  useEffect(() => {
-    const dest = sortedDestinations[selectedTab];
-    if (!dest) return;
-
-    const owned = dest.leaders.filter(
-      (leaderId) => characterState[leaderId]?.stars > 0
-    );
-
-    setOwnedLeaders(owned);
-  }, [selectedTab, characterState, sortedDestinations]);
+  const charactersAllowed = lighthouseLevel
+    ? (LIGHTHOUSE_LEVELS.find((lvl) => lvl.level === lighthouseLevel)
+        ?.characters ?? 1)
+    : 1;
 
   return (
     <>
@@ -51,14 +33,15 @@ export default function LighthouseDestinationsTabs() {
       >
         {sortedDestinations.map((dest, index) => {
           const [map, mission] = dest.mapName.split(" - ");
+          const isDisabled =
+            lighthouseLevel === "" ||
+            dest.levelUnlock > Number(lighthouseLevel);
+
           return (
             <Tab
               key={dest.id}
               value={index}
-              disabled={
-                lighthouseLevel === "" ||
-                dest.levelUnlock > Number(lighthouseLevel)
-              }
+              disabled={isDisabled}
               label={
                 <Box
                   sx={{
@@ -73,6 +56,12 @@ export default function LighthouseDestinationsTabs() {
                   </Typography>
                 </Box>
               }
+              sx={{
+                ...(isDisabled && {
+                  backgroundColor: "action.disabledBackground",
+                  color: "text.disabled",
+                }),
+              }}
             />
           );
         })}
@@ -86,78 +75,11 @@ export default function LighthouseDestinationsTabs() {
           sx={{ p: 2 }}
         >
           {selectedTab === index && (
-            <TableContainer component={Paper}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="center">Leader</TableCell>
-                    {Array.from({ length: maxCharactersPerRow }).map((_, i) => (
-                      <TableCell
-                        key={i}
-                        align="center"
-                      >{`Character ${i + 1}`}</TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-
-                <TableBody>
-                  {dest.leaders.map((leaderId) => {
-                    const leader = CHARACTERS.find((c) => c.id === leaderId);
-                    const owned =
-                      leader && characterState[leader.id]?.stars > 0;
-
-                    return (
-                      <TableRow
-                        key={leaderId}
-                        sx={{
-                          backgroundColor: owned
-                            ? "inherit"
-                            : "action.disabledBackground",
-                        }}
-                      >
-                        <TableCell>
-                          {leader && (
-                            <Box
-                              sx={{
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                                gap: 0.5,
-                                color: owned ? "inherit" : "text.disabled",
-                              }}
-                            >
-                              <CharacterAvatar
-                                name={leader.name}
-                                size={50}
-                                sx={{
-                                  filter: owned ? "none" : "grayscale(100%)",
-                                }}
-                              />
-                              <Typography variant="caption">
-                                {leader.name}
-                              </Typography>
-                            </Box>
-                          )}
-                        </TableCell>
-
-                        {Array.from({ length: maxCharactersPerRow }).map(
-                          (_, i) => (
-                            <TableCell
-                              key={i}
-                              sx={{
-                                color: owned ? "inherit" : "text.disabled",
-                              }}
-                            >
-                              {/* Placeholder for future characters */}
-                            </TableCell>
-                          )
-                        )}
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            </TableContainer>
+            <LighthouseDestinationTable
+              leaders={dest.leaders}
+              charactersAllowed={charactersAllowed}
+              allCharacters={CHARACTERS}
+            />
           )}
         </Box>
       ))}
