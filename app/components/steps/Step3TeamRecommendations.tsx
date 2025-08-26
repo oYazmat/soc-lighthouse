@@ -13,7 +13,7 @@ import type { CharacterWithPower } from "~/interfaces/CharacterWithPower";
 import LighthouseDestinationsTabs from "../LighthouseDestinationsTabs";
 
 export default function Step3TeamRecommendations() {
-  const { matchedSpots, characterState, lighthouseLevel } = useSoCContext();
+  const { matchedSpots, characterState } = useSoCContext();
   const [charactersWithPower, setCharactersWithPower] = useState<
     CharacterWithPower[]
   >([]);
@@ -76,7 +76,14 @@ export default function Step3TeamRecommendations() {
           </Typography>
         </Box>
       ) : (
-        <LighthouseDestinationsTabs lighthouseLevel={lighthouseLevel} />
+        <>
+          <Typography variant="body1" sx={{ mb: 2 }}>
+            Here are the strongest teams you can send on your Lighthouse
+            expeditions:
+          </Typography>
+
+          <LighthouseDestinationsTabs />
+        </>
       )}
     </Box>
   );
