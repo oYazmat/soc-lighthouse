@@ -14,14 +14,17 @@ import LighthouseDestinationsTabs from "../LighthouseDestinationsTabs";
 import type { LeaderTeam } from "~/interfaces/LeaderTeam";
 
 export default function Step3TeamRecommendations() {
-  const { matchedSpots, characterState, lighthouseLevel } = useSoCContext();
+  const {
+    matchedSpots,
+    characterState,
+    lighthouseLevel,
+    selectedTeams,
+    setSelectedTeams,
+  } = useSoCContext();
 
   const [leaderTeams, setLeaderTeams] = useState<Record<number, LeaderTeam>>(
     {}
   );
-  const [selectedTeams, setSelectedTeams] = useState<
-    Record<number, LeaderTeam>
-  >({});
   const [loading, setLoading] = useState(false);
 
   const charactersAllowed = lighthouseLevel
@@ -106,7 +109,6 @@ export default function Step3TeamRecommendations() {
 
           <LighthouseDestinationsTabs
             leaderTeams={leaderTeams}
-            selectedTeams={selectedTeams}
             charactersAllowed={charactersAllowed}
           />
         </>

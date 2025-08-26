@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import type { CharacterState } from "~/interfaces/CharacterState";
+import type { LeaderTeam } from "~/interfaces/LeaderTeam";
 import type { MatchedSpot } from "~/interfaces/MatchedSpot";
 
 interface SoCContextType {
@@ -19,6 +20,10 @@ interface SoCContextType {
   setLighthouseLevel: React.Dispatch<React.SetStateAction<number | "">>;
   matchedSpots: MatchedSpot[];
   setMatchedSpots: React.Dispatch<React.SetStateAction<MatchedSpot[]>>;
+  selectedTeams: Record<number, LeaderTeam>;
+  setSelectedTeams: React.Dispatch<
+    React.SetStateAction<Record<number, LeaderTeam>>
+  >;
 }
 
 const SoCContext = createContext<SoCContextType | undefined>(undefined);
@@ -33,6 +38,9 @@ export function SoCProvider({ children }: { children: ReactNode }) {
   > | null>(null);
   const [lighthouseLevel, setLighthouseLevel] = useState<number | "">(1);
   const [matchedSpots, setMatchedSpots] = useState<MatchedSpot[]>([]);
+  const [selectedTeams, setSelectedTeams] = useState<
+    Record<number, LeaderTeam>
+  >({});
 
   // Load character state from localStorage
   useEffect(() => {
@@ -94,6 +102,8 @@ export function SoCProvider({ children }: { children: ReactNode }) {
         setLighthouseLevel,
         matchedSpots,
         setMatchedSpots,
+        selectedTeams,
+        setSelectedTeams,
       }}
     >
       {children}

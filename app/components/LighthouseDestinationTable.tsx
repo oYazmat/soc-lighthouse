@@ -21,16 +21,14 @@ interface Props {
   leaders: number[];
   charactersAllowed: number;
   leaderTeams: Record<number, LeaderTeam>;
-  selectedTeams: Record<number, LeaderTeam>;
 }
 
 export default function LighthouseDestinationTable({
   leaders,
   charactersAllowed,
   leaderTeams,
-  selectedTeams,
 }: Props) {
-  const { characterState } = useSoCContext();
+  const { characterState, selectedTeams } = useSoCContext();
   const maxCharactersPerRow = 4;
 
   return (

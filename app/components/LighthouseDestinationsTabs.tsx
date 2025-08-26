@@ -7,13 +7,11 @@ import type { LeaderTeam } from "~/interfaces/LeaderTeam";
 
 interface Props {
   leaderTeams: Record<number, LeaderTeam>;
-  selectedTeams: Record<number, LeaderTeam>;
   charactersAllowed: number;
 }
 
 export default function LighthouseDestinationsTabs({
   leaderTeams,
-  selectedTeams,
   charactersAllowed,
 }: Props) {
   const { lighthouseLevel } = useSoCContext();
@@ -73,7 +71,6 @@ export default function LighthouseDestinationsTabs({
               leaders={dest.leaders}
               charactersAllowed={charactersAllowed}
               leaderTeams={leaderTeams}
-              selectedTeams={selectedTeams}
             />
           )}
         </Box>
