@@ -42,6 +42,14 @@ function combinations<T>(array: T[], size: number): T[][] {
   return withFirst.concat(withoutFirst);
 }
 
+// Extra bonus depending on team size
+export function getExtraBonusPercent(teamSize: number): number {
+  if (teamSize === 2) return 40;
+  if (teamSize === 3) return 100;
+  if (teamSize >= 4) return 180;
+  return 0;
+}
+
 export async function calculateFactionTeams(
   characters: CharacterWithPower[],
   teamSize: number
@@ -61,7 +69,15 @@ export async function calculateFactionTeams(
 
     combos.forEach((team) => {
       const basePowerSum = team.reduce((sum, c) => sum + c.basePower, 0);
-      const powerPercentSum = team.reduce((sum, c) => sum + c.powerPercent, 0);
+      const rawPowerPercentSum = team.reduce(
+        (sum, c) => sum + c.powerPercent,
+        0
+      );
+
+      // Add extra bonus depending on number of characters
+      const extraPercent = getExtraBonusPercent(team.length);
+      const powerPercentSum = rawPowerPercentSum + extraPercent;
+
       const combinedPower = basePowerSum * (1 + powerPercentSum / 100);
 
       factionTeams.push({
