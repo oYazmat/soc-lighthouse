@@ -24,6 +24,7 @@ interface SoCContextType {
 const SoCContext = createContext<SoCContextType | undefined>(undefined);
 
 const CHARACTER_LOCAL_STORAGE_KEY = "characterState";
+const CHARACTER_BACKUP_KEY = "characterStateBackup";
 const LIGHTHOUSE_LOCAL_STORAGE_KEY = "lighthouse-level";
 
 export function SoCProvider({ children }: { children: ReactNode }) {
@@ -31,41 +32,67 @@ export function SoCProvider({ children }: { children: ReactNode }) {
     Record<number, CharacterState>
   >({});
   const [lighthouseLevel, setLighthouseLevel] = useState<number | "">(1);
-
-  // New state for matched spots
   const [matchedSpots, setMatchedSpots] = useState<MatchedSpot[]>([]);
 
-  // Load character state from localStorage
+  // Load character state from localStorage safely
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const stored = localStorage.getItem(CHARACTER_LOCAL_STORAGE_KEY);
-      if (stored) setCharacterState(JSON.parse(stored));
+      try {
+        const stored = localStorage.getItem(CHARACTER_LOCAL_STORAGE_KEY);
+        if (stored) {
+          setCharacterState(JSON.parse(stored));
+        } else {
+          // Try backup if main storage missing
+          const backup = localStorage.getItem(CHARACTER_BACKUP_KEY);
+          if (backup) setCharacterState(JSON.parse(backup));
+        }
 
-      const levelStored = localStorage.getItem(LIGHTHOUSE_LOCAL_STORAGE_KEY);
-      if (levelStored) {
-        const num = Number(levelStored);
-        if (!isNaN(num)) setLighthouseLevel(num);
+        const levelStored = localStorage.getItem(LIGHTHOUSE_LOCAL_STORAGE_KEY);
+        if (levelStored) {
+          const num = Number(levelStored);
+          if (!isNaN(num)) setLighthouseLevel(num);
+        }
+      } catch (err) {
+        console.error(
+          "Failed to load localStorage, restoring backup if available",
+          err
+        );
+        const backup = localStorage.getItem(CHARACTER_BACKUP_KEY);
+        if (backup) {
+          try {
+            setCharacterState(JSON.parse(backup));
+          } catch {
+            // Final fallback: keep empty, but do NOT overwrite user data
+          }
+        }
       }
     }
   }, []);
 
-  // Save character state
+  // Save character state with backup
   useEffect(() => {
     if (typeof window !== "undefined") {
-      localStorage.setItem(
-        CHARACTER_LOCAL_STORAGE_KEY,
-        JSON.stringify(characterState)
-      );
+      try {
+        const serialized = JSON.stringify(characterState);
+        localStorage.setItem(CHARACTER_LOCAL_STORAGE_KEY, serialized);
+        localStorage.setItem(CHARACTER_BACKUP_KEY, serialized);
+      } catch (err) {
+        console.error("Failed to save character state", err);
+      }
     }
   }, [characterState]);
 
-  // Save lighthouse level
+  // Save lighthouse level safely
   useEffect(() => {
     if (typeof window !== "undefined" && lighthouseLevel !== "") {
-      localStorage.setItem(
-        LIGHTHOUSE_LOCAL_STORAGE_KEY,
-        lighthouseLevel.toString()
-      );
+      try {
+        localStorage.setItem(
+          LIGHTHOUSE_LOCAL_STORAGE_KEY,
+          lighthouseLevel.toString()
+        );
+      } catch (err) {
+        console.error("Failed to save lighthouse level", err);
+      }
     }
   }, [lighthouseLevel]);
 
@@ -85,7 +112,7 @@ export function SoCProvider({ children }: { children: ReactNode }) {
   );
 }
 
-// Custom hook for convenience
+// Custom hook
 export function useSoCContext() {
   const context = useContext(SoCContext);
   if (!context)
