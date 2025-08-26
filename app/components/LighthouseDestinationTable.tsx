@@ -10,6 +10,7 @@ import {
   TableContainer,
   TableHead,
   Paper,
+  Checkbox,
 } from "@mui/material";
 import CharacterAvatar from "./CharacterAvatar";
 import { useSoCContext } from "~/context/SoCContext";
@@ -36,6 +37,9 @@ export default function LighthouseDestinationTable({
       <Table>
         <TableHead>
           <TableRow>
+            {/* Extra checkbox column */}
+            <TableCell align="center" />
+
             <TableCell align="center">Leader</TableCell>
             {Array.from({ length: maxCharactersPerRow }).map((_, i) => (
               <TableCell
@@ -62,6 +66,11 @@ export default function LighthouseDestinationTable({
 
             return (
               <TableRow key={leaderId}>
+                {/* Checkbox column */}
+                <TableCell align="center">
+                  <Checkbox disabled={isRowDisabled} />
+                </TableCell>
+
                 {/* Leader cell */}
                 <TableCell
                   sx={{

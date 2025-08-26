@@ -87,10 +87,16 @@ export default function Step3TeamRecommendations() {
         </Box>
       ) : (
         <>
-          <Typography variant="body1" sx={{ mb: 2 }}>
-            Here are the strongest teams you can send on your Lighthouse
-            expeditions:
-          </Typography>
+          <Box sx={{ mb: 2 }}>
+            <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+              Select your expedition teams
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Choose the teams you want to send on your Lighthouse expeditions.
+              Any remaining characters will automatically be assigned to
+              logistics in the next step.
+            </Typography>
+          </Box>
 
           <LighthouseDestinationsTabs factionTeams={factionTeams} />
         </>
