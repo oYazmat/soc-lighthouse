@@ -86,7 +86,7 @@ export async function calculateFactionTeams(
 export function getBestTeamForLeader(
   leaderId: number,
   factionTeams: FactionTeam[]
-): CharacterWithPower[] {
+): { team: FactionTeam | null; membersWithoutLeader: CharacterWithPower[] } {
   const bestTeam = factionTeams
     .filter((team) => team.characters.some((char) => char.id === leaderId))
     .reduce(
@@ -95,8 +95,12 @@ export function getBestTeamForLeader(
       null as FactionTeam | null
     );
 
-  if (!bestTeam) return [];
+  if (!bestTeam) return { team: null, membersWithoutLeader: [] };
 
-  // Remove leader from the team array so we don't duplicate in the table
-  return bestTeam.characters.filter((char) => char.id !== leaderId);
+  return {
+    team: bestTeam,
+    membersWithoutLeader: bestTeam.characters.filter(
+      (char) => char.id !== leaderId
+    ),
+  };
 }

@@ -43,6 +43,8 @@ export default function LighthouseDestinationTable({
                 align="center"
               >{`Character ${i + 1}`}</TableCell>
             ))}
+            <TableCell align="center">Base Power</TableCell>
+            <TableCell align="center">Bonus Power %</TableCell>
           </TableRow>
         </TableHead>
 
@@ -51,7 +53,12 @@ export default function LighthouseDestinationTable({
             const leader = CHARACTERS.find((c) => c.id === leaderId);
             const ownedLeader = leader && characterState[leaderId]?.stars > 0;
 
-            const teamMembers = getBestTeamForLeader(leaderId, factionTeams);
+            const { team, membersWithoutLeader } = getBestTeamForLeader(
+              leaderId,
+              factionTeams
+            );
+
+            const isRowDisabled = !ownedLeader;
 
             return (
               <TableRow key={leaderId}>
@@ -87,7 +94,7 @@ export default function LighthouseDestinationTable({
 
                 {/* Best team cells */}
                 {Array.from({ length: maxCharactersPerRow }).map((_, i) => {
-                  const member = teamMembers[i];
+                  const member = membersWithoutLeader[i];
                   const isDisabled = !member || i >= charactersAllowed - 1;
 
                   return (
@@ -124,6 +131,30 @@ export default function LighthouseDestinationTable({
                     </TableCell>
                   );
                 })}
+
+                {/* Extra columns for team stats */}
+                <TableCell
+                  align="center"
+                  sx={{
+                    backgroundColor: isRowDisabled
+                      ? "action.disabledBackground"
+                      : "inherit",
+                  }}
+                >
+                  {team?.basePowerSum ?? "-"}
+                </TableCell>
+                <TableCell
+                  align="center"
+                  sx={{
+                    backgroundColor: isRowDisabled
+                      ? "action.disabledBackground"
+                      : "inherit",
+                  }}
+                >
+                  {team?.powerPercentSum != null
+                    ? `${team.powerPercentSum}%`
+                    : "-"}
+                </TableCell>
               </TableRow>
             );
           })}
