@@ -16,20 +16,53 @@ import CharacterAvatar from "./CharacterAvatar";
 import { useSoCContext } from "~/context/SoCContext";
 import { CHARACTERS } from "~/utils/data-loader";
 import type { LeaderTeam } from "~/interfaces/LeaderTeam";
+import type { SelectedTeams } from "~/interfaces/SelectedTeams";
+import type { LeaderTeams } from "~/interfaces/LeaderTeams";
 
 interface Props {
+  /** Destination this table belongs to (keys in selectedTeams are destination ids) */
+  destinationId: number;
   leaders: number[];
   charactersAllowed: number;
-  leaderTeams: Record<number, LeaderTeam>;
+  leaderTeams: LeaderTeams;
 }
 
 export default function LighthouseDestinationTable({
+  destinationId,
   leaders,
   charactersAllowed,
   leaderTeams,
 }: Props) {
-  const { characterState, selectedTeams } = useSoCContext();
+  const { charactersState, selectedTeams, setSelectedTeams } = useSoCContext();
   const maxCharactersPerRow = 4;
+
+  const handleCheckboxChange = (
+    destId: number,
+    leaderId: number,
+    leaderTeam: LeaderTeam | undefined,
+    checked: boolean
+  ) => {
+    if (!leaderTeam) return;
+
+    setSelectedTeams((prev) => {
+      const next: SelectedTeams = { ...prev };
+
+      if (!next[destId]) {
+        next[destId] = {};
+      }
+
+      if (checked) {
+        next[destId][leaderId] = { ...leaderTeam };
+      } else {
+        delete next[destId][leaderId];
+        if (Object.keys(next[destId]).length === 0) {
+          delete next[destId];
+        }
+      }
+
+      return next;
+    });
+  };
 
   return (
     <TableContainer component={Paper}>
@@ -39,10 +72,9 @@ export default function LighthouseDestinationTable({
             <TableCell align="center" />
             <TableCell align="center">Leader</TableCell>
             {Array.from({ length: maxCharactersPerRow }).map((_, i) => (
-              <TableCell
-                key={i}
-                align="center"
-              >{`Character ${i + 1}`}</TableCell>
+              <TableCell key={i} align="center">
+                {`Character ${i + 1}`}
+              </TableCell>
             ))}
             <TableCell align="center">Base Power</TableCell>
             <TableCell align="center">Bonus Power %</TableCell>
@@ -52,22 +84,29 @@ export default function LighthouseDestinationTable({
         <TableBody>
           {leaders.map((leaderId) => {
             const leader = CHARACTERS.find((c) => c.id === leaderId);
-            const ownedLeader = leader && characterState[leaderId]?.stars > 0;
+            const ownedLeader = leader && charactersState[leaderId]?.stars > 0;
 
             const leaderTeam = leaderTeams[leaderId];
             const membersWithoutLeader = leaderTeam?.membersWithoutLeader ?? [];
             const team = leaderTeam?.team ?? null;
 
             const isRowDisabled = !ownedLeader;
+            const isChecked = !!selectedTeams[destinationId]?.[leaderId];
 
             return (
               <TableRow key={leaderId}>
                 <TableCell align="center">
                   <Checkbox
                     disabled={isRowDisabled}
-                    checked={Object.values(selectedTeams).some(
-                      (team) => team.leaderId === leaderId
-                    )}
+                    checked={isChecked}
+                    onChange={(e) =>
+                      handleCheckboxChange(
+                        destinationId,
+                        leaderId,
+                        leaderTeam,
+                        e.target.checked
+                      )
+                    }
                   />
                 </TableCell>
 

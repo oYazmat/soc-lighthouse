@@ -28,7 +28,7 @@ const rarityOrder: Record<string, number> = {
 };
 
 export default function CharacterList() {
-  const { characterState, setCharacterState } = useSoCContext();
+  const { charactersState, setCharactersState } = useSoCContext();
 
   const [filters, setFilters] = useState<CharacterFilterValues>({
     name: "",
@@ -58,7 +58,7 @@ export default function CharacterList() {
         filters.factions.length === 0 ||
         filters.factions.some((f) => c.factions.includes(f));
 
-      const stars = characterState[c.id]?.stars || 0;
+      const stars = charactersState[c.id]?.stars || 0;
       const matchesOwnership =
         !filters.ownership || filters.ownership === "All"
           ? true
@@ -72,12 +72,12 @@ export default function CharacterList() {
       if (rarityDiff !== 0) return rarityDiff;
       return a.name.localeCompare(b.name);
     });
-  }, [filters, characterState]);
+  }, [filters, charactersState]);
 
   // Handlers to update state
   const handleStarsChange = (id: number, stars: number) => {
-    setCharacterState((prev) => {
-      const prevState = prev[id] || { stars: 0, rank: 0 };
+    setCharactersState((prev) => {
+      const prevState = prev?.[id] ?? { stars: 0, rank: 0 };
       return {
         ...prev,
         [id]: {
@@ -89,7 +89,13 @@ export default function CharacterList() {
   };
 
   const handleRankChange = (id: number, rank: number) => {
-    setCharacterState((prev) => ({ ...prev, [id]: { ...prev[id], rank } }));
+    setCharactersState((prev) => ({
+      ...(prev ?? {}),
+      [id]: {
+        ...((prev ?? {})[id] ?? { stars: 0, rank: 0 }),
+        rank,
+      },
+    }));
   };
 
   return (
@@ -115,7 +121,7 @@ export default function CharacterList() {
           </TableHead>
           <TableBody>
             {filteredCharacters.map((character) => {
-              const state = characterState[character.id] || {
+              const state = charactersState[character.id] || {
                 stars: 0,
                 rank: 0,
               };

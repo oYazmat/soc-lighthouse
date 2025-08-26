@@ -1,5 +1,4 @@
 import type { Character } from "~/interfaces/character";
-import type { CharacterState } from "~/interfaces/CharacterState";
 import type { CharacterWithPower } from "~/interfaces/CharacterWithPower";
 import {
   RANK_POWERS,
@@ -9,10 +8,13 @@ import {
 } from "./data-loader";
 import type { FactionTeam } from "~/interfaces/FactionTeam";
 import type { LeaderTeam } from "~/interfaces/LeaderTeam";
+import type { SelectedTeams } from "~/interfaces/SelectedTeams";
+import type { LeaderTeams } from "~/interfaces/LeaderTeams";
+import type { CharactersState } from "~/interfaces/CharactersState";
 
 export function calculateOwnedCharacterPower(
   ownedCharacters: Character[],
-  characterState: Record<number, CharacterState>
+  characterState: CharactersState
 ): CharacterWithPower[] {
   return ownedCharacters.map((char) => {
     const charState = characterState[char.id];
@@ -127,10 +129,8 @@ export function getBestTeamForLeader(
   };
 }
 
-export function buildLeaderTeams(
-  factionTeams: FactionTeam[]
-): Record<number, LeaderTeam> {
-  const leaderTeamsMap: Record<number, LeaderTeam> = {};
+export function buildLeaderTeams(factionTeams: FactionTeam[]): LeaderTeams {
+  const leaderTeamsMap: LeaderTeams = {};
   LIGHTHOUSE_DESTINATIONS.forEach((dest) => {
     dest.leaders.forEach((leaderId) => {
       const { team, membersWithoutLeader } = getBestTeamForLeader(
@@ -147,9 +147,9 @@ export function buildLeaderTeams(
 
 export function selectBestTeamsPerDestination(
   lighthouseLevel: number | "",
-  leaderTeamsMap: Record<number, LeaderTeam>
-): Record<number, LeaderTeam> {
-  const selected: Record<number, LeaderTeam> = {};
+  leaderTeamsMap: LeaderTeams
+): SelectedTeams {
+  const selected: SelectedTeams = {};
   LIGHTHOUSE_DESTINATIONS.forEach((dest) => {
     // Skip if destination is locked
     if (dest.levelUnlock > Number(lighthouseLevel)) return;
@@ -157,20 +157,22 @@ export function selectBestTeamsPerDestination(
     let bestLeader: LeaderTeam | null = null;
 
     dest.leaders.forEach((leaderId) => {
-      const lt = leaderTeamsMap[leaderId];
-      if (!lt || !lt.team) return;
+      const leaderTeam = leaderTeamsMap[leaderId];
+      if (!leaderTeam || !leaderTeam.team) return;
 
       if (!bestLeader) {
-        bestLeader = lt;
+        bestLeader = leaderTeam;
       } else if (bestLeader.team) {
-        if (lt.team.combinedPower > bestLeader.team.combinedPower) {
-          bestLeader = lt;
+        if (leaderTeam.team.combinedPower > bestLeader.team.combinedPower) {
+          bestLeader = leaderTeam;
         }
       }
     });
 
-    if (bestLeader) {
-      selected[dest.id] = bestLeader;
+    if (bestLeader !== null) {
+      if (!selected[dest.id]) selected[dest.id] = {};
+
+      selected[dest.id][(bestLeader as LeaderTeam).leaderId] = bestLeader;
     }
   });
   return selected;

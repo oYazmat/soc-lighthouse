@@ -3,10 +3,10 @@ import { useState } from "react";
 import { LIGHTHOUSE_DESTINATIONS } from "~/utils/data-loader";
 import LighthouseDestinationTable from "./LighthouseDestinationTable";
 import { useSoCContext } from "~/context/SoCContext";
-import type { LeaderTeam } from "~/interfaces/LeaderTeam";
+import type { LeaderTeams } from "~/interfaces/LeaderTeams";
 
 interface Props {
-  leaderTeams: Record<number, LeaderTeam>;
+  leaderTeams: LeaderTeams;
   charactersAllowed: number;
 }
 
@@ -68,6 +68,7 @@ export default function LighthouseDestinationsTabs({
         >
           {selectedTab === index && (
             <LighthouseDestinationTable
+              destinationId={dest.id}
               leaders={dest.leaders}
               charactersAllowed={charactersAllowed}
               leaderTeams={leaderTeams}

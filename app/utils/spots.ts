@@ -3,6 +3,7 @@ import { CHARACTERS, LIGHTHOUSE_SPOTS } from "./data-loader";
 import type { CharacterState } from "~/interfaces/CharacterState";
 import type { LighthouseSpot } from "~/interfaces/LighthouseSpot";
 import type { Character } from "~/interfaces/character";
+import type { CharactersState } from "~/interfaces/CharactersState";
 
 export function getSpecialSpots(lighthouseLevel: number | "") {
   return LIGHTHOUSE_SPOTS.filter(
@@ -13,10 +14,7 @@ export function getSpecialSpots(lighthouseLevel: number | "") {
   );
 }
 
-const getChar = (
-  charId: number | null,
-  characterState: Record<number, CharacterState>
-) => {
+const getChar = (charId: number | null, characterState: CharactersState) => {
   if (charId === null) return null;
 
   const state = characterState[charId];
@@ -33,12 +31,12 @@ const getChar = (
 
 export function matchSpots(
   specialSpots: LighthouseSpot[],
-  characterState: Record<number, CharacterState>
+  charactersState: CharactersState
 ): MatchedSpot[] {
   return specialSpots
     .map((spot) => {
-      const char1 = getChar(spot.specialChar1, characterState);
-      const char2 = getChar(spot.specialChar2, characterState);
+      const char1 = getChar(spot.specialChar1, charactersState);
+      const char2 = getChar(spot.specialChar2, charactersState);
 
       let selectedChar: (Character & { stars: number; rank: number }) | null =
         null;

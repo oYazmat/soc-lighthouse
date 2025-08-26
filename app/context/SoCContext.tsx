@@ -7,23 +7,22 @@ import {
   useEffect,
   type ReactNode,
 } from "react";
+import type { CharactersState } from "~/interfaces/CharactersState";
 import type { CharacterState } from "~/interfaces/CharacterState";
-import type { LeaderTeam } from "~/interfaces/LeaderTeam";
 import type { MatchedSpot } from "~/interfaces/MatchedSpot";
+import type { SelectedTeams } from "~/interfaces/SelectedTeams";
 
 interface SoCContextType {
-  characterState: Record<number, CharacterState>;
-  setCharacterState: React.Dispatch<
-    React.SetStateAction<Record<number, CharacterState> | null>
+  charactersState: CharactersState;
+  setCharactersState: React.Dispatch<
+    React.SetStateAction<CharactersState | null>
   >;
   lighthouseLevel: number | "";
   setLighthouseLevel: React.Dispatch<React.SetStateAction<number | "">>;
   matchedSpots: MatchedSpot[];
   setMatchedSpots: React.Dispatch<React.SetStateAction<MatchedSpot[]>>;
-  selectedTeams: Record<number, LeaderTeam>;
-  setSelectedTeams: React.Dispatch<
-    React.SetStateAction<Record<number, LeaderTeam>>
-  >;
+  selectedTeams: SelectedTeams;
+  setSelectedTeams: React.Dispatch<React.SetStateAction<SelectedTeams>>;
 }
 
 const SoCContext = createContext<SoCContextType | undefined>(undefined);
@@ -32,15 +31,20 @@ const CHARACTER_LOCAL_STORAGE_KEY = "characterState";
 const LIGHTHOUSE_LOCAL_STORAGE_KEY = "lighthouse-level";
 
 export function SoCProvider({ children }: { children: ReactNode }) {
-  const [characterState, setCharacterState] = useState<Record<
+  const [charactersState, setCharactersState] = useState<Record<
     number,
     CharacterState
   > | null>(null);
   const [lighthouseLevel, setLighthouseLevel] = useState<number | "">(1);
   const [matchedSpots, setMatchedSpots] = useState<MatchedSpot[]>([]);
-  const [selectedTeams, setSelectedTeams] = useState<
-    Record<number, LeaderTeam>
-  >({});
+  const [selectedTeams, setSelectedTeams] = useState<SelectedTeams>({});
+
+  useEffect(() => {
+    console.debug(
+      "Selected teams changed:",
+      JSON.stringify(selectedTeams, null, 2)
+    );
+  }, [selectedTeams]);
 
   // Load character state from localStorage
   useEffect(() => {
@@ -49,7 +53,7 @@ export function SoCProvider({ children }: { children: ReactNode }) {
     try {
       const stored = localStorage.getItem(CHARACTER_LOCAL_STORAGE_KEY);
       if (stored) {
-        setCharacterState(JSON.parse(stored));
+        setCharactersState(JSON.parse(stored));
       }
     } catch (err) {
       console.error("Failed to load characterState from localStorage", err);
@@ -64,17 +68,17 @@ export function SoCProvider({ children }: { children: ReactNode }) {
 
   // Save character state only if it's non-null
   useEffect(() => {
-    if (typeof window === "undefined" || characterState === null) return;
+    if (typeof window === "undefined" || charactersState === null) return;
 
     try {
       localStorage.setItem(
         CHARACTER_LOCAL_STORAGE_KEY,
-        JSON.stringify(characterState)
+        JSON.stringify(charactersState)
       );
     } catch (err) {
       console.error("Failed to save characterState", err);
     }
-  }, [characterState]);
+  }, [charactersState]);
 
   // Save lighthouse level
   useEffect(() => {
@@ -91,13 +95,13 @@ export function SoCProvider({ children }: { children: ReactNode }) {
   }, [lighthouseLevel]);
 
   // Do not render children until characterState is loaded
-  if (characterState === null) return null;
+  if (charactersState === null) return null;
 
   return (
     <SoCContext.Provider
       value={{
-        characterState,
-        setCharacterState,
+        charactersState,
+        setCharactersState,
         lighthouseLevel,
         setLighthouseLevel,
         matchedSpots,

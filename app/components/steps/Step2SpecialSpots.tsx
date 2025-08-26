@@ -11,11 +11,11 @@ import {
 } from "~/utils/spots";
 
 export default function Step2SpecialSpots() {
-  const { lighthouseLevel, characterState, setMatchedSpots } = useSoCContext();
+  const { lighthouseLevel, charactersState, setMatchedSpots } = useSoCContext();
 
   const specialSpots = getSpecialSpots(lighthouseLevel);
 
-  const matchedSpotsLocal = matchSpots(specialSpots, characterState);
+  const matchedSpotsLocal = matchSpots(specialSpots, charactersState);
 
   useEffect(() => {
     setMatchedSpots(matchedSpotsLocal);
