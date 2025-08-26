@@ -57,19 +57,10 @@ export default function RecommendationModal({
 
   const handleBack = () => setActiveStep((prev) => prev - 1);
 
-  const handleStart = () => {
-    // Trigger actual recommendation process here
-    onClose();
-    setActiveStep(0);
-  };
+  const handleRestart = () => setActiveStep(0);
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      fullWidth
-      maxWidth="lg" // makes the modal large
-    >
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="lg">
       <DialogTitle>Start Recommendation</DialogTitle>
 
       <DialogContent dividers>
@@ -92,6 +83,9 @@ export default function RecommendationModal({
         <Button onClick={onClose} color="primary">
           Close
         </Button>
+        <Button onClick={handleRestart} color="secondary">
+          Restart
+        </Button>
         <Button
           onClick={handleBack}
           color="inherit"
@@ -99,22 +93,16 @@ export default function RecommendationModal({
         >
           Back
         </Button>
-        {activeStep < steps.length - 1 ? (
-          <Button
-            onClick={handleNext}
-            color="secondary"
-            variant="contained"
-            disabled={
-              activeStep === 0 && (lighthouseLevel === "" || !!levelError)
-            }
-          >
-            Next
-          </Button>
-        ) : (
-          <Button onClick={handleStart} color="secondary" variant="contained">
-            Start
-          </Button>
-        )}
+        <Button
+          onClick={handleNext}
+          color="secondary"
+          variant="contained"
+          disabled={
+            activeStep === 0 && (lighthouseLevel === "" || !!levelError)
+          }
+        >
+          Next
+        </Button>
       </DialogActions>
     </Dialog>
   );

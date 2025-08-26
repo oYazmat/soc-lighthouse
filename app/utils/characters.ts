@@ -1,7 +1,8 @@
 import type { Character } from "~/interfaces/character";
 import type { CharacterState } from "~/interfaces/CharacterState";
 import type { CharacterWithPower } from "~/interfaces/CharacterWithPower";
-import { RANK_POWERS, RARITY_AND_STARS_POWERS } from "./data-loader";
+import { RANK_POWERS, RARITY_AND_STARS_POWERS, FACTIONS } from "./data-loader";
+import type { FactionTeam } from "~/interfaces/FactionTeam";
 
 export function calculateOwnedCharacterPower(
   ownedCharacters: Character[],
@@ -16,12 +17,60 @@ export function calculateOwnedCharacterPower(
         (r) => r.rarity === char.rarity && r.stars === charState.stars
       )?.powerPercent ?? 0;
 
+    // filter out ignored factions
+    const filteredFactions = char.factions.filter((f) =>
+      FACTIONS.find((fa) => fa.name === f && !fa.ignored)
+    );
+
     return {
       id: char.id,
       name: char.name,
-      factions: char.factions,
+      factions: filteredFactions,
       basePower,
       powerPercent,
     };
   });
+}
+
+// Helper to generate combinations of given size
+function combinations<T>(array: T[], size: number): T[][] {
+  if (size === 0) return [[]];
+  if (array.length === 0) return [];
+  const [first, ...rest] = array;
+  const withFirst = combinations(rest, size - 1).map((c) => [first, ...c]);
+  const withoutFirst = combinations(rest, size);
+  return withFirst.concat(withoutFirst);
+}
+
+export function calculateFactionTeams(
+  characters: CharacterWithPower[]
+): FactionTeam[] {
+  const factionTeams: FactionTeam[] = [];
+  const validFactions = FACTIONS.filter((f) => !f.ignored).map((f) => f.name);
+
+  validFactions.forEach((faction) => {
+    const charsInFaction = characters.filter((c) =>
+      c.factions.includes(faction)
+    );
+    if (charsInFaction.length === 0) return;
+
+    const teamSize = charsInFaction.length >= 4 ? 4 : charsInFaction.length;
+    const combos = combinations(charsInFaction, teamSize);
+
+    combos.forEach((team) => {
+      const basePowerSum = team.reduce((sum, c) => sum + c.basePower, 0);
+      const powerPercentSum = team.reduce((sum, c) => sum + c.powerPercent, 0);
+      const combinedPower = basePowerSum * (1 + powerPercentSum / 100);
+
+      factionTeams.push({
+        faction,
+        characters: team,
+        basePowerSum,
+        powerPercentSum,
+        combinedPower,
+      });
+    });
+  });
+
+  return factionTeams;
 }

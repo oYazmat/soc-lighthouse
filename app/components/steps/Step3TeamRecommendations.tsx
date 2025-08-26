@@ -3,7 +3,10 @@
 import { Typography, Box } from "@mui/material";
 import { useSoCContext } from "~/context/SoCContext";
 import { useMemo } from "react";
-import { calculateOwnedCharacterPower } from "~/utils/characters";
+import {
+  calculateFactionTeams,
+  calculateOwnedCharacterPower,
+} from "~/utils/characters";
 import { CHARACTERS } from "~/utils/data-loader";
 
 export default function Step3TeamRecommendations() {
@@ -18,6 +21,10 @@ export default function Step3TeamRecommendations() {
     return calculateOwnedCharacterPower(ownedCharacters, characterState);
   }, [characterState, matchedSpots]);
 
+  const factionTeams = useMemo(() => {
+    return calculateFactionTeams(charactersWithPower);
+  }, [charactersWithPower]);
+
   if (!matchedSpots || matchedSpots.length === 0) {
     return (
       <Box>
@@ -29,33 +36,41 @@ export default function Step3TeamRecommendations() {
   return (
     <Box sx={{ mt: 2 }}>
       <Typography variant="h6" sx={{ mb: 2 }}>
-        Step 3 Debug: Matched Spots
+        Step 3: Faction Teams
       </Typography>
-      <div>
-        <h2>Owned Characters with Power</h2>
-        <pre>{JSON.stringify(charactersWithPower, null, 2)}</pre>
-      </div>
-      {matchedSpots.map((spot) => (
-        <Box
-          key={spot.id}
-          sx={{
-            p: 1,
-            mb: 1,
-            border: "1px solid",
-            borderColor: "divider",
-            borderRadius: 1,
-          }}
-        >
-          <Typography>
-            Spot {spot.id} (Level Unlock: {spot.levelUnlock})
-          </Typography>
-          <Typography>
-            Selected Character: {spot.selectedChar.name} — Rank{" "}
-            {spot.selectedChar.rank}, Stars {spot.selectedChar.stars}, Rarity{" "}
-            {spot.selectedChar.rarity}
-          </Typography>
-        </Box>
-      ))}
+      {factionTeams.length === 0 ? (
+        <Typography>No faction teams available.</Typography>
+      ) : (
+        factionTeams.map((team, index) => (
+          <Box
+            key={index}
+            sx={{
+              p: 1,
+              mb: 1,
+              border: "1px solid",
+              borderColor: "divider",
+              borderRadius: 1,
+            }}
+          >
+            <Typography>
+              <strong>Faction:</strong> {team.faction}
+            </Typography>
+            <Typography>
+              <strong>Characters:</strong>{" "}
+              {team.characters.map((c) => c.name).join(", ")}
+            </Typography>
+            <Typography>
+              <strong>Base Power Sum:</strong> {team.basePowerSum}
+            </Typography>
+            <Typography>
+              <strong>Power Percent Sum:</strong> {team.powerPercentSum}%
+            </Typography>
+            <Typography>
+              <strong>Combined Power:</strong> {team.combinedPower.toFixed(0)}
+            </Typography>
+          </Box>
+        ))
+      )}
     </Box>
   );
 }
