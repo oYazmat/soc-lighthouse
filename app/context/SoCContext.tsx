@@ -7,12 +7,8 @@ import {
   useEffect,
   type ReactNode,
 } from "react";
+import type { CharacterState } from "~/interfaces/CharacterState";
 import type { MatchedSpot } from "~/interfaces/MatchedSpot";
-
-interface CharacterState {
-  stars: number;
-  rank: number;
-}
 
 interface SoCContextType {
   characterState: Record<number, CharacterState>;

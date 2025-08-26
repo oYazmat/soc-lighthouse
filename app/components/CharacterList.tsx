@@ -12,14 +12,13 @@ import {
   Box,
 } from "@mui/material";
 import { useMemo, useState } from "react";
-import charactersData from "../data/characters.json";
 import StarsDropdown from "./StarsDropdown";
 import RankDropdown from "./RankDropdown";
 import CharacterFilters from "./CharacterFilters";
 import { useSoCContext } from "../context/SoCContext";
-import type { Character } from "~/interfaces/character";
 import CharacterAvatar from "./CharacterAvatar";
 import type { CharacterFilterValues } from "~/interfaces/CharacterFilterValues";
+import { CHARACTERS } from "~/utils/data-loader";
 
 const rarityOrder: Record<string, number> = {
   Legendary: 1,
@@ -27,8 +26,6 @@ const rarityOrder: Record<string, number> = {
   Rare: 3,
   Common: 4,
 };
-
-const characters = charactersData as Character[];
 
 export default function CharacterList() {
   const { characterState, setCharacterState } = useSoCContext();
@@ -43,42 +40,38 @@ export default function CharacterList() {
   // Collect all unique factions from the data
   const allFactions = useMemo(() => {
     const set = new Set<string>();
-    characters.forEach((c) => c.factions.forEach((f: string) => set.add(f)));
+    CHARACTERS.forEach((c) => c.factions.forEach((f: string) => set.add(f)));
     return Array.from(set).sort();
   }, []);
 
   // Filter + sort characters
   const filteredCharacters = useMemo(() => {
-    return characters
-      .filter((c) => {
-        const matchesName = c.name
-          .toLowerCase()
-          .includes(filters.name.toLowerCase());
+    return CHARACTERS.filter((c) => {
+      const matchesName = c.name
+        .toLowerCase()
+        .includes(filters.name.toLowerCase());
 
-        const matchesRarity =
-          filters.rarity.length === 0 || filters.rarity.includes(c.rarity);
+      const matchesRarity =
+        filters.rarity.length === 0 || filters.rarity.includes(c.rarity);
 
-        const matchesFaction =
-          filters.factions.length === 0 ||
-          filters.factions.some((f) => c.factions.includes(f));
+      const matchesFaction =
+        filters.factions.length === 0 ||
+        filters.factions.some((f) => c.factions.includes(f));
 
-        const stars = characterState[c.id]?.stars || 0;
-        const matchesOwnership =
-          !filters.ownership || filters.ownership === "All"
-            ? true
-            : filters.ownership === "Owned"
-              ? stars > 0
-              : stars === 0;
+      const stars = characterState[c.id]?.stars || 0;
+      const matchesOwnership =
+        !filters.ownership || filters.ownership === "All"
+          ? true
+          : filters.ownership === "Owned"
+            ? stars > 0
+            : stars === 0;
 
-        return (
-          matchesName && matchesRarity && matchesFaction && matchesOwnership
-        );
-      })
-      .sort((a, b) => {
-        const rarityDiff = rarityOrder[a.rarity] - rarityOrder[b.rarity];
-        if (rarityDiff !== 0) return rarityDiff;
-        return a.name.localeCompare(b.name);
-      });
+      return matchesName && matchesRarity && matchesFaction && matchesOwnership;
+    }).sort((a, b) => {
+      const rarityDiff = rarityOrder[a.rarity] - rarityOrder[b.rarity];
+      if (rarityDiff !== 0) return rarityDiff;
+      return a.name.localeCompare(b.name);
+    });
   }, [filters, characterState]);
 
   // Handlers to update state

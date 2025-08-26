@@ -2,16 +2,11 @@
 
 import { Box, Typography } from "@mui/material";
 import { useEffect } from "react";
-import lighthouseSpotsData from "../../data/lighthouse-spots.json";
-import charactersData from "../../data/characters.json";
 import { useSoCContext } from "../../context/SoCContext";
-import type { LighthouseSpot } from "~/interfaces/LighthouseSpot";
 import type { Character } from "~/interfaces/character";
 import CharacterAvatar from "../CharacterAvatar";
 import type { MatchedSpot } from "~/interfaces/MatchedSpot";
-
-const lighthouseSpots = lighthouseSpotsData as LighthouseSpot[];
-const characters = charactersData as Character[];
+import { CHARACTERS, LIGHTHOUSE_SPOTS } from "~/utils/data-loader";
 
 export default function Step2SpecialSpots() {
   const { lighthouseLevel, characterState, setMatchedSpots } = useSoCContext();
@@ -23,7 +18,7 @@ export default function Step2SpecialSpots() {
     const state = characterState[charId];
     if (!state || state.stars <= 0) return null;
 
-    const staticData = characters.find((c) => c.id === charId);
+    const staticData = CHARACTERS.find((c) => c.id === charId);
     if (!staticData) return null;
 
     return {
@@ -33,7 +28,7 @@ export default function Step2SpecialSpots() {
   };
 
   // Filter spots unlocked at current level and that have at least one special character
-  const specialSpots = lighthouseSpots.filter(
+  const specialSpots = LIGHTHOUSE_SPOTS.filter(
     (spot) =>
       lighthouseLevel !== "" &&
       spot.levelUnlock <= lighthouseLevel &&

@@ -2,9 +2,21 @@
 
 import { Typography, Box } from "@mui/material";
 import { useSoCContext } from "~/context/SoCContext";
+import { useMemo } from "react";
+import { calculateOwnedCharacterPower } from "~/utils/characters";
+import { CHARACTERS } from "~/utils/data-loader";
 
 export default function Step3TeamRecommendations() {
-  const { matchedSpots } = useSoCContext();
+  const { matchedSpots, characterState } = useSoCContext();
+
+  const charactersWithPower = useMemo(() => {
+    const matchedCharIds = matchedSpots.map((spot) => spot.selectedChar.id);
+    const ownedCharacters = CHARACTERS.filter(
+      (char) =>
+        characterState[char.id]?.stars > 0 && !matchedCharIds.includes(char.id)
+    );
+    return calculateOwnedCharacterPower(ownedCharacters, characterState);
+  }, [characterState, matchedSpots]);
 
   if (!matchedSpots || matchedSpots.length === 0) {
     return (
@@ -19,6 +31,10 @@ export default function Step3TeamRecommendations() {
       <Typography variant="h6" sx={{ mb: 2 }}>
         Step 3 Debug: Matched Spots
       </Typography>
+      <div>
+        <h2>Owned Characters with Power</h2>
+        <pre>{JSON.stringify(charactersWithPower, null, 2)}</pre>
+      </div>
       {matchedSpots.map((spot) => (
         <Box
           key={spot.id}
