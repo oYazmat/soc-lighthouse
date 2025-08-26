@@ -42,17 +42,17 @@ function combinations<T>(array: T[], size: number): T[][] {
   return withFirst.concat(withoutFirst);
 }
 
-export function calculateFactionTeams(
+export async function calculateFactionTeams(
   characters: CharacterWithPower[]
-): FactionTeam[] {
+): Promise<FactionTeam[]> {
   const factionTeams: FactionTeam[] = [];
   const validFactions = FACTIONS.filter((f) => !f.ignored).map((f) => f.name);
 
-  validFactions.forEach((faction) => {
+  for (const faction of validFactions) {
     const charsInFaction = characters.filter((c) =>
       c.factions.includes(faction)
     );
-    if (charsInFaction.length === 0) return;
+    if (charsInFaction.length === 0) continue;
 
     const teamSize = charsInFaction.length >= 4 ? 4 : charsInFaction.length;
     const combos = combinations(charsInFaction, teamSize);
@@ -70,7 +70,10 @@ export function calculateFactionTeams(
         combinedPower,
       });
     });
-  });
+  }
+
+  // sort by combinedPower (highest first)
+  factionTeams.sort((a, b) => b.combinedPower - a.combinedPower);
 
   return factionTeams;
 }
