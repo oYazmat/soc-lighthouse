@@ -13,18 +13,16 @@ import {
 } from "@mui/material";
 import CharacterAvatar from "./CharacterAvatar";
 import { useSoCContext } from "~/context/SoCContext";
-import type { Character } from "~/interfaces/character";
+import { CHARACTERS } from "~/utils/data-loader";
 
 interface Props {
   leaders: number[];
   charactersAllowed: number;
-  allCharacters: Character[];
 }
 
 export default function LighthouseDestinationTable({
   leaders,
   charactersAllowed,
-  allCharacters,
 }: Props) {
   const { characterState } = useSoCContext();
   const maxCharactersPerRow = 4;
@@ -46,7 +44,7 @@ export default function LighthouseDestinationTable({
 
         <TableBody>
           {leaders.map((leaderId) => {
-            const leader = allCharacters.find((c) => c.id === leaderId);
+            const leader = CHARACTERS.find((c) => c.id === leaderId);
             const ownedLeader = leader && characterState[leader.id]?.stars > 0;
 
             return (

@@ -3,7 +3,6 @@ import { useState } from "react";
 import {
   LIGHTHOUSE_DESTINATIONS,
   LIGHTHOUSE_LEVELS,
-  CHARACTERS,
 } from "~/utils/data-loader";
 import LighthouseDestinationTable from "./LighthouseDestinationTable";
 import { useSoCContext } from "~/context/SoCContext";
@@ -15,8 +14,6 @@ export default function LighthouseDestinationsTabs() {
   const sortedDestinations = [...LIGHTHOUSE_DESTINATIONS].sort(
     (a, b) => a.levelUnlock - b.levelUnlock
   );
-
-  const maxCharactersPerRow = 4;
 
   const charactersAllowed = lighthouseLevel
     ? (LIGHTHOUSE_LEVELS.find((lvl) => lvl.level === lighthouseLevel)
@@ -78,7 +75,6 @@ export default function LighthouseDestinationsTabs() {
             <LighthouseDestinationTable
               leaders={dest.leaders}
               charactersAllowed={charactersAllowed}
-              allCharacters={CHARACTERS}
             />
           )}
         </Box>
