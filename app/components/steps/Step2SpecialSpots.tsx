@@ -3,64 +3,20 @@
 import { Box, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useSoCContext } from "../../context/SoCContext";
-import type { Character } from "~/interfaces/character";
 import CharacterAvatar from "../CharacterAvatar";
-import type { MatchedSpot } from "~/interfaces/MatchedSpot";
-import { CHARACTERS, LIGHTHOUSE_SPOTS } from "~/utils/data-loader";
+import {
+  aggregateActiveBonuses,
+  getSpecialSpots,
+  matchSpots,
+} from "~/utils/spots";
 
 export default function Step2SpecialSpots() {
   const { lighthouseLevel, characterState, setMatchedSpots } = useSoCContext();
 
-  // Helper: get full character info (static + dynamic) if owned
-  const getChar = (charId: number | null) => {
-    if (charId === null) return null;
+  const specialSpots = getSpecialSpots(lighthouseLevel);
 
-    const state = characterState[charId];
-    if (!state || state.stars <= 0) return null;
+  const matchedSpotsLocal = matchSpots(specialSpots, characterState);
 
-    const staticData = CHARACTERS.find((c) => c.id === charId);
-    if (!staticData) return null;
-
-    return {
-      ...staticData, // includes id, name, rarity, etc.
-      ...state, // rank, stars
-    };
-  };
-
-  // Filter spots unlocked at current level and that have at least one special character
-  const specialSpots = LIGHTHOUSE_SPOTS.filter(
-    (spot) =>
-      lighthouseLevel !== "" &&
-      spot.levelUnlock <= lighthouseLevel &&
-      (spot.specialChar1 !== null || spot.specialChar2 !== null)
-  );
-
-  // For each spot, pick the best matching character
-  const matchedSpotsLocal: MatchedSpot[] = specialSpots
-    .map((spot) => {
-      const char1 = getChar(spot.specialChar1);
-      const char2 = getChar(spot.specialChar2);
-
-      let selectedChar: (Character & { stars: number; rank: number }) | null =
-        null;
-
-      if (char1 && !char2) selectedChar = char1;
-      else if (!char1 && char2) selectedChar = char2;
-      else if (char1 && char2) {
-        if (char1.rank > char2.rank) selectedChar = char1;
-        else if (char2.rank > char1.rank) selectedChar = char2;
-        else if (char1.stars < char2.stars) selectedChar = char1;
-        else if (char2.stars < char1.stars) selectedChar = char2;
-        else selectedChar = char1.rarity <= char2.rarity ? char1 : char2;
-      }
-
-      if (!selectedChar) return null; // nulls removed here
-
-      return { ...spot, selectedChar };
-    })
-    .filter((s): s is MatchedSpot => s !== null); // type guard ensures non-null
-
-  // Save matched spots into context for later steps
   useEffect(() => {
     setMatchedSpots(matchedSpotsLocal);
   }, [matchedSpotsLocal, setMatchedSpots]);
@@ -73,15 +29,16 @@ export default function Step2SpecialSpots() {
     );
   }
 
+  const totalBonuses = aggregateActiveBonuses(matchedSpotsLocal);
+
   return (
     <Box sx={{ mt: 2 }}>
-      {/* Instruction for the user */}
       <Typography color="text.primary" sx={{ mb: 2 }}>
         Based on your current data, these characters will be assigned to their
         respective special spots and will be excluded from team recommendations.
       </Typography>
 
-      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 2 }}>
         {matchedSpotsLocal.map((spot) => (
           <Box
             key={spot.id}
@@ -106,6 +63,34 @@ export default function Step2SpecialSpots() {
           </Box>
         ))}
       </Box>
+
+      {matchedSpotsLocal.length > 0 && (
+        <Box sx={{ mt: 2 }}>
+          <Typography variant="subtitle1" sx={{ mb: 1 }}>
+            Total Active Bonuses
+          </Typography>
+          {totalBonuses.bonusYield > 0 && (
+            <Typography variant="body2" color="text.secondary">
+              Expedition Yield: +{totalBonuses.bonusYield}%
+            </Typography>
+          )}
+          {totalBonuses.bonusLogistics > 0 && (
+            <Typography variant="body2" color="text.secondary">
+              Logistics Bonus: +{totalBonuses.bonusLogistics}%
+            </Typography>
+          )}
+          {totalBonuses.bonusLight > 0 && (
+            <Typography variant="body2" color="text.secondary">
+              Light Production Rate: +{totalBonuses.bonusLight}%
+            </Typography>
+          )}
+          {totalBonuses.bonusEvents > 0 && (
+            <Typography variant="body2" color="text.secondary">
+              More frequent expedition events: x{totalBonuses.bonusEvents}
+            </Typography>
+          )}
+        </Box>
+      )}
     </Box>
   );
 }
