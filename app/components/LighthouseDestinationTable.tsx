@@ -15,31 +15,30 @@ import {
 import CharacterAvatar from "./CharacterAvatar";
 import { useSoCContext } from "~/context/SoCContext";
 import { CHARACTERS } from "~/utils/data-loader";
-import type { FactionTeam } from "~/interfaces/FactionTeam";
-import { getBestTeamForLeader } from "~/utils/characters";
+import type { LeaderTeam } from "~/interfaces/LeaderTeam";
 
 interface Props {
   leaders: number[];
   charactersAllowed: number;
-  factionTeams: FactionTeam[];
+  leaderTeams: Record<number, LeaderTeam>;
+  selectedTeams: Record<number, LeaderTeam>;
 }
 
 export default function LighthouseDestinationTable({
   leaders,
   charactersAllowed,
-  factionTeams,
+  leaderTeams,
+  selectedTeams,
 }: Props) {
   const { characterState } = useSoCContext();
-  const maxCharactersPerRow = 4; // leader + 4 characters
+  const maxCharactersPerRow = 4;
 
   return (
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
-            {/* Extra checkbox column */}
             <TableCell align="center" />
-
             <TableCell align="center">Leader</TableCell>
             {Array.from({ length: maxCharactersPerRow }).map((_, i) => (
               <TableCell
@@ -57,21 +56,23 @@ export default function LighthouseDestinationTable({
             const leader = CHARACTERS.find((c) => c.id === leaderId);
             const ownedLeader = leader && characterState[leaderId]?.stars > 0;
 
-            const { team, membersWithoutLeader } = getBestTeamForLeader(
-              leaderId,
-              factionTeams
-            );
+            const leaderTeam = leaderTeams[leaderId];
+            const membersWithoutLeader = leaderTeam?.membersWithoutLeader ?? [];
+            const team = leaderTeam?.team ?? null;
 
             const isRowDisabled = !ownedLeader;
 
             return (
               <TableRow key={leaderId}>
-                {/* Checkbox column */}
                 <TableCell align="center">
-                  <Checkbox disabled={isRowDisabled} />
+                  <Checkbox
+                    disabled={isRowDisabled}
+                    checked={Object.values(selectedTeams).some(
+                      (team) => team.leaderId === leaderId
+                    )}
+                  />
                 </TableCell>
 
-                {/* Leader cell */}
                 <TableCell
                   sx={{
                     color: ownedLeader ? "inherit" : "text.disabled",
@@ -101,7 +102,6 @@ export default function LighthouseDestinationTable({
                   )}
                 </TableCell>
 
-                {/* Best team cells */}
                 {Array.from({ length: maxCharactersPerRow }).map((_, i) => {
                   const member = membersWithoutLeader[i];
                   const isDisabled = !member || i >= charactersAllowed - 1;
@@ -141,7 +141,6 @@ export default function LighthouseDestinationTable({
                   );
                 })}
 
-                {/* Extra columns for team stats */}
                 <TableCell
                   align="center"
                   sx={{

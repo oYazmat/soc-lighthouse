@@ -1,29 +1,27 @@
 import { Tabs, Tab, Box, Typography } from "@mui/material";
 import { useState } from "react";
-import {
-  LIGHTHOUSE_DESTINATIONS,
-  LIGHTHOUSE_LEVELS,
-} from "~/utils/data-loader";
+import { LIGHTHOUSE_DESTINATIONS } from "~/utils/data-loader";
 import LighthouseDestinationTable from "./LighthouseDestinationTable";
 import { useSoCContext } from "~/context/SoCContext";
-import type { FactionTeam } from "~/interfaces/FactionTeam";
+import type { LeaderTeam } from "~/interfaces/LeaderTeam";
 
 interface Props {
-  factionTeams: FactionTeam[];
+  leaderTeams: Record<number, LeaderTeam>;
+  selectedTeams: Record<number, LeaderTeam>;
+  charactersAllowed: number;
 }
 
-export default function LighthouseDestinationsTabs({ factionTeams }: Props) {
+export default function LighthouseDestinationsTabs({
+  leaderTeams,
+  selectedTeams,
+  charactersAllowed,
+}: Props) {
   const { lighthouseLevel } = useSoCContext();
   const [selectedTab, setSelectedTab] = useState(0);
 
   const sortedDestinations = [...LIGHTHOUSE_DESTINATIONS].sort(
     (a, b) => a.levelUnlock - b.levelUnlock
   );
-
-  const charactersAllowed = lighthouseLevel
-    ? (LIGHTHOUSE_LEVELS.find((lvl) => lvl.level === lighthouseLevel)
-        ?.characters ?? 1)
-    : 1;
 
   return (
     <>
@@ -58,12 +56,6 @@ export default function LighthouseDestinationsTabs({ factionTeams }: Props) {
                   </Typography>
                 </Box>
               }
-              sx={{
-                ...(isDisabled && {
-                  backgroundColor: "action.disabledBackground",
-                  color: "text.disabled",
-                }),
-              }}
             />
           );
         })}
@@ -80,7 +72,8 @@ export default function LighthouseDestinationsTabs({ factionTeams }: Props) {
             <LighthouseDestinationTable
               leaders={dest.leaders}
               charactersAllowed={charactersAllowed}
-              factionTeams={factionTeams}
+              leaderTeams={leaderTeams}
+              selectedTeams={selectedTeams}
             />
           )}
         </Box>

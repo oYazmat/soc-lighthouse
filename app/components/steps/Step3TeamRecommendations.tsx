@@ -6,18 +6,25 @@ import { useEffect, useState } from "react";
 import {
   calculateFactionTeams,
   calculateOwnedCharacterPower,
+  getBestTeamForLeader,
 } from "~/utils/characters";
-import { CHARACTERS, LIGHTHOUSE_LEVELS } from "~/utils/data-loader";
-import type { FactionTeam } from "~/interfaces/FactionTeam";
-import type { CharacterWithPower } from "~/interfaces/CharacterWithPower";
+import {
+  CHARACTERS,
+  LIGHTHOUSE_LEVELS,
+  LIGHTHOUSE_DESTINATIONS,
+} from "~/utils/data-loader";
 import LighthouseDestinationsTabs from "../LighthouseDestinationsTabs";
+import type { LeaderTeam } from "~/interfaces/LeaderTeam";
 
 export default function Step3TeamRecommendations() {
   const { matchedSpots, characterState, lighthouseLevel } = useSoCContext();
-  const [charactersWithPower, setCharactersWithPower] = useState<
-    CharacterWithPower[]
-  >([]);
-  const [factionTeams, setFactionTeams] = useState<FactionTeam[]>([]);
+
+  const [leaderTeams, setLeaderTeams] = useState<Record<number, LeaderTeam>>(
+    {}
+  );
+  const [selectedTeams, setSelectedTeams] = useState<
+    Record<number, LeaderTeam>
+  >({});
   const [loading, setLoading] = useState(false);
 
   const charactersAllowed = lighthouseLevel
@@ -31,16 +38,13 @@ export default function Step3TeamRecommendations() {
     const runCalc = async () => {
       setLoading(true);
 
-      // Yield to UI so loading spinner shows
+      // Small delay so spinner renders
       await new Promise((resolve) => setTimeout(resolve, 50));
 
-      const matchedCharIds =
-        matchedSpots?.map((spot) => spot.selectedChar.id) || [];
+      const matchedCharIds = matchedSpots?.map((s) => s.selectedChar.id) || [];
 
       const ownedCharacters = CHARACTERS.filter(
-        (char) =>
-          characterState[char.id]?.stars > 0 &&
-          !matchedCharIds.includes(char.id)
+        (c) => characterState[c.id]?.stars > 0 && !matchedCharIds.includes(c.id)
       );
 
       const charsWithPower = calculateOwnedCharacterPower(
@@ -48,21 +52,58 @@ export default function Step3TeamRecommendations() {
         characterState
       );
 
-      // Pass charactersAllowed as team size
-      const teams = await calculateFactionTeams(
+      const factionTeams = await calculateFactionTeams(
         charsWithPower,
         charactersAllowed
       );
-
       if (!active) return;
 
-      setCharactersWithPower(charsWithPower);
-      setFactionTeams(teams);
+      // Build leaderTeams
+      const leaderTeamsMap: Record<number, LeaderTeam> = {};
+      LIGHTHOUSE_DESTINATIONS.forEach((dest) => {
+        dest.leaders.forEach((leaderId) => {
+          const { team, membersWithoutLeader } = getBestTeamForLeader(
+            leaderId,
+            factionTeams
+          );
+          if (team) {
+            leaderTeamsMap[leaderId] = { leaderId, team, membersWithoutLeader };
+          }
+        });
+      });
+      setLeaderTeams(leaderTeamsMap);
+
+      // Select the leader with the highest combinedPower per destination
+      const selected: Record<number, LeaderTeam> = {};
+      LIGHTHOUSE_DESTINATIONS.forEach((dest) => {
+        // Skip if destination is locked
+        if (dest.levelUnlock > Number(lighthouseLevel)) return;
+
+        let bestLeader: LeaderTeam | null = null;
+
+        dest.leaders.forEach((leaderId) => {
+          const lt = leaderTeamsMap[leaderId];
+          if (!lt || !lt.team) return;
+
+          if (!bestLeader) {
+            bestLeader = lt;
+          } else if (bestLeader.team) {
+            if (lt.team.combinedPower > bestLeader.team.combinedPower) {
+              bestLeader = lt;
+            }
+          }
+        });
+
+        if (bestLeader) {
+          selected[dest.id] = bestLeader;
+        }
+      });
+
+      setSelectedTeams(selected);
       setLoading(false);
     };
 
     runCalc();
-
     return () => {
       active = false;
     };
@@ -98,7 +139,11 @@ export default function Step3TeamRecommendations() {
             </Typography>
           </Box>
 
-          <LighthouseDestinationsTabs factionTeams={factionTeams} />
+          <LighthouseDestinationsTabs
+            leaderTeams={leaderTeams}
+            selectedTeams={selectedTeams}
+            charactersAllowed={charactersAllowed}
+          />
         </>
       )}
     </Box>
