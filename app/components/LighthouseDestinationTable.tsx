@@ -14,18 +14,22 @@ import {
 import CharacterAvatar from "./CharacterAvatar";
 import { useSoCContext } from "~/context/SoCContext";
 import { CHARACTERS } from "~/utils/data-loader";
+import type { FactionTeam } from "~/interfaces/FactionTeam";
+import { getBestTeamForLeader } from "~/utils/characters";
 
 interface Props {
   leaders: number[];
   charactersAllowed: number;
+  factionTeams: FactionTeam[];
 }
 
 export default function LighthouseDestinationTable({
   leaders,
   charactersAllowed,
+  factionTeams,
 }: Props) {
   const { characterState } = useSoCContext();
-  const maxCharactersPerRow = 4;
+  const maxCharactersPerRow = 4; // leader + 4 characters
 
   return (
     <TableContainer component={Paper}>
@@ -45,10 +49,13 @@ export default function LighthouseDestinationTable({
         <TableBody>
           {leaders.map((leaderId) => {
             const leader = CHARACTERS.find((c) => c.id === leaderId);
-            const ownedLeader = leader && characterState[leader.id]?.stars > 0;
+            const ownedLeader = leader && characterState[leaderId]?.stars > 0;
+
+            const teamMembers = getBestTeamForLeader(leaderId, factionTeams);
 
             return (
               <TableRow key={leaderId}>
+                {/* Leader cell */}
                 <TableCell
                   sx={{
                     color: ownedLeader ? "inherit" : "text.disabled",
@@ -78,9 +85,10 @@ export default function LighthouseDestinationTable({
                   )}
                 </TableCell>
 
+                {/* Best team cells */}
                 {Array.from({ length: maxCharactersPerRow }).map((_, i) => {
-                  const isAvailable = i < charactersAllowed - 1; // subtract leader
-                  const isDisabled = !ownedLeader || !isAvailable;
+                  const member = teamMembers[i];
+                  const isDisabled = !member || i >= charactersAllowed - 1;
 
                   return (
                     <TableCell
@@ -92,7 +100,27 @@ export default function LighthouseDestinationTable({
                           : "inherit",
                       }}
                     >
-                      {/* Future character placeholder */}
+                      {member && (
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            gap: 0.5,
+                          }}
+                        >
+                          <CharacterAvatar
+                            name={member.name}
+                            size={50}
+                            sx={{
+                              filter: isDisabled ? "grayscale(100%)" : "none",
+                            }}
+                          />
+                          <Typography variant="caption">
+                            {member.name}
+                          </Typography>
+                        </Box>
+                      )}
                     </TableCell>
                   );
                 })}

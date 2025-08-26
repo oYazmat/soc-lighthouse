@@ -77,3 +77,24 @@ export async function calculateFactionTeams(
 
   return factionTeams;
 }
+
+/**
+ * Returns the best team (highest combinedPower) that contains the given leader.
+ */
+export function getBestTeamForLeader(
+  leaderId: number,
+  factionTeams: FactionTeam[]
+): CharacterWithPower[] {
+  const bestTeam = factionTeams
+    .filter((team) => team.characters.some((char) => char.id === leaderId))
+    .reduce(
+      (best, team) =>
+        !best || team.combinedPower > best.combinedPower ? team : best,
+      null as FactionTeam | null
+    );
+
+  if (!bestTeam) return [];
+
+  // Remove leader from the team array so we don't duplicate in the table
+  return bestTeam.characters.filter((char) => char.id !== leaderId);
+}

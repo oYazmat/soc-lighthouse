@@ -82,7 +82,7 @@ export default function Step3TeamRecommendations() {
             expeditions:
           </Typography>
 
-          <LighthouseDestinationsTabs />
+          <LighthouseDestinationsTabs factionTeams={factionTeams} />
         </>
       )}
     </Box>

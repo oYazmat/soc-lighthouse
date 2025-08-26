@@ -6,8 +6,13 @@ import {
 } from "~/utils/data-loader";
 import LighthouseDestinationTable from "./LighthouseDestinationTable";
 import { useSoCContext } from "~/context/SoCContext";
+import type { FactionTeam } from "~/interfaces/FactionTeam";
 
-export default function LighthouseDestinationsTabs() {
+interface Props {
+  factionTeams: FactionTeam[];
+}
+
+export default function LighthouseDestinationsTabs({ factionTeams }: Props) {
   const { lighthouseLevel } = useSoCContext();
   const [selectedTab, setSelectedTab] = useState(0);
 
@@ -75,6 +80,7 @@ export default function LighthouseDestinationsTabs() {
             <LighthouseDestinationTable
               leaders={dest.leaders}
               charactersAllowed={charactersAllowed}
+              factionTeams={factionTeams}
             />
           )}
         </Box>
