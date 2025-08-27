@@ -57,7 +57,17 @@ export default function RecommendationModal({
   const handleRestart = () => setActiveStep(0);
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="lg">
+    <Dialog
+      open={open}
+      onClose={(_event, reason) => {
+        if (reason === "backdropClick" || reason === "escapeKeyDown") {
+          return; // ignore close
+        }
+        onClose();
+      }}
+      fullWidth
+      maxWidth="lg"
+    >
       <DialogTitle>Start Recommendation</DialogTitle>
 
       <DialogContent dividers>

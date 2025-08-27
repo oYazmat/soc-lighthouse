@@ -35,26 +35,35 @@ export default function Step2SpecialSpots() {
 
   return (
     <Box sx={{ mt: 2 }}>
-      <Typography color="text.primary" sx={{ mb: 2 }}>
-        Based on your current data, these characters will be assigned to their
-        respective special spots (unmatched spots remain empty).
-      </Typography>
+      {specialSpots.length === 0 ? (
+        <Typography color="text.secondary" sx={{ mb: 2 }}>
+          No special logistic spots are available at your current lighthouse
+          level.
+        </Typography>
+      ) : (
+        <>
+          <Typography color="text.primary" sx={{ mb: 2 }}>
+            Based on your current data, these characters will be assigned to
+            their respective special spots (unmatched spots remain empty).
+          </Typography>
 
-      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 2 }}>
-        {specialSpots.map((spot) => {
-          const matched = matchedSpecialSpots.find((m) => m.id === spot.id);
-          return (
-            <SpotCard
-              key={spot.id}
-              spot={spot}
-              matchedCharName={matched?.selectedChar?.name}
-            />
-          );
-        })}
-      </Box>
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 2 }}>
+            {specialSpots.map((spot) => {
+              const matched = matchedSpecialSpots.find((m) => m.id === spot.id);
+              return (
+                <SpotCard
+                  key={spot.id}
+                  spot={spot}
+                  matchedCharName={matched?.selectedChar?.name}
+                />
+              );
+            })}
+          </Box>
 
-      {matchedSpecialSpots.length > 0 && (
-        <TotalActiveBonuses bonuses={totalBonuses} />
+          {matchedSpecialSpots.length > 0 && (
+            <TotalActiveBonuses bonuses={totalBonuses} />
+          )}
+        </>
       )}
     </Box>
   );
