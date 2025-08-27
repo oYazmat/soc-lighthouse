@@ -9,14 +9,15 @@ import {
 import SpotCard from "../SpotCard";
 
 export default function Step2SpecialSpots() {
-  const { lighthouseLevel, charactersState, setMatchedSpots } = useSoCContext();
+  const { lighthouseLevel, charactersState, setMatchedSpecialSpots } =
+    useSoCContext();
 
   const specialSpots = getSpecialSpots(lighthouseLevel);
   const matchedSpotsLocal = matchSpots(specialSpots, charactersState);
 
   useEffect(() => {
-    setMatchedSpots(matchedSpotsLocal);
-  }, [matchedSpotsLocal, setMatchedSpots]);
+    setMatchedSpecialSpots(matchedSpotsLocal);
+  }, [matchedSpotsLocal, setMatchedSpecialSpots]);
 
   const totalBonuses = aggregateActiveBonuses(matchedSpotsLocal);
 

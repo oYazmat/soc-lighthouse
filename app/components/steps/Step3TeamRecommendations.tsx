@@ -14,8 +14,12 @@ import LighthouseDestinationsTabs from "../LighthouseDestinationsTabs";
 import type { LeaderTeams } from "~/interfaces/LeaderTeams";
 
 export default function Step3TeamRecommendations() {
-  const { matchedSpots, charactersState, lighthouseLevel, setSelectedTeams } =
-    useSoCContext();
+  const {
+    matchedSpecialSpots,
+    charactersState,
+    lighthouseLevel,
+    setSelectedTeams,
+  } = useSoCContext();
 
   const [leaderTeams, setLeaderTeams] = useState<LeaderTeams>({});
   const [loading, setLoading] = useState(true);
@@ -34,7 +38,8 @@ export default function Step3TeamRecommendations() {
       // Small delay so spinner renders
       await new Promise((resolve) => setTimeout(resolve, 50));
 
-      const matchedCharIds = matchedSpots?.map((s) => s.selectedChar.id) || [];
+      const matchedCharIds =
+        matchedSpecialSpots?.map((s) => s.selectedChar?.id) || [];
 
       const ownedCharacters = CHARACTERS.filter(
         (c) =>
@@ -69,7 +74,7 @@ export default function Step3TeamRecommendations() {
     return () => {
       active = false;
     };
-  }, [charactersState, matchedSpots, charactersAllowed]);
+  }, [charactersState, matchedSpecialSpots, charactersAllowed]);
 
   return (
     <Box sx={{ mt: 2 }}>

@@ -19,13 +19,7 @@ import { useSoCContext } from "../context/SoCContext";
 import CharacterAvatar from "./CharacterAvatar";
 import type { CharacterFilterValues } from "~/interfaces/CharacterFilterValues";
 import { CHARACTERS } from "~/utils/data-loader";
-
-const rarityOrder: Record<string, number> = {
-  Legendary: 1,
-  Epic: 2,
-  Rare: 3,
-  Common: 4,
-};
+import { RARITY_ORDER } from "~/utils/characters";
 
 export default function CharacterList() {
   const { charactersState, setCharactersState } = useSoCContext();
@@ -68,7 +62,7 @@ export default function CharacterList() {
 
       return matchesName && matchesRarity && matchesFaction && matchesOwnership;
     }).sort((a, b) => {
-      const rarityDiff = rarityOrder[a.rarity] - rarityOrder[b.rarity];
+      const rarityDiff = RARITY_ORDER[a.rarity] - RARITY_ORDER[b.rarity];
       if (rarityDiff !== 0) return rarityDiff;
       return a.name.localeCompare(b.name);
     });

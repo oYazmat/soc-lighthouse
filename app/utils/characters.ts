@@ -5,12 +5,21 @@ import {
   RARITY_AND_STARS_POWERS,
   FACTIONS,
   LIGHTHOUSE_DESTINATIONS,
+  CHARACTERS,
 } from "./data-loader";
 import type { FactionTeam } from "~/interfaces/FactionTeam";
 import type { LeaderTeam } from "~/interfaces/LeaderTeam";
 import type { SelectedTeams } from "~/interfaces/SelectedTeams";
 import type { LeaderTeams } from "~/interfaces/LeaderTeams";
 import type { CharactersState } from "~/interfaces/CharactersState";
+import type { FilledCharacter } from "~/interfaces/FilledCharacter";
+
+export const RARITY_ORDER: Record<string, number> = {
+  Legendary: 1,
+  Epic: 2,
+  Rare: 3,
+  Common: 4,
+};
 
 export function calculateOwnedCharacterPower(
   ownedCharacters: Character[],
@@ -176,4 +185,35 @@ export function selectBestTeamsPerDestination(
     }
   });
   return selected;
+}
+
+export function getFallbackCharacters(
+  charactersState: CharactersState
+): FilledCharacter[] {
+  // Only characters owned by the user
+  const ownedChars = CHARACTERS.filter((c) => charactersState[c.id]?.stars > 0);
+
+  if (ownedChars.length === 0) return [];
+
+  // Map each character to FilledCharacter
+  const filledChars: FilledCharacter[] = ownedChars.map((c) => ({
+    ...c,
+    stars: charactersState[c.id].stars,
+    rank: charactersState[c.id].rank,
+  }));
+
+  filledChars.sort((a, b) => {
+    // 1. Highest rank first
+    if (b.rank !== a.rank) return b.rank - a.rank;
+
+    // 2. Lowest rarity first
+    const rarityA = RARITY_ORDER[a.rarity] ?? 999;
+    const rarityB = RARITY_ORDER[b.rarity] ?? 999;
+    if (rarityA !== rarityB) return rarityA - rarityB;
+
+    // 3. Lowest stars first
+    return a.stars - b.stars;
+  });
+
+  return filledChars;
 }

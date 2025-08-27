@@ -1,6 +1,7 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
+import { useEffect } from "react";
 import { useSoCContext } from "~/context/SoCContext";
 import {
   LIGHTHOUSE_SPOTS,
@@ -9,9 +10,18 @@ import {
 } from "~/utils/data-loader";
 import SpotCard from "../SpotCard";
 import TeamsTable from "../TeamsTable";
+import { getFallbackCharacters } from "~/utils/characters";
+import type { MatchedSpot } from "~/interfaces/MatchedSpot";
 
 export default function Step4Recap() {
-  const { lighthouseLevel, matchedSpots, selectedTeams } = useSoCContext();
+  const {
+    lighthouseLevel,
+    matchedSpecialSpots,
+    matchedSpots,
+    setMatchedSpots,
+    selectedTeams,
+    charactersState,
+  } = useSoCContext();
 
   // All unlocked spots (up to current lighthouse level)
   const unlockedSpots = LIGHTHOUSE_SPOTS.filter(
@@ -23,6 +33,40 @@ export default function Step4Recap() {
     ? (LIGHTHOUSE_LEVELS.find((lvl) => lvl.level === lighthouseLevel)
         ?.characters ?? 1)
     : 1;
+
+  // Assign fallback characters to empty spots once
+  useEffect(() => {
+    if (!unlockedSpots.length || !charactersState) return;
+
+    let usedCharIds = new Set<number>();
+    const fallbackChars = getFallbackCharacters(charactersState);
+
+    const updatedMatches: MatchedSpot[] = unlockedSpots.map(
+      (spot): MatchedSpot => {
+        const existingMatch = matchedSpecialSpots?.find(
+          (s) => s.id === spot.id
+        );
+        if (existingMatch && existingMatch.selectedChar) {
+          usedCharIds.add(existingMatch.selectedChar.id);
+          return existingMatch;
+        }
+
+        const fallback = fallbackChars.find((c) => !usedCharIds.has(c.id));
+        if (fallback) usedCharIds.add(fallback.id);
+
+        return { ...spot, selectedChar: fallback ?? null };
+      }
+    );
+
+    const prevIds = matchedSpecialSpots?.map((m) => m.selectedChar?.id) ?? [];
+    const newIds = updatedMatches.map((m) => m.selectedChar?.id);
+    const hasChanged = prevIds.join(",") !== newIds.join(",");
+
+    if (hasChanged) {
+      setMatchedSpots(updatedMatches);
+      console.debug("🚀 ~ Step4Recap ~ updatedMatches:", updatedMatches);
+    }
+  }, [unlockedSpots.length, charactersState]);
 
   // Flatten all selected teams by destination
   const selectedDestinations = Object.keys(selectedTeams)

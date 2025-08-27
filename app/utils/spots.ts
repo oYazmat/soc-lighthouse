@@ -33,7 +33,7 @@ export function matchSpots(
   charactersState: CharactersState
 ): MatchedSpot[] {
   return specialSpots
-    .map((spot) => {
+    .map((spot): MatchedSpot | null => {
       const char1 = getChar(spot.specialChar1, charactersState);
       const char2 = getChar(spot.specialChar2, charactersState);
 

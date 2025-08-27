@@ -21,6 +21,8 @@ interface SoCContextType {
   setLighthouseLevel: React.Dispatch<React.SetStateAction<number | "">>;
   matchedSpots: MatchedSpot[];
   setMatchedSpots: React.Dispatch<React.SetStateAction<MatchedSpot[]>>;
+  matchedSpecialSpots: MatchedSpot[];
+  setMatchedSpecialSpots: React.Dispatch<React.SetStateAction<MatchedSpot[]>>;
   selectedTeams: SelectedTeams;
   setSelectedTeams: React.Dispatch<React.SetStateAction<SelectedTeams>>;
 }
@@ -37,11 +39,14 @@ export function SoCProvider({ children }: { children: ReactNode }) {
   > | null>(null);
   const [lighthouseLevel, setLighthouseLevel] = useState<number | "">("");
   const [matchedSpots, setMatchedSpots] = useState<MatchedSpot[]>([]);
+  const [matchedSpecialSpots, setMatchedSpecialSpots] = useState<MatchedSpot[]>(
+    []
+  );
   const [selectedTeams, setSelectedTeams] = useState<SelectedTeams>({});
 
   useEffect(() => {
     console.debug(
-      "Selected teams changed:",
+      "🚀 ~ SoCProvider ~ selectedTeams:",
       JSON.stringify(selectedTeams, null, 2)
     );
   }, [selectedTeams]);
@@ -110,6 +115,8 @@ export function SoCProvider({ children }: { children: ReactNode }) {
         setLighthouseLevel,
         matchedSpots,
         setMatchedSpots,
+        matchedSpecialSpots,
+        setMatchedSpecialSpots,
         selectedTeams,
         setSelectedTeams,
       }}
