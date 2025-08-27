@@ -7,8 +7,11 @@ import {
   Select,
   Chip,
   OutlinedInput,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 import type { CharacterFilterValues } from "~/interfaces/CharacterFilterValues";
+import ClearIcon from "@mui/icons-material/Clear";
 
 // Define a reusable interface for the filter values
 
@@ -34,6 +37,18 @@ export default function CharacterFilters({
         value={filters.name}
         onChange={(e) => onChange({ ...filters, name: e.target.value })}
         size="small"
+        InputProps={{
+          endAdornment: filters.name ? (
+            <InputAdornment position="end">
+              <IconButton
+                size="small"
+                onClick={() => onChange({ ...filters, name: "" })}
+              >
+                <ClearIcon fontSize="small" />
+              </IconButton>
+            </InputAdornment>
+          ) : null,
+        }}
       />
 
       {/* Rarity filter */}
