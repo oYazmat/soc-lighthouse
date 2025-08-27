@@ -188,19 +188,39 @@ export function selectBestTeamsPerDestination(
   return selected;
 }
 
-export function getFallbackCharacters(
-  charactersState: CharactersState,
-  matchedSpecialSpots: MatchedSpot[] = []
-): FilledCharacter[] {
-  // Collect IDs of already matched special characters
-  const usedIds = new Set<number>();
-  matchedSpecialSpots.forEach((m) => {
-    if (m.selectedChar) usedIds.add(m.selectedChar.id);
+// Helper function to collect all used character IDs
+export function getUsedCharacterIds(
+  matchedSpecialSpots: MatchedSpot[] | undefined,
+  selectedTeams: SelectedTeams
+): Set<number> {
+  const usedCharIds = new Set<number>();
+
+  // Add special spots
+  matchedSpecialSpots?.forEach((m) => {
+    if (m.selectedChar) usedCharIds.add(m.selectedChar.id);
   });
 
-  // Only characters owned by the user and not used in special spots
+  // Add characters already assigned in destination teams
+  Object.values(selectedTeams).forEach((leaderTeams) => {
+    Object.values(leaderTeams).forEach((leaderTeam) => {
+      // Add leader
+      if (leaderTeam.leaderId) usedCharIds.add(leaderTeam.leaderId);
+
+      // Add team characters if FactionTeam exists
+      leaderTeam.team?.characters.forEach((c) => usedCharIds.add(c.id));
+    });
+  });
+
+  return usedCharIds;
+}
+
+export function getFallbackCharacters(
+  charactersState: CharactersState,
+  excludeIds: Set<number> = new Set()
+): FilledCharacter[] {
+  // Only characters owned by the user and not in excludeIds
   const ownedChars = CHARACTERS.filter(
-    (c) => charactersState[c.id]?.stars > 0 && !usedIds.has(c.id)
+    (c) => charactersState[c.id]?.stars > 0 && !excludeIds.has(c.id)
   );
 
   if (ownedChars.length === 0) return [];

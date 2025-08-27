@@ -10,7 +10,7 @@ import {
 } from "~/utils/data-loader";
 import SpotCard from "../SpotCard";
 import TeamsTable from "../TeamsTable";
-import { getFallbackCharacters } from "~/utils/characters";
+import { getFallbackCharacters, getUsedCharacterIds } from "~/utils/characters";
 import type { MatchedSpot } from "~/interfaces/MatchedSpot";
 
 export default function Step4Recap() {
@@ -38,24 +38,23 @@ export default function Step4Recap() {
   useEffect(() => {
     if (!unlockedSpots.length || !charactersState) return;
 
-    const fallbackChars = getFallbackCharacters(
-      charactersState,
-      matchedSpecialSpots
+    const usedCharIds = getUsedCharacterIds(matchedSpecialSpots, selectedTeams);
+
+    const fallbackChars = getFallbackCharacters(charactersState, usedCharIds);
+
+    const updatedMatches: MatchedSpot[] = unlockedSpots.map(
+      (spot): MatchedSpot => {
+        const existingMatch = matchedSpecialSpots?.find(
+          (s) => s.id === spot.id
+        );
+        if (existingMatch && existingMatch.selectedChar) return existingMatch;
+
+        const fallback = fallbackChars.find((c) => !usedCharIds.has(c.id));
+        if (fallback) usedCharIds.add(fallback.id);
+
+        return { ...spot, selectedChar: fallback ?? null };
+      }
     );
-    const usedCharIds = new Set<number>();
-    matchedSpecialSpots?.forEach((m) => {
-      if (m.selectedChar) usedCharIds.add(m.selectedChar.id);
-    });
-
-    const updatedMatches: MatchedSpot[] = unlockedSpots.map((spot) => {
-      const existingMatch = matchedSpecialSpots?.find((s) => s.id === spot.id);
-      if (existingMatch && existingMatch.selectedChar) return existingMatch;
-
-      const fallback = fallbackChars.find((c) => !usedCharIds.has(c.id));
-      if (fallback) usedCharIds.add(fallback.id);
-
-      return { ...spot, selectedChar: fallback ?? null };
-    });
 
     const prevIds = matchedSpots?.map((m) => m.selectedChar?.id) ?? [];
     const newIds = updatedMatches.map((m) => m.selectedChar?.id);
@@ -65,7 +64,12 @@ export default function Step4Recap() {
       setMatchedSpots(updatedMatches);
       console.debug("🚀 ~ Step4Recap ~ updatedMatches:", updatedMatches);
     }
-  }, [unlockedSpots.length, charactersState, matchedSpecialSpots]);
+  }, [
+    unlockedSpots.length,
+    charactersState,
+    matchedSpecialSpots,
+    selectedTeams,
+  ]);
 
   // Flatten all selected teams by destination
   const selectedDestinations = Object.keys(selectedTeams)
