@@ -13,6 +13,7 @@ import type { SelectedTeams } from "~/interfaces/SelectedTeams";
 import type { LeaderTeams } from "~/interfaces/LeaderTeams";
 import type { CharactersState } from "~/interfaces/CharactersState";
 import type { FilledCharacter } from "~/interfaces/FilledCharacter";
+import type { MatchedSpot } from "~/interfaces/MatchedSpot";
 
 export const RARITY_ORDER: Record<string, number> = {
   Legendary: 1,
@@ -188,14 +189,22 @@ export function selectBestTeamsPerDestination(
 }
 
 export function getFallbackCharacters(
-  charactersState: CharactersState
+  charactersState: CharactersState,
+  matchedSpecialSpots: MatchedSpot[] = []
 ): FilledCharacter[] {
-  // Only characters owned by the user
-  const ownedChars = CHARACTERS.filter((c) => charactersState[c.id]?.stars > 0);
+  // Collect IDs of already matched special characters
+  const usedIds = new Set<number>();
+  matchedSpecialSpots.forEach((m) => {
+    if (m.selectedChar) usedIds.add(m.selectedChar.id);
+  });
+
+  // Only characters owned by the user and not used in special spots
+  const ownedChars = CHARACTERS.filter(
+    (c) => charactersState[c.id]?.stars > 0 && !usedIds.has(c.id)
+  );
 
   if (ownedChars.length === 0) return [];
 
-  // Map each character to FilledCharacter
   const filledChars: FilledCharacter[] = ownedChars.map((c) => ({
     ...c,
     stars: charactersState[c.id].stars,

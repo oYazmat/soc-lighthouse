@@ -38,27 +38,26 @@ export default function Step4Recap() {
   useEffect(() => {
     if (!unlockedSpots.length || !charactersState) return;
 
-    let usedCharIds = new Set<number>();
-    const fallbackChars = getFallbackCharacters(charactersState);
-
-    const updatedMatches: MatchedSpot[] = unlockedSpots.map(
-      (spot): MatchedSpot => {
-        const existingMatch = matchedSpecialSpots?.find(
-          (s) => s.id === spot.id
-        );
-        if (existingMatch && existingMatch.selectedChar) {
-          usedCharIds.add(existingMatch.selectedChar.id);
-          return existingMatch;
-        }
-
-        const fallback = fallbackChars.find((c) => !usedCharIds.has(c.id));
-        if (fallback) usedCharIds.add(fallback.id);
-
-        return { ...spot, selectedChar: fallback ?? null };
-      }
+    const fallbackChars = getFallbackCharacters(
+      charactersState,
+      matchedSpecialSpots
     );
+    const usedCharIds = new Set<number>();
+    matchedSpecialSpots?.forEach((m) => {
+      if (m.selectedChar) usedCharIds.add(m.selectedChar.id);
+    });
 
-    const prevIds = matchedSpecialSpots?.map((m) => m.selectedChar?.id) ?? [];
+    const updatedMatches: MatchedSpot[] = unlockedSpots.map((spot) => {
+      const existingMatch = matchedSpecialSpots?.find((s) => s.id === spot.id);
+      if (existingMatch && existingMatch.selectedChar) return existingMatch;
+
+      const fallback = fallbackChars.find((c) => !usedCharIds.has(c.id));
+      if (fallback) usedCharIds.add(fallback.id);
+
+      return { ...spot, selectedChar: fallback ?? null };
+    });
+
+    const prevIds = matchedSpots?.map((m) => m.selectedChar?.id) ?? [];
     const newIds = updatedMatches.map((m) => m.selectedChar?.id);
     const hasChanged = prevIds.join(",") !== newIds.join(",");
 
@@ -66,7 +65,7 @@ export default function Step4Recap() {
       setMatchedSpots(updatedMatches);
       console.debug("🚀 ~ Step4Recap ~ updatedMatches:", updatedMatches);
     }
-  }, [unlockedSpots.length, charactersState]);
+  }, [unlockedSpots.length, charactersState, matchedSpecialSpots]);
 
   // Flatten all selected teams by destination
   const selectedDestinations = Object.keys(selectedTeams)
