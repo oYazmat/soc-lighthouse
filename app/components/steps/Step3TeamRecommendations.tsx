@@ -95,9 +95,9 @@ export default function Step3TeamRecommendations() {
               Select your expedition teams
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Choose the teams you want to send on your Lighthouse expeditions.
-              Any remaining characters will automatically be assigned to
-              logistics in the next step.
+              Choose the teams you want to save to your presets. Any remaining
+              characters will automatically be assigned to the remaining
+              logistic spots next.
             </Typography>
           </Box>
 

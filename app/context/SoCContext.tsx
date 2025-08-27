@@ -35,7 +35,7 @@ export function SoCProvider({ children }: { children: ReactNode }) {
     number,
     CharacterState
   > | null>(null);
-  const [lighthouseLevel, setLighthouseLevel] = useState<number | "">(1);
+  const [lighthouseLevel, setLighthouseLevel] = useState<number | "">("");
   const [matchedSpots, setMatchedSpots] = useState<MatchedSpot[]>([]);
   const [selectedTeams, setSelectedTeams] = useState<SelectedTeams>({});
 
@@ -46,7 +46,7 @@ export function SoCProvider({ children }: { children: ReactNode }) {
     );
   }, [selectedTeams]);
 
-  // Load character state from localStorage
+  // Load character state & lighthouse level from localStorage
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -56,13 +56,17 @@ export function SoCProvider({ children }: { children: ReactNode }) {
         setCharactersState(JSON.parse(stored));
       }
     } catch (err) {
-      console.error("Failed to load characterState from localStorage", err);
+      console.error("Failed to load character state from localStorage", err);
     }
 
-    const levelStored = localStorage.getItem(LIGHTHOUSE_LOCAL_STORAGE_KEY);
-    if (levelStored) {
-      const num = Number(levelStored);
-      if (!isNaN(num)) setLighthouseLevel(num);
+    try {
+      const levelStored = localStorage.getItem(LIGHTHOUSE_LOCAL_STORAGE_KEY);
+      if (levelStored) {
+        const num = Number(levelStored);
+        if (!isNaN(num)) setLighthouseLevel(num);
+      }
+    } catch (err) {
+      console.error("Failed to load lighthouse level from localStorage", err);
     }
   }, []);
 

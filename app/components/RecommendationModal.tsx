@@ -15,8 +15,7 @@ import { useState } from "react";
 import Step1Lighthouse from "./steps/Step1Lighthouse";
 import Step2SpecialSpots from "./steps/Step2SpecialSpots";
 import Step3TeamRecommendations from "./steps/Step3TeamRecommendations";
-import Step4 from "./steps/Step4";
-import Step5 from "./steps/Step5";
+import Step4Recap from "./steps/Step4Recap";
 import { useSoCContext } from "../context/SoCContext";
 
 interface RecommendationModalProps {
@@ -28,8 +27,7 @@ const steps = [
   "Enter Lighthouse Level",
   "Special Logistic Spots",
   "Team Recommendations",
-  "Step 4",
-  "Step 5",
+  "Remaining Logistic Spots & Recap",
 ];
 
 export default function RecommendationModal({
@@ -43,8 +41,7 @@ export default function RecommendationModal({
     <Step1Lighthouse key="step1" />,
     <Step2SpecialSpots key="step2" />,
     <Step3TeamRecommendations key="step3" />,
-    <Step4 key="step4" />,
-    <Step5 key="step5" />,
+    <Step4Recap key="step4" />,
   ];
 
   const levelError =
@@ -93,16 +90,22 @@ export default function RecommendationModal({
         >
           Back
         </Button>
-        <Button
-          onClick={handleNext}
-          color="secondary"
-          variant="contained"
-          disabled={
-            activeStep === 0 && (lighthouseLevel === "" || !!levelError)
-          }
-        >
-          Next
-        </Button>
+        {activeStep === steps.length - 1 ? (
+          <Button onClick={onClose} color="success" variant="contained">
+            Finish
+          </Button>
+        ) : (
+          <Button
+            onClick={handleNext}
+            color="secondary"
+            variant="contained"
+            disabled={
+              activeStep === 0 && (lighthouseLevel === "" || !!levelError)
+            }
+          >
+            Next
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   );
