@@ -2,9 +2,28 @@
 
 import { Box, Typography, TextField } from "@mui/material";
 import { useSoCContext } from "../../context/SoCContext";
+import { useEffect } from "react";
 
 export default function Step1Lighthouse() {
-  const { lighthouseLevel, setLighthouseLevel } = useSoCContext();
+  const {
+    lighthouseLevel,
+    setLighthouseLevel,
+    setMatchedSpecialSpots,
+    setMatchedSpots,
+    setSelectedTeams,
+  } = useSoCContext();
+
+  // Reset all dependent states whenever lighthouseLevel changes
+  useEffect(() => {
+    setMatchedSpecialSpots([]);
+    setMatchedSpots([]);
+    setSelectedTeams({});
+  }, [
+    lighthouseLevel,
+    setMatchedSpecialSpots,
+    setMatchedSpots,
+    setSelectedTeams,
+  ]);
 
   const handleLevelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -34,7 +53,7 @@ export default function Step1Lighthouse() {
         type="number"
         value={lighthouseLevel}
         onChange={handleLevelChange}
-        sx={{ maxWidth: 200, width: "100%" }} // limit the input size
+        sx={{ maxWidth: 200, width: "100%" }}
         slotProps={{
           input: {
             inputProps: { min: 1, max: 70 },

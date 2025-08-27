@@ -18,7 +18,9 @@ export default function Step3TeamRecommendations() {
     matchedSpecialSpots,
     charactersState,
     lighthouseLevel,
+    selectedTeams,
     setSelectedTeams,
+    setMatchedSpots,
   } = useSoCContext();
 
   const [leaderTeams, setLeaderTeams] = useState<LeaderTeams>({});
@@ -75,6 +77,11 @@ export default function Step3TeamRecommendations() {
       active = false;
     };
   }, [charactersState, matchedSpecialSpots, charactersAllowed]);
+
+  useEffect(() => {
+    // Whenever selectedTeams changes, reset matchedSpots
+    setMatchedSpots([]);
+  }, [selectedTeams, setMatchedSpots]);
 
   return (
     <Box sx={{ mt: 2 }}>

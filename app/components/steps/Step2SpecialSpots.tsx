@@ -9,17 +9,28 @@ import {
 import SpotCard from "../SpotCard";
 
 export default function Step2SpecialSpots() {
-  const { lighthouseLevel, charactersState, setMatchedSpecialSpots } =
-    useSoCContext();
+  const {
+    lighthouseLevel,
+    charactersState,
+    setMatchedSpecialSpots,
+    setMatchedSpots,
+    setSelectedTeams,
+  } = useSoCContext();
 
   const specialSpots = getSpecialSpots(lighthouseLevel);
-  const matchedSpotsLocal = matchSpots(specialSpots, charactersState);
+  const matchedSpecialSpots = matchSpots(specialSpots, charactersState);
 
   useEffect(() => {
-    setMatchedSpecialSpots(matchedSpotsLocal);
-  }, [matchedSpotsLocal, setMatchedSpecialSpots]);
+    setMatchedSpecialSpots(matchedSpecialSpots);
+  }, [matchedSpecialSpots, setMatchedSpecialSpots]);
 
-  const totalBonuses = aggregateActiveBonuses(matchedSpotsLocal);
+  useEffect(() => {
+    // Whenever matchedSpecialSpots updates, reset matchedSpots and selectedTeams
+    setMatchedSpots([]);
+    setSelectedTeams({});
+  }, [matchedSpecialSpots, setMatchedSpots, setSelectedTeams]);
+
+  const totalBonuses = aggregateActiveBonuses(matchedSpecialSpots);
 
   return (
     <Box sx={{ mt: 2 }}>
@@ -30,7 +41,7 @@ export default function Step2SpecialSpots() {
 
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 2 }}>
         {specialSpots.map((spot) => {
-          const matched = matchedSpotsLocal.find((m) => m.id === spot.id);
+          const matched = matchedSpecialSpots.find((m) => m.id === spot.id);
           return (
             <SpotCard
               key={spot.id}
@@ -41,7 +52,7 @@ export default function Step2SpecialSpots() {
         })}
       </Box>
 
-      {matchedSpotsLocal.length > 0 && (
+      {matchedSpecialSpots.length > 0 && (
         <Box sx={{ mt: 2 }}>
           <Typography variant="subtitle1" sx={{ mb: 1 }}>
             Total Active Bonuses

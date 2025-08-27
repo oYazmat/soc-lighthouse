@@ -56,8 +56,8 @@ export function matchSpots(
     .filter((s): s is MatchedSpot => s !== null);
 }
 
-export function aggregateActiveBonuses(matchedSpotsLocal: MatchedSpot[]) {
-  return matchedSpotsLocal.reduce(
+export function aggregateActiveBonuses(matchedSpots: MatchedSpot[]) {
+  return matchedSpots.reduce(
     (acc, spot) => {
       if (spot.bonusYield) acc.bonusYield += spot.bonusYield;
       if (spot.bonusLogistics) acc.bonusLogistics += spot.bonusLogistics;

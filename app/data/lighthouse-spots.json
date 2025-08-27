@@ -103,8 +103,8 @@
   {
     "id": 36,
     "levelUnlock": 49,
-    "specialChar1": null,
-    "specialChar2": null,
+    "specialChar1": 25,
+    "specialChar2": 30,
     "bonusLogistics": 5
   },
   { "id": 37, "levelUnlock": 50, "specialChar1": null, "specialChar2": null },
