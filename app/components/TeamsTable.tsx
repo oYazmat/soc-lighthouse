@@ -27,6 +27,7 @@ interface Props {
   leaderTeams: LeaderTeams;
   showCheckbox?: boolean;
   showExpeditionPower?: boolean;
+  lighthousePower?: number;
 }
 
 export default function TeamsTable({
@@ -36,6 +37,7 @@ export default function TeamsTable({
   leaderTeams,
   showCheckbox,
   showExpeditionPower = false, // default false
+  lighthousePower = 0,
 }: Props) {
   const { charactersState, selectedTeams, setSelectedTeams } = useSoCContext();
   const maxCharactersPerRow = 4;
@@ -235,7 +237,7 @@ export default function TeamsTable({
                         : "inherit",
                     }}
                   >
-                    {/* Placeholder for now */}-
+                    {team ? lighthousePower + (team.combinedPower ?? 0) : "-"}
                   </TableCell>
                 )}
               </TableRow>

@@ -6,6 +6,7 @@ import {
   FACTIONS,
   LIGHTHOUSE_DESTINATIONS,
   CHARACTERS,
+  LIGHTHOUSE_LEVELS,
 } from "./data-loader";
 import type { FactionTeam } from "~/interfaces/FactionTeam";
 import type { LeaderTeam } from "~/interfaces/LeaderTeam";
@@ -70,7 +71,8 @@ export function getExtraBonusPercent(teamSize: number): number {
 
 export async function calculateFactionTeams(
   characters: CharacterWithPower[],
-  teamSize: number
+  teamSize: number,
+  lighthouseLevel: number | ""
 ): Promise<FactionTeam[]> {
   const factionTeams: FactionTeam[] = [];
   const validFactions = FACTIONS.filter((f) => !f.ignored).map((f) => f.name);
@@ -96,7 +98,14 @@ export async function calculateFactionTeams(
       const extraPercent = getExtraBonusPercent(team.length);
       const powerPercentSum = rawPowerPercentSum + extraPercent;
 
-      const combinedPower = basePowerSum * (1 + powerPercentSum / 100);
+      const baseLighthousePower =
+        lighthouseLevel !== ""
+          ? (LIGHTHOUSE_LEVELS.find((lvl) => lvl.level === lighthouseLevel)
+              ?.power ?? 0)
+          : 0;
+
+      const combinedPower =
+        basePowerSum + baseLighthousePower * (1 + powerPercentSum / 100);
 
       factionTeams.push({
         faction,

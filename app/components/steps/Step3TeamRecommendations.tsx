@@ -55,7 +55,8 @@ export default function Step3TeamRecommendations() {
 
       const factionTeams = await calculateFactionTeams(
         charsWithPower,
-        charactersAllowed
+        charactersAllowed,
+        lighthouseLevel
       );
       if (!active) return;
 

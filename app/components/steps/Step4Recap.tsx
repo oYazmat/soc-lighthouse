@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Typography } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useSoCContext } from "~/context/SoCContext";
 import {
   LIGHTHOUSE_SPOTS,
@@ -13,7 +13,7 @@ import TeamsTable from "../TeamsTable";
 import { getFallbackCharacters, getUsedCharacterIds } from "~/utils/characters";
 import type { MatchedSpot } from "~/interfaces/MatchedSpot";
 import TotalActiveBonuses from "../TotalActiveBonuses";
-import { aggregateActiveBonuses } from "~/utils/spots";
+import { aggregateActiveBonuses, calculateSpotsPower } from "~/utils/spots";
 
 export default function Step4Recap() {
   const {
@@ -80,6 +80,12 @@ export default function Step4Recap() {
 
   const totalBonuses = aggregateActiveBonuses(matchedSpecialSpots);
 
+  // 🔥 Calculate total rank power of all matched spots
+  const totalRankPower = useMemo(
+    () => calculateSpotsPower(matchedSpots),
+    [matchedSpots]
+  );
+
   return (
     <Box sx={{ mb: 2 }}>
       {/* Unlocked spots */}
@@ -138,6 +144,9 @@ export default function Step4Recap() {
                 leaderTeams={leaderTeamsForDest}
                 showCheckbox={false}
                 showExpeditionPower
+                lighthousePower={
+                  totalRankPower * (1 + totalBonuses.bonusLogistics / 100)
+                }
               />
             </Box>
           );

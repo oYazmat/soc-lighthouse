@@ -1,5 +1,5 @@
 import type { MatchedSpot } from "~/interfaces/MatchedSpot";
-import { CHARACTERS, LIGHTHOUSE_SPOTS } from "./data-loader";
+import { CHARACTERS, LIGHTHOUSE_SPOTS, RANK_POWERS } from "./data-loader";
 import type { LighthouseSpot } from "~/interfaces/LighthouseSpot";
 import type { CharactersState } from "~/interfaces/CharactersState";
 import type { FilledCharacter } from "~/interfaces/FilledCharacter";
@@ -67,4 +67,16 @@ export function aggregateActiveBonuses(matchedSpots: MatchedSpot[]) {
     },
     { bonusYield: 0, bonusLogistics: 0, bonusLight: 0, bonusEvents: 0 }
   );
+}
+
+export function calculateSpotsPower(matchedSpots: MatchedSpot[]) {
+  if (!matchedSpots?.length) return 0;
+
+  return matchedSpots.reduce((sum, spot) => {
+    const rank = spot.selectedChar?.rank;
+    if (rank == null) return sum;
+
+    const rankPower = RANK_POWERS.find((rp) => rp.rank === rank)?.power ?? 0;
+    return sum + rankPower;
+  }, 0);
 }
