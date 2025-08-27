@@ -24,13 +24,15 @@ interface Props {
   leaders: number[];
   charactersAllowed: number;
   leaderTeams: LeaderTeams;
+  showCheckbox?: boolean;
 }
 
-export default function LighthouseDestinationTable({
+export default function TeamsTable({
   destinationId,
   leaders,
   charactersAllowed,
   leaderTeams,
+  showCheckbox,
 }: Props) {
   const { charactersState, selectedTeams, setSelectedTeams } = useSoCContext();
   const maxCharactersPerRow = 4;
@@ -68,46 +70,46 @@ export default function LighthouseDestinationTable({
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell align="center" />
+            {showCheckbox && <TableCell align="center" />}
             <TableCell align="center">Leader</TableCell>
             {Array.from({ length: maxCharactersPerRow }).map((_, i) => (
-              <TableCell key={i} align="center">
-                {`Character ${i + 1}`}
-              </TableCell>
+              <TableCell
+                key={i}
+                align="center"
+              >{`Character ${i + 1}`}</TableCell>
             ))}
             <TableCell align="center">Base Power</TableCell>
             <TableCell align="center">Bonus Power %</TableCell>
           </TableRow>
         </TableHead>
-
         <TableBody>
           {leaders.map((leaderId) => {
             const leader = CHARACTERS.find((c) => c.id === leaderId);
             const ownedLeader = leader && charactersState[leaderId]?.stars > 0;
-
             const leaderTeam = leaderTeams[leaderId];
             const membersWithoutLeader = leaderTeam?.membersWithoutLeader ?? [];
             const team = leaderTeam?.team ?? null;
-
             const isRowDisabled = !ownedLeader;
             const isChecked = !!selectedTeams[destinationId]?.[leaderId];
 
             return (
               <TableRow key={leaderId}>
-                <TableCell align="center">
-                  <Checkbox
-                    disabled={isRowDisabled}
-                    checked={isChecked}
-                    onChange={(e) =>
-                      handleCheckboxChange(
-                        destinationId,
-                        leaderId,
-                        leaderTeam,
-                        e.target.checked
-                      )
-                    }
-                  />
-                </TableCell>
+                {showCheckbox && (
+                  <TableCell align="center">
+                    <Checkbox
+                      disabled={isRowDisabled}
+                      checked={isChecked}
+                      onChange={(e) =>
+                        handleCheckboxChange(
+                          destinationId,
+                          leaderId,
+                          leaderTeam,
+                          e.target.checked
+                        )
+                      }
+                    />
+                  </TableCell>
+                )}
 
                 <TableCell
                   sx={{

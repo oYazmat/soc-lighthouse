@@ -2,7 +2,7 @@ import { Tabs, Tab, Box, Typography } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
 import { useState } from "react";
 import { LIGHTHOUSE_DESTINATIONS } from "~/utils/data-loader";
-import LighthouseDestinationTable from "./LighthouseDestinationTable";
+import TeamsTable from "./TeamsTable";
 import { useSoCContext } from "~/context/SoCContext";
 import type { LeaderTeams } from "~/interfaces/LeaderTeams";
 
@@ -74,11 +74,12 @@ export default function LighthouseDestinationsTabs({
           sx={{ p: 2 }}
         >
           {selectedTab === index && (
-            <LighthouseDestinationTable
+            <TeamsTable
               destinationId={dest.id}
               leaders={dest.leaders}
               charactersAllowed={charactersAllowed}
               leaderTeams={leaderTeams}
+              showCheckbox
             />
           )}
         </Box>
