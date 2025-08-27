@@ -11,7 +11,7 @@ import {
   Chip,
   Box,
 } from "@mui/material";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import StarsDropdown from "./StarsDropdown";
 import RankDropdown from "./RankDropdown";
 import CharacterFilters from "./CharacterFilters";
@@ -22,7 +22,13 @@ import { CHARACTERS } from "~/utils/data-loader";
 import { RARITY_ORDER } from "~/utils/characters";
 
 export default function CharacterList() {
-  const { charactersState, setCharactersState } = useSoCContext();
+  const {
+    charactersState,
+    setCharactersState,
+    setMatchedSpots,
+    setMatchedSpecialSpots,
+    setSelectedTeams,
+  } = useSoCContext();
 
   const [filters, setFilters] = useState<CharacterFilterValues>({
     name: "",
@@ -67,6 +73,18 @@ export default function CharacterList() {
       return a.name.localeCompare(b.name);
     });
   }, [filters, charactersState]);
+
+  useEffect(() => {
+    // Whenever charactersState changes, clear dependent context states
+    setMatchedSpots([]);
+    setMatchedSpecialSpots([]);
+    setSelectedTeams({});
+  }, [
+    charactersState,
+    setMatchedSpots,
+    setMatchedSpecialSpots,
+    setSelectedTeams,
+  ]);
 
   // Handlers to update state
   const handleStarsChange = (id: number, stars: number) => {

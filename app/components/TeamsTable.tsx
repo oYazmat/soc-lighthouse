@@ -18,6 +18,7 @@ import { CHARACTERS } from "~/utils/data-loader";
 import type { LeaderTeam } from "~/interfaces/LeaderTeam";
 import type { SelectedTeams } from "~/interfaces/SelectedTeams";
 import type { LeaderTeams } from "~/interfaces/LeaderTeams";
+import { getTeamFaction } from "~/utils/factions";
 
 interface Props {
   destinationId: number;
@@ -71,6 +72,8 @@ export default function TeamsTable({
         <TableHead>
           <TableRow>
             {showCheckbox && <TableCell align="center" />}
+            <TableCell align="center">Faction</TableCell>{" "}
+            {/* New Faction column */}
             <TableCell align="center">Leader</TableCell>
             {Array.from({ length: maxCharactersPerRow }).map((_, i) => (
               <TableCell
@@ -92,6 +95,8 @@ export default function TeamsTable({
             const isRowDisabled = !ownedLeader;
             const isChecked = !!selectedTeams[destinationId]?.[leaderId];
 
+            const faction = getTeamFaction(leaderTeam); // Compute faction
+
             return (
               <TableRow key={leaderId}>
                 {showCheckbox && (
@@ -110,6 +115,9 @@ export default function TeamsTable({
                     />
                   </TableCell>
                 )}
+
+                {/* Faction column */}
+                <TableCell align="center">{faction}</TableCell>
 
                 <TableCell
                   sx={{
