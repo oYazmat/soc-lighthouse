@@ -10,6 +10,7 @@ import {
   Paper,
   Chip,
   Box,
+  Button,
 } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import StarsDropdown from "./StarsDropdown";
@@ -20,6 +21,7 @@ import CharacterAvatar from "./CharacterAvatar";
 import type { CharacterFilterValues } from "~/interfaces/CharacterFilterValues";
 import { CHARACTERS } from "~/utils/data-loader";
 import { RARITY_ORDER } from "~/utils/characters";
+import CharacterJsonModal from "./CharacterJsonModal";
 
 export default function CharacterList() {
   const {
@@ -36,6 +38,9 @@ export default function CharacterList() {
     factions: [],
     ownership: "All", // default value
   });
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState<"import" | "export">("export");
 
   // Collect all unique factions from the data
   const allFactions = useMemo(() => {
@@ -112,12 +117,59 @@ export default function CharacterList() {
 
   return (
     <>
-      {/* Character Filters */}
-      <CharacterFilters
-        filters={filters}
-        onChange={setFilters}
-        allFactions={allFactions}
-      />
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          mb: 2,
+        }}
+      >
+        {/* Left: Filters */}
+        <CharacterFilters
+          filters={filters}
+          onChange={setFilters}
+          allFactions={allFactions}
+        />
+
+        {/* Right: Import / Export */}
+        <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
+          <Button
+            variant="outlined"
+            size="small"
+            sx={{ height: 40 }}
+            color="primary"
+            onClick={() => {
+              setModalMode("import");
+              setModalOpen(true);
+            }}
+          >
+            Import
+          </Button>
+          <Button
+            variant="outlined"
+            size="small"
+            sx={{ height: 40 }}
+            color="success"
+            onClick={() => {
+              setModalMode("export");
+              setModalOpen(true);
+            }}
+          >
+            Export
+          </Button>
+        </Box>
+
+        <CharacterJsonModal
+          open={modalOpen}
+          onClose={() => setModalOpen(false)}
+          mode={modalMode}
+          data={charactersState} // for export
+          onSave={(json) => {
+            setCharactersState(json); // update context on import
+          }}
+        />
+      </Box>
 
       <TableContainer component={Paper} sx={{ mt: 2 }}>
         <Table>
