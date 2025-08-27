@@ -18,7 +18,7 @@ export default function Step3TeamRecommendations() {
     useSoCContext();
 
   const [leaderTeams, setLeaderTeams] = useState<LeaderTeams>({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const charactersAllowed = lighthouseLevel
     ? (LIGHTHOUSE_LEVELS.find((lvl) => lvl.level === lighthouseLevel)
