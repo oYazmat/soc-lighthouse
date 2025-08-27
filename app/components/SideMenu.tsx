@@ -37,16 +37,36 @@ export default function SideMenu() {
       }}
     >
       <Toolbar />
-      <List sx={{ flexGrow: 1 }}>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <PeopleIcon />
-            </ListItemIcon>
-            <ListItemText primary="My Characters" />
-          </ListItemButton>
-        </ListItem>
-      </List>
+      <Box
+        sx={{
+          flexGrow: 1,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        {/* The actual list items */}
+        <List sx={{ zIndex: 1 }}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <PeopleIcon />
+              </ListItemIcon>
+              <ListItemText primary="My Characters" />
+            </ListItemButton>
+          </ListItem>
+        </List>
+
+        {/* Empty space background */}
+        <Box
+          sx={{
+            flexGrow: 1,
+            backgroundImage: `url(/images/lighthouse-bg.png)`,
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+            backgroundSize: "cover",
+          }}
+        />
+      </Box>
 
       {/* Bottom section */}
       <Box sx={{ p: 2, borderTop: "1px solid #ddd" }}>
