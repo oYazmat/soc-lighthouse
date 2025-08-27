@@ -104,8 +104,9 @@ export async function calculateFactionTeams(
               ?.power ?? 0)
           : 0;
 
-      const combinedPower =
-        basePowerSum + baseLighthousePower * (1 + powerPercentSum / 100);
+      const combinedPower = Math.round(
+        basePowerSum + baseLighthousePower * (1 + powerPercentSum / 100)
+      );
 
       factionTeams.push({
         faction,

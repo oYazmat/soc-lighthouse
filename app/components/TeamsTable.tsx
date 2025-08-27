@@ -89,11 +89,16 @@ export default function TeamsTable({
               <>
                 <TableCell align="center">Base Power</TableCell>
                 <TableCell align="center">Bonus Power %</TableCell>
+                <TableCell align="center">Total Team Power</TableCell>
               </>
             )}
 
             {showExpeditionPower && (
-              <TableCell align="center">Expedition Power</TableCell>
+              <>
+                <TableCell align="center"> Team Power</TableCell>
+                <TableCell align="center">Logistics Power</TableCell>
+                <TableCell align="center">Total Expedition Power</TableCell>
+              </>
             )}
           </TableRow>
         </TableHead>
@@ -227,18 +232,40 @@ export default function TeamsTable({
                     </TableCell>
                   </>
                 )}
+                <TableCell
+                  align="center"
+                  sx={{
+                    backgroundColor: isRowDisabled
+                      ? "action.disabledBackground"
+                      : "inherit",
+                  }}
+                >
+                  {team?.combinedPower ?? "-"}
+                </TableCell>
 
                 {showExpeditionPower && (
-                  <TableCell
-                    align="center"
-                    sx={{
-                      backgroundColor: isRowDisabled
-                        ? "action.disabledBackground"
-                        : "inherit",
-                    }}
-                  >
-                    {team ? lighthousePower + (team.combinedPower ?? 0) : "-"}
-                  </TableCell>
+                  <>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        backgroundColor: isRowDisabled
+                          ? "action.disabledBackground"
+                          : "inherit",
+                      }}
+                    >
+                      {lighthousePower}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        backgroundColor: isRowDisabled
+                          ? "action.disabledBackground"
+                          : "inherit",
+                      }}
+                    >
+                      {team ? lighthousePower + (team.combinedPower ?? 0) : "-"}
+                    </TableCell>
+                  </>
                 )}
               </TableRow>
             );
