@@ -4,6 +4,7 @@ import { Box, Typography } from "@mui/material";
 import CharacterAvatar from "./CharacterAvatar";
 import { CHARACTERS } from "~/utils/data-loader";
 import type { LighthouseSpot } from "~/interfaces/LighthouseSpot";
+import StarIcon from "@mui/icons-material/Star";
 
 interface SpotCardProps {
   spot: LighthouseSpot;
@@ -17,6 +18,10 @@ export default function SpotCard({ spot, matchedCharName }: SpotCardProps) {
     .map((id) => CHARACTERS.find((c) => c.id === id)?.name)
     .filter(Boolean);
 
+  const isSpecialSpot = specialCharNames.length > 0;
+  const isMatchedSpecial =
+    matchedCharName && specialCharNames.includes(matchedCharName);
+
   return (
     <Box
       sx={{
@@ -28,8 +33,22 @@ export default function SpotCard({ spot, matchedCharName }: SpotCardProps) {
         borderColor: "divider",
         borderRadius: 1,
         minWidth: 100,
+        position: "relative",
       }}
     >
+      {/* Star always shown for special spots */}
+      {isSpecialSpot && (
+        <StarIcon
+          fontSize="small"
+          sx={{
+            position: "absolute",
+            top: 4,
+            right: 4,
+            color: isMatchedSpecial ? "gold" : "grey.400",
+          }}
+        />
+      )}
+
       <Typography variant="body2" sx={{ mb: 1 }}>
         Spot {spot.id}
       </Typography>
