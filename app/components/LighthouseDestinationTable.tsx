@@ -20,7 +20,6 @@ import type { SelectedTeams } from "~/interfaces/SelectedTeams";
 import type { LeaderTeams } from "~/interfaces/LeaderTeams";
 
 interface Props {
-  /** Destination this table belongs to (keys in selectedTeams are destination ids) */
   destinationId: number;
   leaders: number[];
   charactersAllowed: number;

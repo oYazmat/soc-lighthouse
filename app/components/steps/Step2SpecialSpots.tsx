@@ -6,7 +6,7 @@ import {
   getSpecialSpots,
   matchSpots,
 } from "~/utils/spots";
-import SpecialSpotCard from "../SpecialSpotCard";
+import SpotCard from "../SpotCard";
 
 export default function Step2SpecialSpots() {
   const { lighthouseLevel, charactersState, setMatchedSpots } = useSoCContext();
@@ -31,7 +31,7 @@ export default function Step2SpecialSpots() {
         {specialSpots.map((spot) => {
           const matched = matchedSpotsLocal.find((m) => m.id === spot.id);
           return (
-            <SpecialSpotCard
+            <SpotCard
               key={spot.id}
               spot={spot}
               matchedCharName={matched?.selectedChar?.name}

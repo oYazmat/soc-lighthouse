@@ -5,15 +5,12 @@ import CharacterAvatar from "./CharacterAvatar";
 import { CHARACTERS } from "~/utils/data-loader";
 import type { LighthouseSpot } from "~/interfaces/LighthouseSpot";
 
-interface SpecialSpotCardProps {
+interface SpotCardProps {
   spot: LighthouseSpot;
   matchedCharName?: string;
 }
 
-export default function SpecialSpotCard({
-  spot,
-  matchedCharName,
-}: SpecialSpotCardProps) {
+export default function SpotCard({ spot, matchedCharName }: SpotCardProps) {
   // Look up names of special characters
   const specialCharNames = [spot.specialChar1, spot.specialChar2]
     .filter((id): id is number => id !== null)
@@ -58,7 +55,7 @@ export default function SpecialSpotCard({
         >
           {specialCharNames.length > 0
             ? `You don't own ${specialCharNames.join(" or ")}`
-            : "No special character assigned"}
+            : "No character assigned"}
         </Typography>
       )}
     </Box>
