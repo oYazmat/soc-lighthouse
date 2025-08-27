@@ -7,6 +7,7 @@ import {
   matchSpots,
 } from "~/utils/spots";
 import SpotCard from "../SpotCard";
+import TotalActiveBonuses from "../TotalActiveBonuses";
 
 export default function Step2SpecialSpots() {
   const {
@@ -53,31 +54,7 @@ export default function Step2SpecialSpots() {
       </Box>
 
       {matchedSpecialSpots.length > 0 && (
-        <Box sx={{ mt: 2 }}>
-          <Typography variant="subtitle1" sx={{ mb: 1 }}>
-            Total Active Bonuses
-          </Typography>
-          {totalBonuses.bonusYield > 0 && (
-            <Typography variant="body2" color="text.secondary">
-              Expedition Yield: +{totalBonuses.bonusYield}%
-            </Typography>
-          )}
-          {totalBonuses.bonusLogistics > 0 && (
-            <Typography variant="body2" color="text.secondary">
-              Logistics Bonus: +{totalBonuses.bonusLogistics}%
-            </Typography>
-          )}
-          {totalBonuses.bonusLight > 0 && (
-            <Typography variant="body2" color="text.secondary">
-              Light Production Rate: +{totalBonuses.bonusLight}%
-            </Typography>
-          )}
-          {totalBonuses.bonusEvents > 0 && (
-            <Typography variant="body2" color="text.secondary">
-              More frequent expedition events: x{totalBonuses.bonusEvents}
-            </Typography>
-          )}
-        </Box>
+        <TotalActiveBonuses bonuses={totalBonuses} />
       )}
     </Box>
   );

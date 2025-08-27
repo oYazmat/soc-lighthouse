@@ -12,6 +12,8 @@ import SpotCard from "../SpotCard";
 import TeamsTable from "../TeamsTable";
 import { getFallbackCharacters, getUsedCharacterIds } from "~/utils/characters";
 import type { MatchedSpot } from "~/interfaces/MatchedSpot";
+import TotalActiveBonuses from "../TotalActiveBonuses";
+import { aggregateActiveBonuses } from "~/utils/spots";
 
 export default function Step4Recap() {
   const {
@@ -76,6 +78,8 @@ export default function Step4Recap() {
     .map((k) => Number(k))
     .sort((a, b) => a - b);
 
+  const totalBonuses = aggregateActiveBonuses(matchedSpecialSpots);
+
   return (
     <Box sx={{ mb: 2 }}>
       {/* Unlocked spots */}
@@ -85,7 +89,7 @@ export default function Step4Recap() {
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
         Review all unlocked spots and their assigned characters (if any):
       </Typography>
-      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 4 }}>
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 2 }}>
         {unlockedSpots.map((spot) => {
           const matched = matchedSpots?.find((s) => s.id === spot.id);
           return (
@@ -96,6 +100,12 @@ export default function Step4Recap() {
             />
           );
         })}
+      </Box>
+
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 2 }}>
+        {matchedSpecialSpots.length > 0 && (
+          <TotalActiveBonuses bonuses={totalBonuses} />
+        )}
       </Box>
 
       {/* Selected Teams recap table */}
