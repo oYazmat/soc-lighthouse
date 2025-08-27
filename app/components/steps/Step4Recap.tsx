@@ -136,7 +136,8 @@ export default function Step4Recap() {
                 leaders={Object.keys(leaderTeamsForDest).map((k) => Number(k))}
                 charactersAllowed={charactersAllowed}
                 leaderTeams={leaderTeamsForDest}
-                showCheckbox={false} // recap only
+                showCheckbox={false}
+                showExpeditionPower
               />
             </Box>
           );

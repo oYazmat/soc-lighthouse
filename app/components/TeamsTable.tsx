@@ -26,6 +26,7 @@ interface Props {
   charactersAllowed: number;
   leaderTeams: LeaderTeams;
   showCheckbox?: boolean;
+  showExpeditionPower?: boolean;
 }
 
 export default function TeamsTable({
@@ -34,6 +35,7 @@ export default function TeamsTable({
   charactersAllowed,
   leaderTeams,
   showCheckbox,
+  showExpeditionPower = false, // default false
 }: Props) {
   const { charactersState, selectedTeams, setSelectedTeams } = useSoCContext();
   const maxCharactersPerRow = 4;
@@ -72,8 +74,7 @@ export default function TeamsTable({
         <TableHead>
           <TableRow>
             {showCheckbox && <TableCell align="center" />}
-            <TableCell align="center">Faction</TableCell>{" "}
-            {/* New Faction column */}
+            <TableCell align="center">Faction</TableCell>
             <TableCell align="center">Leader</TableCell>
             {Array.from({ length: maxCharactersPerRow }).map((_, i) => (
               <TableCell
@@ -81,8 +82,17 @@ export default function TeamsTable({
                 align="center"
               >{`Character ${i + 1}`}</TableCell>
             ))}
-            <TableCell align="center">Base Power</TableCell>
-            <TableCell align="center">Bonus Power %</TableCell>
+
+            {!showExpeditionPower && (
+              <>
+                <TableCell align="center">Base Power</TableCell>
+                <TableCell align="center">Bonus Power %</TableCell>
+              </>
+            )}
+
+            {showExpeditionPower && (
+              <TableCell align="center">Expedition Power</TableCell>
+            )}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -95,7 +105,7 @@ export default function TeamsTable({
             const isRowDisabled = !ownedLeader;
             const isChecked = !!selectedTeams[destinationId]?.[leaderId];
 
-            const faction = getTeamFaction(leaderTeam); // Compute faction
+            const faction = getTeamFaction(leaderTeam);
 
             return (
               <TableRow key={leaderId}>
@@ -116,9 +126,9 @@ export default function TeamsTable({
                   </TableCell>
                 )}
 
-                {/* Faction column */}
                 <TableCell align="center">{faction}</TableCell>
 
+                {/* Leader cell */}
                 <TableCell
                   sx={{
                     color: ownedLeader ? "inherit" : "text.disabled",
@@ -148,6 +158,7 @@ export default function TeamsTable({
                   )}
                 </TableCell>
 
+                {/* Members */}
                 {Array.from({ length: maxCharactersPerRow }).map((_, i) => {
                   const member = membersWithoutLeader[i];
                   const isDisabled = !member || i >= charactersAllowed - 1;
@@ -187,28 +198,46 @@ export default function TeamsTable({
                   );
                 })}
 
-                <TableCell
-                  align="center"
-                  sx={{
-                    backgroundColor: isRowDisabled
-                      ? "action.disabledBackground"
-                      : "inherit",
-                  }}
-                >
-                  {team?.basePowerSum ?? "-"}
-                </TableCell>
-                <TableCell
-                  align="center"
-                  sx={{
-                    backgroundColor: isRowDisabled
-                      ? "action.disabledBackground"
-                      : "inherit",
-                  }}
-                >
-                  {team?.powerPercentSum != null
-                    ? `${team.powerPercentSum}%`
-                    : "-"}
-                </TableCell>
+                {/* Power columns */}
+                {!showExpeditionPower && (
+                  <>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        backgroundColor: isRowDisabled
+                          ? "action.disabledBackground"
+                          : "inherit",
+                      }}
+                    >
+                      {team?.basePowerSum ?? "-"}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        backgroundColor: isRowDisabled
+                          ? "action.disabledBackground"
+                          : "inherit",
+                      }}
+                    >
+                      {team?.powerPercentSum != null
+                        ? `${team.powerPercentSum}%`
+                        : "-"}
+                    </TableCell>
+                  </>
+                )}
+
+                {showExpeditionPower && (
+                  <TableCell
+                    align="center"
+                    sx={{
+                      backgroundColor: isRowDisabled
+                        ? "action.disabledBackground"
+                        : "inherit",
+                    }}
+                  >
+                    {/* Placeholder for now */}-
+                  </TableCell>
+                )}
               </TableRow>
             );
           })}
