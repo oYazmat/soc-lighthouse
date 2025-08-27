@@ -1,4 +1,5 @@
 import { Tabs, Tab, Box, Typography } from "@mui/material";
+import LockIcon from "@mui/icons-material/Lock";
 import { useState } from "react";
 import { LIGHTHOUSE_DESTINATIONS } from "~/utils/data-loader";
 import LighthouseDestinationTable from "./LighthouseDestinationTable";
@@ -46,9 +47,15 @@ export default function LighthouseDestinationsTabs({
                     display: "flex",
                     flexDirection: "column",
                     lineHeight: 1.2,
+                    alignItems: "center",
                   }}
                 >
-                  <Typography variant="body2">{map}</Typography>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                    <Typography variant="body2">{map}</Typography>
+                    {isDisabled && (
+                      <LockIcon fontSize="small" color="disabled" />
+                    )}
+                  </Box>
                   <Typography variant="caption" color="text.secondary">
                     {mission}
                   </Typography>

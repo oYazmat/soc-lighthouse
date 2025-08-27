@@ -99,6 +99,10 @@ export default function Step3TeamRecommendations() {
               characters will automatically be assigned to the remaining
               logistic spots next.
             </Typography>
+            <Typography variant="caption" color="text.secondary">
+              Please review all tabs to ensure your teams are correctly assigned
+              before proceeding.
+            </Typography>
           </Box>
 
           <LighthouseDestinationsTabs
