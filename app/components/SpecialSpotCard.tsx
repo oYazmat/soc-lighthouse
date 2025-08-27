@@ -3,13 +3,10 @@
 import { Box, Typography } from "@mui/material";
 import CharacterAvatar from "./CharacterAvatar";
 import { CHARACTERS } from "~/utils/data-loader";
+import type { LighthouseSpot } from "~/interfaces/LighthouseSpot";
 
 interface SpecialSpotCardProps {
-  spot: {
-    id: number;
-    specialChar1: number | null;
-    specialChar2: number | null;
-  };
+  spot: LighthouseSpot;
   matchedCharName?: string;
 }
 

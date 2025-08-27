@@ -1,9 +1,8 @@
 import type { MatchedSpot } from "~/interfaces/MatchedSpot";
 import { CHARACTERS, LIGHTHOUSE_SPOTS } from "./data-loader";
-import type { CharacterState } from "~/interfaces/CharacterState";
 import type { LighthouseSpot } from "~/interfaces/LighthouseSpot";
-import type { Character } from "~/interfaces/character";
 import type { CharactersState } from "~/interfaces/CharactersState";
+import type { FilledCharacter } from "~/interfaces/FilledCharacter";
 
 export function getSpecialSpots(lighthouseLevel: number | "") {
   return LIGHTHOUSE_SPOTS.filter(
@@ -38,8 +37,7 @@ export function matchSpots(
       const char1 = getChar(spot.specialChar1, charactersState);
       const char2 = getChar(spot.specialChar2, charactersState);
 
-      let selectedChar: (Character & { stars: number; rank: number }) | null =
-        null;
+      let selectedChar: FilledCharacter | null = null;
 
       if (char1 && !char2) selectedChar = char1;
       else if (!char1 && char2) selectedChar = char2;
