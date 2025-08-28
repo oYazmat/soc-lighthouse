@@ -109,6 +109,8 @@ export default function TeamsTable({
             const team = leaderTeam?.team ?? null;
             const isRowDisabled = !ownedLeader;
             const isChecked = !!selectedTeams[destinationId]?.[leaderId];
+            const isCheckboxDisabled =
+              isRowDisabled || membersWithoutLeader.length === 0;
 
             const faction = getTeamFaction(leaderTeam);
 
@@ -117,7 +119,7 @@ export default function TeamsTable({
                 {showCheckbox && (
                   <TableCell align="center">
                     <Checkbox
-                      disabled={isRowDisabled}
+                      disabled={isCheckboxDisabled}
                       checked={isChecked}
                       onChange={(e) =>
                         handleCheckboxChange(
@@ -158,7 +160,12 @@ export default function TeamsTable({
                           filter: ownedLeader ? "none" : "grayscale(100%)",
                         }}
                       />
-                      <Typography variant="caption">{leader.name}</Typography>
+                      <Typography
+                        variant="caption"
+                        sx={{ textAlign: "center", width: "100%" }}
+                      >
+                        {leader.name}
+                      </Typography>
                     </Box>
                   )}
                 </TableCell>
@@ -194,7 +201,10 @@ export default function TeamsTable({
                               filter: isDisabled ? "grayscale(100%)" : "none",
                             }}
                           />
-                          <Typography variant="caption">
+                          <Typography
+                            variant="caption"
+                            sx={{ textAlign: "center", width: "100%" }}
+                          >
                             {member.name}
                           </Typography>
                         </Box>

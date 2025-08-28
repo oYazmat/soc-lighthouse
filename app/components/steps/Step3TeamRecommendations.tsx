@@ -1,4 +1,10 @@
-import { Typography, Box, CircularProgress } from "@mui/material";
+import {
+  Typography,
+  Box,
+  CircularProgress,
+  FormControlLabel,
+  Switch,
+} from "@mui/material";
 import { useSoCContext } from "~/context/SoCContext";
 import { useEffect, useState } from "react";
 import {
@@ -23,6 +29,7 @@ export default function Step3TeamRecommendations() {
 
   const [leaderTeams, setLeaderTeams] = useState<LeaderTeams>({});
   const [loading, setLoading] = useState(true);
+  const [allowOverlap, setAllowOverlap] = useState(true);
 
   const charactersAllowed = lighthouseLevel
     ? (LIGHTHOUSE_LEVELS.find((lvl) => lvl.level === lighthouseLevel)
@@ -58,7 +65,7 @@ export default function Step3TeamRecommendations() {
       );
       if (!active) return;
 
-      const leaderTeamsMap = buildLeaderTeams(factionTeams);
+      const leaderTeamsMap = buildLeaderTeams(factionTeams, allowOverlap);
       setLeaderTeams(leaderTeamsMap);
 
       // Select the leader with the highest combinedPower per destination
@@ -75,7 +82,7 @@ export default function Step3TeamRecommendations() {
     return () => {
       active = false;
     };
-  }, [charactersState, matchedSpecialSpots, charactersAllowed]);
+  }, [charactersState, matchedSpecialSpots, charactersAllowed, allowOverlap]);
 
   useEffect(() => {
     // Whenever selectedTeams changes, reset matchedSpots
@@ -110,10 +117,26 @@ export default function Step3TeamRecommendations() {
               characters will automatically be assigned to the remaining
               logistic spots next.
             </Typography>
-            <Typography variant="caption" color="text.secondary">
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              display="block"
+              sx={{ mb: 1 }}
+            >
               Please review all tabs to ensure your teams are correctly assigned
               before proceeding.
             </Typography>
+
+            {/* NEW Switch */}
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={allowOverlap}
+                  onChange={(e) => setAllowOverlap(e.target.checked)}
+                />
+              }
+              label="Allow overlapping characters"
+            />
           </Box>
 
           <LighthouseDestinationsTabs
