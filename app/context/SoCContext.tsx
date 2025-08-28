@@ -12,9 +12,7 @@ import type { SelectedTeams } from "~/interfaces/SelectedTeams";
 
 interface SoCContextType {
   charactersState: CharactersState;
-  setCharactersState: React.Dispatch<
-    React.SetStateAction<CharactersState | null>
-  >;
+  setCharactersState: React.Dispatch<React.SetStateAction<CharactersState>>;
   lighthouseLevel: number | "";
   setLighthouseLevel: React.Dispatch<React.SetStateAction<number | "">>;
   matchedSpots: MatchedSpot[];
@@ -31,10 +29,9 @@ const CHARACTER_LOCAL_STORAGE_KEY = "characterState";
 const LIGHTHOUSE_LOCAL_STORAGE_KEY = "lighthouse-level";
 
 export function SoCProvider({ children }: { children: ReactNode }) {
-  const [charactersState, setCharactersState] = useState<Record<
-    number,
-    CharacterState
-  > | null>(null);
+  const [charactersState, setCharactersState] = useState<
+    Record<number, CharacterState>
+  >({});
   const [lighthouseLevel, setLighthouseLevel] = useState<number | "">("");
   const [matchedSpots, setMatchedSpots] = useState<MatchedSpot[]>([]);
   const [matchedSpecialSpots, setMatchedSpecialSpots] = useState<MatchedSpot[]>(
@@ -75,13 +72,27 @@ export function SoCProvider({ children }: { children: ReactNode }) {
 
   // Save character state only if it's non-null
   useEffect(() => {
-    if (typeof window === "undefined" || charactersState === null) return;
+    if (typeof window === "undefined") return;
 
     try {
-      localStorage.setItem(
-        CHARACTER_LOCAL_STORAGE_KEY,
-        JSON.stringify(charactersState)
-      );
+      const stored = localStorage.getItem(CHARACTER_LOCAL_STORAGE_KEY);
+      const storedState: Record<number, CharacterState> = stored
+        ? JSON.parse(stored)
+        : {};
+
+      // Only overwrite localStorage if charactersState is valid object
+      if (charactersState && Object.keys(charactersState).length > 0) {
+        localStorage.setItem(
+          CHARACTER_LOCAL_STORAGE_KEY,
+          JSON.stringify(charactersState)
+        );
+      } else {
+        // If charactersState is empty due to crash, preserve previous storage
+        localStorage.setItem(
+          CHARACTER_LOCAL_STORAGE_KEY,
+          JSON.stringify(storedState)
+        );
+      }
     } catch (err) {
       console.error("Failed to save characterState", err);
     }
@@ -100,9 +111,6 @@ export function SoCProvider({ children }: { children: ReactNode }) {
       console.error("Failed to save lighthouseLevel", err);
     }
   }, [lighthouseLevel]);
-
-  // Do not render children until characterState is loaded
-  if (charactersState === null) return null;
 
   return (
     <SoCContext.Provider
