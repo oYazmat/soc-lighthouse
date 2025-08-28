@@ -14,6 +14,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import SoCLayout from "./components/SoCLayout";
+import LoadingPage from "./components/LoadingPage";
 
 export const links: Route.LinksFunction = () => [];
 
@@ -43,6 +44,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </body>
     </html>
   );
+}
+
+export function HydrateFallback() {
+  return <LoadingPage />;
 }
 
 export default function App() {
