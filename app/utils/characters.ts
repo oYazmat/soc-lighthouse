@@ -149,20 +149,96 @@ export function getBestTeamForLeader(
   };
 }
 
-export function buildLeaderTeams(factionTeams: FactionTeam[]): LeaderTeams {
+export function buildLeaderTeams(
+  factionTeams: FactionTeam[],
+  allowOverlap: boolean
+): LeaderTeams {
   const leaderTeamsMap: LeaderTeams = {};
+
   LIGHTHOUSE_DESTINATIONS.forEach((dest) => {
-    dest.leaders.forEach((leaderId) => {
-      const { team, membersWithoutLeader } = getBestTeamForLeader(
+    // Track used characters *within this destination only*
+    const usedCharIds = new Set<number>();
+
+    // 1) If overlap is allowed, keep your original simple behavior
+    if (allowOverlap) {
+      dest.leaders.forEach((leaderId) => {
+        const { team, membersWithoutLeader } = getBestTeamForLeader(
+          leaderId,
+          factionTeams
+        );
+        if (team) {
+          leaderTeamsMap[leaderId] = { leaderId, team, membersWithoutLeader };
+        }
+      });
+      return; // next destination
+    }
+
+    // 2) If overlap is NOT allowed, pick greedily: best team A, then best team B that doesn’t overlap, etc.
+
+    // Pre-compute each leader's best possible team (ignoring overlap) to sort leaders by potential
+    const leadersWithBest = dest.leaders
+      .map((leaderId) => {
+        const { team } = getBestTeamForLeader(leaderId, factionTeams);
+        return { leaderId, bestTeamPower: team?.combinedPower ?? 0 };
+      })
+      .filter((x) => x.bestTeamPower > 0)
+      .sort((a, b) => b.bestTeamPower - a.bestTeamPower);
+
+    for (const entry of leadersWithBest) {
+      const leaderId = entry.leaderId;
+
+      // Find the best team for this leader that doesn't conflict with usedCharIds
+      const bestNonOverlap = getBestTeamForLeaderWithExclusions(
         leaderId,
-        factionTeams
+        factionTeams,
+        usedCharIds
       );
-      if (team) {
-        leaderTeamsMap[leaderId] = { leaderId, team, membersWithoutLeader };
-      }
-    });
+
+      if (!bestNonOverlap.team) continue;
+
+      const { team, membersWithoutLeader } = bestNonOverlap;
+
+      // Save it
+      leaderTeamsMap[leaderId] = { leaderId, team, membersWithoutLeader };
+
+      // Mark all characters from this team as used within this destination
+      team.characters.forEach((c) => usedCharIds.add(c.id));
+    }
   });
+
   return leaderTeamsMap;
+}
+
+/**
+ * Best team for a leader *without* using any characters present in excludeIds.
+ * (Exclusion applies to the whole team, including the leader.)
+ */
+function getBestTeamForLeaderWithExclusions(
+  leaderId: number,
+  factionTeams: FactionTeam[],
+  excludeIds: Set<number>
+): { team: FactionTeam | null; membersWithoutLeader: CharacterWithPower[] } {
+  let best: FactionTeam | null = null;
+
+  for (const team of factionTeams) {
+    // Must include the leader
+    if (!team.characters.some((ch) => ch.id === leaderId)) continue;
+
+    // Must not contain any excluded character IDs
+    const overlaps = team.characters.some((ch) => excludeIds.has(ch.id));
+    if (overlaps) continue;
+
+    if (!best || team.combinedPower > best.combinedPower) {
+      best = team;
+    }
+  }
+
+  if (!best) return { team: null, membersWithoutLeader: [] };
+
+  return {
+    team: best,
+    membersWithoutLeader: best.characters.filter((ch) => ch.id !== leaderId),
+  };
 }
 
 export function selectBestTeamsPerDestination(
