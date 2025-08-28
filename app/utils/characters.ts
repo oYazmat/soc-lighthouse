@@ -151,62 +151,132 @@ export function getBestTeamForLeader(
 
 export function buildLeaderTeams(
   factionTeams: FactionTeam[],
-  allowOverlap: boolean
+  allowOverlap: boolean,
+  braindeadMode: boolean
 ): LeaderTeams {
+  if (braindeadMode) {
+    return buildLeaderTeamsBraindead(factionTeams);
+  }
+  if (allowOverlap) {
+    return buildLeaderTeamsWithOverlap(factionTeams);
+  }
+  return buildLeaderTeamsNoOverlap(factionTeams);
+}
+
+/**
+ * Strategy 1: Allow overlap, simple greedy pick.
+ */
+function buildLeaderTeamsWithOverlap(factionTeams: FactionTeam[]): LeaderTeams {
   const leaderTeamsMap: LeaderTeams = {};
 
   LIGHTHOUSE_DESTINATIONS.forEach((dest) => {
-    // Track used characters *within this destination only*
-    const usedCharIds = new Set<number>();
+    dest.leaders.forEach((leaderId) => {
+      const { team, membersWithoutLeader } = getBestTeamForLeader(
+        leaderId,
+        factionTeams
+      );
+      if (team) {
+        leaderTeamsMap[leaderId] = { leaderId, team, membersWithoutLeader };
+      }
+    });
+  });
 
-    // 1) If overlap is allowed, keep your original simple behavior
-    if (allowOverlap) {
-      dest.leaders.forEach((leaderId) => {
-        const { team, membersWithoutLeader } = getBestTeamForLeader(
-          leaderId,
-          factionTeams
-        );
-        if (team) {
-          leaderTeamsMap[leaderId] = { leaderId, team, membersWithoutLeader };
-        }
-      });
-      return; // next destination
-    }
+  return leaderTeamsMap;
+}
 
-    // 2) If overlap is NOT allowed, pick greedily: best team A, then best team B that doesn’t overlap, etc.
+/**
+ * Strategy 2: No overlap, greedy within each destination.
+ */
+function buildLeaderTeamsNoOverlap(factionTeams: FactionTeam[]): LeaderTeams {
+  const leaderTeamsMap: LeaderTeams = {};
 
-    // Pre-compute each leader's best possible team (ignoring overlap) to sort leaders by potential
-    const leadersWithBest = dest.leaders
-      .map((leaderId) => {
-        const { team } = getBestTeamForLeader(leaderId, factionTeams);
-        return { leaderId, bestTeamPower: team?.combinedPower ?? 0 };
-      })
-      .filter((x) => x.bestTeamPower > 0)
-      .sort((a, b) => b.bestTeamPower - a.bestTeamPower);
+  LIGHTHOUSE_DESTINATIONS.forEach((dest) => {
+    const localUsedCharIds = new Set<number>();
 
-    for (const entry of leadersWithBest) {
-      const leaderId = entry.leaderId;
+    const leadersWithBest = getSortedLeadersWithBestTeams(
+      dest.leaders,
+      factionTeams
+    );
 
-      // Find the best team for this leader that doesn't conflict with usedCharIds
+    for (const { leaderId } of leadersWithBest) {
+      const exclusions = new Set(localUsedCharIds);
+
       const bestNonOverlap = getBestTeamForLeaderWithExclusions(
         leaderId,
         factionTeams,
-        usedCharIds
+        exclusions
       );
 
       if (!bestNonOverlap.team) continue;
 
-      const { team, membersWithoutLeader } = bestNonOverlap;
+      leaderTeamsMap[leaderId] = {
+        leaderId,
+        team: bestNonOverlap.team,
+        membersWithoutLeader: bestNonOverlap.membersWithoutLeader,
+      };
 
-      // Save it
-      leaderTeamsMap[leaderId] = { leaderId, team, membersWithoutLeader };
-
-      // Mark all characters from this team as used within this destination
-      team.characters.forEach((c) => usedCharIds.add(c.id));
+      bestNonOverlap.team.characters.forEach((c) => localUsedCharIds.add(c.id));
     }
   });
 
   return leaderTeamsMap;
+}
+
+/**
+ * Strategy 3: Braindead mode = global no-overlap,
+ * only top 2 leaders per destination.
+ */
+function buildLeaderTeamsBraindead(factionTeams: FactionTeam[]): LeaderTeams {
+  const leaderTeamsMap: LeaderTeams = {};
+  const globalUsedCharIds = new Set<number>();
+
+  LIGHTHOUSE_DESTINATIONS.forEach((dest) => {
+    const leadersWithBest = getSortedLeadersWithBestTeams(
+      dest.leaders,
+      factionTeams
+    );
+    const leadersToProcess = leadersWithBest.slice(0, 2);
+
+    for (const { leaderId } of leadersToProcess) {
+      const exclusions = new Set(globalUsedCharIds);
+
+      const bestNonOverlap = getBestTeamForLeaderWithExclusions(
+        leaderId,
+        factionTeams,
+        exclusions
+      );
+
+      if (!bestNonOverlap.team) continue;
+
+      leaderTeamsMap[leaderId] = {
+        leaderId,
+        team: bestNonOverlap.team,
+        membersWithoutLeader: bestNonOverlap.membersWithoutLeader,
+      };
+
+      bestNonOverlap.team.characters.forEach((c) =>
+        globalUsedCharIds.add(c.id)
+      );
+    }
+  });
+
+  return leaderTeamsMap;
+}
+
+/**
+ * Utility: get leaders sorted by best possible team power.
+ */
+function getSortedLeadersWithBestTeams(
+  leaderIds: number[],
+  factionTeams: FactionTeam[]
+) {
+  return leaderIds
+    .map((leaderId) => {
+      const { team } = getBestTeamForLeader(leaderId, factionTeams);
+      return { leaderId, bestTeamPower: team?.combinedPower ?? 0 };
+    })
+    .filter((x) => x.bestTeamPower > 0)
+    .sort((a, b) => b.bestTeamPower - a.bestTeamPower);
 }
 
 /**
@@ -243,34 +313,48 @@ function getBestTeamForLeaderWithExclusions(
 
 export function selectBestTeamsPerDestination(
   lighthouseLevel: number | "",
-  leaderTeamsMap: LeaderTeams
+  leaderTeamsMap: LeaderTeams,
+  braindeadMode: boolean
 ): SelectedTeams {
   const selected: SelectedTeams = {};
+
   LIGHTHOUSE_DESTINATIONS.forEach((dest) => {
     // Skip if destination is locked
     if (dest.levelUnlock > Number(lighthouseLevel)) return;
 
-    let bestLeader: LeaderTeam | null = null;
+    if (braindeadMode) {
+      // --- Braindead mode: include ALL teams for this destination ---
+      dest.leaders.forEach((leaderId) => {
+        const leaderTeam = leaderTeamsMap[leaderId];
+        if (!leaderTeam || !leaderTeam.team) return;
 
-    dest.leaders.forEach((leaderId) => {
-      const leaderTeam = leaderTeamsMap[leaderId];
-      if (!leaderTeam || !leaderTeam.team) return;
+        if (!selected[dest.id]) selected[dest.id] = {};
+        selected[dest.id][leaderId] = leaderTeam;
+      });
+    } else {
+      // --- Normal mode: pick strongest team only ---
+      let bestLeader: LeaderTeam | null = null;
 
-      if (!bestLeader) {
-        bestLeader = leaderTeam;
-      } else if (bestLeader.team) {
-        if (leaderTeam.team.combinedPower > bestLeader.team.combinedPower) {
+      dest.leaders.forEach((leaderId) => {
+        const leaderTeam = leaderTeamsMap[leaderId];
+        if (!leaderTeam || !leaderTeam.team) return;
+
+        if (!bestLeader) {
+          bestLeader = leaderTeam;
+        } else if (
+          leaderTeam.team.combinedPower > (bestLeader.team?.combinedPower ?? 0)
+        ) {
           bestLeader = leaderTeam;
         }
+      });
+
+      if (bestLeader !== null) {
+        if (!selected[dest.id]) selected[dest.id] = {};
+        selected[dest.id][(bestLeader as LeaderTeam).leaderId] = bestLeader;
       }
-    });
-
-    if (bestLeader !== null) {
-      if (!selected[dest.id]) selected[dest.id] = {};
-
-      selected[dest.id][(bestLeader as LeaderTeam).leaderId] = bestLeader;
     }
   });
+
   return selected;
 }
 
