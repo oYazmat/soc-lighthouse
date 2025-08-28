@@ -1,37 +1,40 @@
-import { Select, MenuItem, Box } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 
-interface StarsDropdownProps {
+interface StarsProps {
   value: number;
   onChange: (value: number) => void;
 }
 
-export default function StarsDropdown({ value, onChange }: StarsDropdownProps) {
-  const renderStars = (count: number) => (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
-      {Array.from({ length: 5 }, (_, i) =>
-        i < count ? (
-          <StarIcon key={i} fontSize="small" sx={{ color: "#FFD700" }} />
-        ) : (
-          <StarBorderIcon key={i} fontSize="small" sx={{ color: "#FFD700" }} />
-        )
-      )}
-    </Box>
-  );
+export default function Stars({ value, onChange }: StarsProps) {
+  const handleClick = (starValue: number) => {
+    // If user clicks the same star again, reset to 0
+    if (value === starValue) {
+      onChange(0);
+    } else {
+      onChange(starValue);
+    }
+  };
 
   return (
-    <Select
-      value={value}
-      onChange={(e) => onChange(Number(e.target.value))}
-      size="small"
-      renderValue={(selected) => renderStars(Number(selected))}
-    >
-      {[0, 1, 2, 3, 4, 5].map((star) => (
-        <MenuItem key={star} value={star}>
-          {renderStars(star)}
-        </MenuItem>
-      ))}
-    </Select>
+    <Box sx={{ display: "flex", alignItems: "center" }}>
+      {Array.from({ length: 5 }, (_, i) => {
+        const starValue = i + 1;
+        return (
+          <IconButton
+            key={starValue}
+            onClick={() => handleClick(starValue)}
+            size="small"
+          >
+            {value >= starValue ? (
+              <StarIcon fontSize="small" sx={{ color: "#FFD700" }} />
+            ) : (
+              <StarBorderIcon fontSize="small" sx={{ color: "#FFD700" }} />
+            )}
+          </IconButton>
+        );
+      })}
+    </Box>
   );
 }
