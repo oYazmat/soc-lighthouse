@@ -1,5 +1,3 @@
-"use client";
-
 import { Box, Typography } from "@mui/material";
 import { useEffect, useMemo } from "react";
 import { useSoCContext } from "~/context/SoCContext";

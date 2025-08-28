@@ -16,7 +16,13 @@ import "@fontsource/roboto/700.css";
 import SoCLayout from "./components/SoCLayout";
 import LoadingPage from "./components/LoadingPage";
 
-export const links: Route.LinksFunction = () => [];
+export const links: Route.LinksFunction = () => [
+  {
+    rel: "shortcut icon",
+    type: "image/x-icon",
+    href: "favicon.ico",
+  },
+];
 
 export function meta({}: Route.MetaArgs) {
   return [

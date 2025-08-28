@@ -1,5 +1,3 @@
-"use client";
-
 import { Box, Typography, TextField } from "@mui/material";
 import { useSoCContext } from "../../context/SoCContext";
 import { useEffect } from "react";

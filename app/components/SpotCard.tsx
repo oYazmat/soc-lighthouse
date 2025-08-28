@@ -1,5 +1,3 @@
-"use client";
-
 import { Box, Typography } from "@mui/material";
 import CharacterAvatar from "./CharacterAvatar";
 import { CHARACTERS } from "~/utils/data-loader";

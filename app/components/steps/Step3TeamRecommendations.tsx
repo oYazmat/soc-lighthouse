@@ -1,5 +1,3 @@
-"use client";
-
 import { Typography, Box, CircularProgress } from "@mui/material";
 import { useSoCContext } from "~/context/SoCContext";
 import { useEffect, useState } from "react";

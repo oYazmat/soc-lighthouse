@@ -1,5 +1,3 @@
-"use client";
-
 import { Avatar } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
 
