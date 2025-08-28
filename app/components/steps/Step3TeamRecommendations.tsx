@@ -30,6 +30,7 @@ export default function Step3TeamRecommendations() {
   const [leaderTeams, setLeaderTeams] = useState<LeaderTeams>({});
   const [loading, setLoading] = useState(true);
   const [allowOverlap, setAllowOverlap] = useState(true);
+  const [braindeadMode, setBraindeadMode] = useState(false);
 
   const charactersAllowed = lighthouseLevel
     ? (LIGHTHOUSE_LEVELS.find((lvl) => lvl.level === lighthouseLevel)
@@ -65,13 +66,18 @@ export default function Step3TeamRecommendations() {
       );
       if (!active) return;
 
-      const leaderTeamsMap = buildLeaderTeams(factionTeams, allowOverlap);
+      const leaderTeamsMap = buildLeaderTeams(
+        factionTeams,
+        braindeadMode ? false : allowOverlap, // disallow overlap in Braindead mode
+        braindeadMode
+      );
       setLeaderTeams(leaderTeamsMap);
 
       // Select the leader with the highest combinedPower per destination
       const selected = selectBestTeamsPerDestination(
         lighthouseLevel,
-        leaderTeamsMap
+        leaderTeamsMap,
+        braindeadMode
       );
 
       setSelectedTeams(selected);
@@ -82,7 +88,15 @@ export default function Step3TeamRecommendations() {
     return () => {
       active = false;
     };
-  }, [charactersState, matchedSpecialSpots, charactersAllowed, allowOverlap]);
+  }, [
+    charactersState,
+    matchedSpecialSpots,
+    charactersAllowed,
+    allowOverlap,
+    braindeadMode,
+    lighthouseLevel,
+    setSelectedTeams,
+  ]);
 
   useEffect(() => {
     // Whenever selectedTeams changes, reset matchedSpots
@@ -127,12 +141,24 @@ export default function Step3TeamRecommendations() {
               before proceeding.
             </Typography>
 
-            {/* NEW Switch */}
+            {/* Braindead Mode Switch */}
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={braindeadMode}
+                  onChange={(e) => setBraindeadMode(e.target.checked)}
+                />
+              }
+              label="Braindead Mode"
+            />
+
+            {/* Allow Overlap Switch */}
             <FormControlLabel
               control={
                 <Switch
                   checked={allowOverlap}
                   onChange={(e) => setAllowOverlap(e.target.checked)}
+                  disabled={braindeadMode} // disabled in Braindead mode
                 />
               }
               label="Allow overlapping characters"
