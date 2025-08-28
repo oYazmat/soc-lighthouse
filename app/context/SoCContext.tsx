@@ -39,13 +39,6 @@ export function SoCProvider({ children }: { children: ReactNode }) {
   );
   const [selectedTeams, setSelectedTeams] = useState<SelectedTeams>({});
 
-  useEffect(() => {
-    console.debug(
-      "🚀 ~ SoCProvider ~ selectedTeams:",
-      JSON.stringify(selectedTeams, null, 2)
-    );
-  }, [selectedTeams]);
-
   // Load character state & lighthouse level from localStorage
   useEffect(() => {
     if (typeof window === "undefined") return;

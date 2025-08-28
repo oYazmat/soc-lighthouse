@@ -62,7 +62,6 @@ export default function Step4Recap() {
 
     if (hasChanged) {
       setMatchedSpots(updatedMatches);
-      console.debug("🚀 ~ Step4Recap ~ updatedMatches:", updatedMatches);
     }
   }, [
     unlockedSpots.length,
