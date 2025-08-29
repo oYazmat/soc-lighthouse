@@ -15,6 +15,7 @@ import type { LeaderTeams } from "~/interfaces/LeaderTeams";
 import type { CharactersState } from "~/interfaces/CharactersState";
 import type { FilledCharacter } from "~/interfaces/FilledCharacter";
 import type { MatchedSpot } from "~/interfaces/MatchedSpot";
+import { buildLeaderTeamsBraindead } from "./braindead";
 
 export const RARITY_ORDER: Record<string, number> = {
   Legendary: 1,
@@ -216,47 +217,6 @@ function buildLeaderTeamsNoOverlap(factionTeams: FactionTeam[]): LeaderTeams {
       };
 
       bestNonOverlap.team.characters.forEach((c) => localUsedCharIds.add(c.id));
-    }
-  });
-
-  return leaderTeamsMap;
-}
-
-/**
- * Strategy 3: Braindead mode = global no-overlap,
- * only top 2 leaders per destination.
- */
-function buildLeaderTeamsBraindead(factionTeams: FactionTeam[]): LeaderTeams {
-  const leaderTeamsMap: LeaderTeams = {};
-  const globalUsedCharIds = new Set<number>();
-
-  LIGHTHOUSE_DESTINATIONS.forEach((dest) => {
-    const leadersWithBest = getSortedLeadersWithBestTeams(
-      dest.leaders,
-      factionTeams
-    );
-    const leadersToProcess = leadersWithBest.slice(0, 2);
-
-    for (const { leaderId } of leadersToProcess) {
-      const exclusions = new Set(globalUsedCharIds);
-
-      const bestNonOverlap = getBestTeamForLeaderWithExclusions(
-        leaderId,
-        factionTeams,
-        exclusions
-      );
-
-      if (!bestNonOverlap.team) continue;
-
-      leaderTeamsMap[leaderId] = {
-        leaderId,
-        team: bestNonOverlap.team,
-        membersWithoutLeader: bestNonOverlap.membersWithoutLeader,
-      };
-
-      bestNonOverlap.team.characters.forEach((c) =>
-        globalUsedCharIds.add(c.id)
-      );
     }
   });
 
