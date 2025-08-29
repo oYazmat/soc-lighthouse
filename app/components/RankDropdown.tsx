@@ -18,9 +18,9 @@ export default function RankDropdown({
       size="small"
       disabled={disabled}
     >
-      {Array.from({ length: 14 }, (_, i) => (
-        <MenuItem key={i} value={i}>
-          {i}
+      {Array.from({ length: 14 }, (_, i) => 13 - i).map((rank) => (
+        <MenuItem key={rank} value={rank}>
+          {rank}
         </MenuItem>
       ))}
     </Select>
