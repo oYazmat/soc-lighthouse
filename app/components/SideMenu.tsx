@@ -9,85 +9,111 @@ import {
   Box,
   Typography,
   Button,
+  Divider,
+  Stack,
 } from "@mui/material";
+import { useState } from "react";
 import PeopleIcon from "@mui/icons-material/People";
 import RedditIcon from "@mui/icons-material/Reddit";
+import HistoryIcon from "@mui/icons-material/History";
+import UpdateIcon from "@mui/icons-material/Update";
 import DiscordIcon from "./DiscordIcon";
+import ChangelogModal from "./ChangelogModal";
 import config from "../../app-config.json";
 
 const drawerWidth = 240;
 
 export default function SideMenu() {
   const lastUpdate = config.lastUpdate;
+  const [openChangelog, setOpenChangelog] = useState(false);
 
   return (
-    <Drawer
-      variant="permanent"
-      sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        display: "flex",
-        flexDirection: "column",
-        [`& .MuiDrawer-paper`]: {
-          width: drawerWidth,
-          boxSizing: "border-box",
-          display: "flex",
-          flexDirection: "column",
-        },
-      }}
-    >
-      <Toolbar />
-      <Box
+    <>
+      <Drawer
+        variant="permanent"
         sx={{
-          flexGrow: 1,
+          width: drawerWidth,
+          flexShrink: 0,
           display: "flex",
           flexDirection: "column",
+          [`& .MuiDrawer-paper`]: {
+            width: drawerWidth,
+            boxSizing: "border-box",
+            display: "flex",
+            flexDirection: "column",
+          },
         }}
       >
-        {/* The actual list items */}
-        <List sx={{ zIndex: 1 }}>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <PeopleIcon />
-              </ListItemIcon>
-              <ListItemText primary="My Characters" />
-            </ListItemButton>
-          </ListItem>
-        </List>
+        <Toolbar />
+        <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
+          {/* The actual list items */}
+          <List sx={{ zIndex: 1 }}>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <PeopleIcon />
+                </ListItemIcon>
+                <ListItemText primary="My Characters" />
+              </ListItemButton>
+            </ListItem>
+          </List>
 
-        {/* Empty space background */}
-        <Box
-          sx={{
-            flexGrow: 1,
-            backgroundImage: `url(/images/lighthouse-bg.png)`,
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-          }}
-        />
-      </Box>
-
-      {/* Bottom section */}
-      <Box sx={{ p: 2, borderTop: "1px solid #ddd" }}>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-          Last update: {lastUpdate}
-        </Typography>
-        <Box display="flex" flexDirection="column" gap={1}>
-          <Button
-            variant="outlined"
-            size="small"
-            startIcon={<RedditIcon />}
-            href="https://www.reddit.com/u/oYazmat"
-            target="_blank"
-          >
-            Reddit
-          </Button>
-          <Button variant="outlined" size="small" startIcon={<DiscordIcon />}>
-            oyazmat
-          </Button>
+          {/* Empty space background */}
+          <Box
+            sx={{
+              flexGrow: 1,
+              backgroundImage: `url(/images/lighthouse-bg.png)`,
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+            }}
+          />
         </Box>
-      </Box>
-    </Drawer>
+
+        {/* Bottom section */}
+        <Divider />
+        <Box sx={{ p: 2 }}>
+          <Stack spacing={1.2}>
+            <Box display="flex" alignItems="center" gap={1}>
+              <UpdateIcon fontSize="small" color="action" />
+              <Typography variant="body2" color="text.secondary">
+                Last update: {lastUpdate}
+              </Typography>
+            </Box>
+
+            <Button
+              size="small"
+              startIcon={<HistoryIcon />}
+              variant="outlined"
+              color="primary"
+              onClick={() => setOpenChangelog(true)}
+            >
+              View Changelog
+            </Button>
+
+            <Divider flexItem />
+
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<RedditIcon />}
+              href="https://www.reddit.com/u/oYazmat"
+              target="_blank"
+            >
+              Reddit
+            </Button>
+            <Button variant="outlined" size="small" startIcon={<DiscordIcon />}>
+              oyazmat
+            </Button>
+          </Stack>
+        </Box>
+      </Drawer>
+
+      {/* Modal */}
+      <ChangelogModal
+        open={openChangelog}
+        onClose={() => setOpenChangelog(false)}
+      />
+    </>
   );
 }
