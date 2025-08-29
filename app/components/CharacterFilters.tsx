@@ -9,9 +9,11 @@ import {
   OutlinedInput,
   InputAdornment,
   IconButton,
+  Avatar,
 } from "@mui/material";
 import type { CharacterFilterValues } from "~/interfaces/CharacterFilterValues";
 import ClearIcon from "@mui/icons-material/Clear";
+import { toKebabCase } from "~/utils/string";
 
 // Define a reusable interface for the filter values
 
@@ -64,14 +66,33 @@ export default function CharacterFilters({
           renderValue={(selected) => (
             <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap" }}>
               {(selected as string[]).map((value) => (
-                <Chip key={value} label={value} size="small" />
+                <Chip
+                  key={value}
+                  avatar={
+                    <Avatar
+                      alt={value}
+                      src={`/images/rarities/${toKebabCase(value)}.png`}
+                    />
+                  }
+                  label={value}
+                  size="small"
+                />
               ))}
             </Box>
           )}
         >
           {allRarities.map((rarity) => (
             <MenuItem key={rarity} value={rarity}>
-              {rarity}
+              <Chip
+                avatar={
+                  <Avatar
+                    alt={rarity}
+                    src={`/images/rarities/${toKebabCase(rarity)}.png`}
+                  />
+                }
+                label={rarity}
+                variant="outlined"
+              />
             </MenuItem>
           ))}
         </Select>
@@ -90,14 +111,33 @@ export default function CharacterFilters({
           renderValue={(selected) => (
             <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap" }}>
               {(selected as string[]).map((value) => (
-                <Chip key={value} label={value} size="small" />
+                <Chip
+                  key={value}
+                  avatar={
+                    <Avatar
+                      alt={value}
+                      src={`/images/factions/${toKebabCase(value)}.png`}
+                    />
+                  }
+                  label={value}
+                  size="small"
+                />
               ))}
             </Box>
           )}
         >
           {allFactions.map((faction) => (
             <MenuItem key={faction} value={faction}>
-              {faction}
+              <Chip
+                avatar={
+                  <Avatar
+                    alt={faction}
+                    src={`/images/factions/${toKebabCase(faction)}.png`}
+                  />
+                }
+                label={faction}
+                variant="outlined"
+              />
             </MenuItem>
           ))}
         </Select>
