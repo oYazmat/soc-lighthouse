@@ -9,6 +9,8 @@ import {
   TableHead,
   Paper,
   Checkbox,
+  Avatar,
+  Chip,
 } from "@mui/material";
 import CharacterAvatar from "./CharacterAvatar";
 import { useSoCContext } from "~/context/SoCContext";
@@ -17,6 +19,7 @@ import type { LeaderTeam } from "~/interfaces/LeaderTeam";
 import type { SelectedTeams } from "~/interfaces/SelectedTeams";
 import type { LeaderTeams } from "~/interfaces/LeaderTeams";
 import { getTeamFaction } from "~/utils/factions";
+import { toKebabCase } from "~/utils/string";
 
 interface Props {
   destinationId: number;
@@ -133,7 +136,21 @@ export default function TeamsTable({
                   </TableCell>
                 )}
 
-                <TableCell align="center">{faction}</TableCell>
+                <TableCell align="center">
+                  {faction && (
+                    <Chip
+                      avatar={
+                        <Avatar
+                          alt={faction}
+                          src={`/images/factions/${toKebabCase(faction)}.png`}
+                        />
+                      }
+                      label={faction}
+                      variant="outlined"
+                    />
+                  )}
+                  {!faction && <>-</>}
+                </TableCell>
 
                 {/* Leader cell */}
                 <TableCell

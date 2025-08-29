@@ -9,6 +9,7 @@ import {
   Chip,
   Box,
   Button,
+  Avatar,
 } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import StarsDropdown from "./StarsDropdown";
@@ -20,6 +21,7 @@ import type { CharacterFilterValues } from "~/interfaces/CharacterFilterValues";
 import { CHARACTERS } from "~/utils/data-loader";
 import { RARITY_ORDER } from "~/utils/characters";
 import CharacterJsonModal from "./CharacterJsonModal";
+import { toKebabCase } from "~/utils/string";
 
 export default function CharacterList() {
   const {
@@ -195,7 +197,18 @@ export default function CharacterList() {
                     <CharacterAvatar name={character.name} size={40} />
                   </TableCell>
                   <TableCell>{character.name}</TableCell>
-                  <TableCell>{character.rarity}</TableCell>
+                  <TableCell>
+                    <Chip
+                      avatar={
+                        <Avatar
+                          alt={character.rarity}
+                          src={`/images/rarities/${toKebabCase(character.rarity)}.png`}
+                        />
+                      }
+                      label={character.rarity}
+                      variant="outlined"
+                    />
+                  </TableCell>
                   <TableCell>
                     <StarsDropdown
                       value={state.stars}
@@ -212,7 +225,18 @@ export default function CharacterList() {
                   <TableCell>
                     <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
                       {character.factions.map((faction: string) => (
-                        <Chip key={faction} label={faction} size="small" />
+                        <Chip
+                          key={faction}
+                          avatar={
+                            <Avatar
+                              alt={faction}
+                              src={`/images/factions/${toKebabCase(faction)}.png`}
+                            />
+                          }
+                          label={faction}
+                          variant="outlined"
+                          size="small"
+                        />
                       ))}
                     </Box>
                   </TableCell>

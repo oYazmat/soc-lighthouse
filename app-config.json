@@ -16,7 +16,8 @@
       "Improvement: Reversed the order of the Rank dropdown on the My Characters page."
     ],
     "1.3.1": [
-      "Improvement: Improvement: Refined the 'Braindead Mode' algorithm to optimize team recommendations in Step 3."
-    ]
+      "Improvement: Refined the 'Braindead Mode' algorithm to optimize team recommendations in Step 3."
+    ],
+    "1.3.2": ["Improvement: Added images of rarities & factions."]
   }
 }

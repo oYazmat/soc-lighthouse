@@ -1,22 +1,11 @@
 import { Avatar } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
+import { toKebabCase } from "~/utils/string";
 
 interface CharacterAvatarProps {
   name: string;
   size?: number; // optional, default to 40
   sx?: SxProps<Theme>;
-}
-
-function toKebabCase(str: string): string {
-  return str
-    .replace(/["']/g, "")
-    .replace(/\./g, "-")
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/([a-z])([A-Z])/g, "$1-$2")
-    .toLowerCase()
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "");
 }
 
 export default function CharacterAvatar({

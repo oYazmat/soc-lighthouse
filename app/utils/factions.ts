@@ -3,7 +3,7 @@ import { FACTIONS } from "./data-loader";
 
 // Helper to get common faction (not ignored)
 export const getTeamFaction = (team: LeaderTeam | undefined) => {
-  if (!team || !team.team?.characters.length) return "-";
+  if (!team || !team.team?.characters.length) return undefined;
 
   const members = team.team.characters;
 
@@ -19,5 +19,5 @@ export const getTeamFaction = (team: LeaderTeam | undefined) => {
     if (common.length === 0) break;
   }
 
-  return common[0] ?? "-"; // pick first common valid faction, or "-" if none
+  return common[0] ?? undefined; // pick first common valid faction, or undefined if none
 };
