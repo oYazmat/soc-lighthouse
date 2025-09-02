@@ -3,6 +3,7 @@ import { CHARACTERS, LIGHTHOUSE_SPOTS, RANK_POWERS } from "./data-loader";
 import type { LighthouseSpot } from "~/interfaces/LighthouseSpot";
 import type { CharactersState } from "~/interfaces/CharactersState";
 import type { FilledCharacter } from "~/interfaces/FilledCharacter";
+import type { TotalBonuses } from "~/interfaces/TotalBonuses";
 
 export function getSpecialSpots(lighthouseLevel: number | "") {
   return LIGHTHOUSE_SPOTS.filter(
@@ -56,7 +57,7 @@ export function matchSpots(
     .filter((s): s is MatchedSpot => s !== null);
 }
 
-export function aggregateActiveBonuses(matchedSpots: MatchedSpot[]) {
+export function aggregateBonuses(matchedSpots: LighthouseSpot[]): TotalBonuses {
   return matchedSpots.reduce(
     (acc, spot) => {
       if (spot.bonusYield) acc.bonusYield += spot.bonusYield;
@@ -79,4 +80,12 @@ export function calculateSpotsPower(matchedSpots: MatchedSpot[]) {
     const rankPower = RANK_POWERS.find((rp) => rp.rank === rank)?.power ?? 0;
     return sum + rankPower;
   }, 0);
+}
+
+export function getUnmatchedSpots(
+  specialSpots: LighthouseSpot[],
+  matchedSpecialSpots: MatchedSpot[]
+): LighthouseSpot[] {
+  const matchedIds = new Set(matchedSpecialSpots.map((s) => s.id));
+  return specialSpots.filter((spot) => !matchedIds.has(spot.id));
 }

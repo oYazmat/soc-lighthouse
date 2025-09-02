@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSoCContext } from "~/context/SoCContext";
 import {
   LIGHTHOUSE_SPOTS,
@@ -10,8 +10,14 @@ import SpotCard from "../SpotCard";
 import TeamsTable from "../TeamsTable";
 import { getFallbackCharacters, getUsedCharacterIds } from "~/utils/characters";
 import type { MatchedSpot } from "~/interfaces/MatchedSpot";
-import TotalActiveBonuses from "../TotalActiveBonuses";
-import { aggregateActiveBonuses, calculateSpotsPower } from "~/utils/spots";
+import {
+  aggregateBonuses,
+  calculateSpotsPower,
+  getSpecialSpots,
+  getUnmatchedSpots,
+} from "~/utils/spots";
+import type { TotalBonuses } from "~/interfaces/TotalBonuses";
+import Bonuses from "../Bonuses";
 
 export default function Step4Recap() {
   const {
@@ -22,6 +28,15 @@ export default function Step4Recap() {
     selectedTeams,
     charactersState,
   } = useSoCContext();
+  const [totalActiveBonuses, setTotalBonuses] = useState<TotalBonuses>();
+  const [totalInactiveBonuses, setTotalInactiveBonuses] =
+    useState<TotalBonuses>();
+
+  const specialSpots = getSpecialSpots(lighthouseLevel);
+  const unmatchedSpecialSpots = getUnmatchedSpots(
+    specialSpots,
+    matchedSpecialSpots
+  );
 
   // All unlocked spots (up to current lighthouse level)
   const unlockedSpots = LIGHTHOUSE_SPOTS.filter(
@@ -75,7 +90,13 @@ export default function Step4Recap() {
     .map((k) => Number(k))
     .sort((a, b) => a - b);
 
-  const totalBonuses = aggregateActiveBonuses(matchedSpecialSpots);
+  useEffect(() => {
+    setTotalBonuses(aggregateBonuses(matchedSpecialSpots));
+  }, [matchedSpecialSpots]);
+
+  useEffect(() => {
+    setTotalInactiveBonuses(aggregateBonuses(unmatchedSpecialSpots));
+  }, [unmatchedSpecialSpots]);
 
   // 🔥 Calculate total rank power of all matched spots
   const totalRankPower = useMemo(
@@ -106,9 +127,10 @@ export default function Step4Recap() {
       </Box>
 
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 2 }}>
-        {matchedSpecialSpots.length > 0 && (
-          <TotalActiveBonuses bonuses={totalBonuses} />
-        )}
+        <Bonuses
+          activeBonuses={totalActiveBonuses}
+          inactiveBonuses={totalInactiveBonuses}
+        />
       </Box>
 
       {/* Selected Teams recap table */}
@@ -142,7 +164,8 @@ export default function Step4Recap() {
                 showCheckbox={false}
                 showExpeditionPower
                 lighthousePower={
-                  totalRankPower * (1 + totalBonuses.bonusLogistics / 100)
+                  totalRankPower *
+                  (1 + (totalActiveBonuses?.bonusLogistics ?? 0) / 100)
                 }
               />
             </Box>

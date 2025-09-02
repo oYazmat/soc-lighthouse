@@ -1,13 +1,16 @@
 import { Box, Typography } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSoCContext } from "../../context/SoCContext";
 import {
-  aggregateActiveBonuses,
+  aggregateBonuses,
   getSpecialSpots,
+  getUnmatchedSpots,
   matchSpots,
 } from "~/utils/spots";
 import SpotCard from "../SpotCard";
-import TotalActiveBonuses from "../TotalActiveBonuses";
+import type { LighthouseSpot } from "~/interfaces/LighthouseSpot";
+import type { TotalBonuses } from "~/interfaces/TotalBonuses";
+import Bonuses from "../Bonuses";
 
 export default function Step2SpecialSpots() {
   const {
@@ -18,12 +21,22 @@ export default function Step2SpecialSpots() {
     setSelectedTeams,
   } = useSoCContext();
 
+  const [unmatchedSpecialSpots, setUnmatchedSpecialSpots] = useState<
+    LighthouseSpot[]
+  >([]);
+  const [totalActiveBonuses, setTotalBonuses] = useState<TotalBonuses>();
+  const [totalInactiveBonuses, setTotalInactiveBonuses] =
+    useState<TotalBonuses>();
+
   const specialSpots = getSpecialSpots(lighthouseLevel);
   const matchedSpecialSpots = matchSpots(specialSpots, charactersState);
 
   useEffect(() => {
     setMatchedSpecialSpots(matchedSpecialSpots);
-  }, [matchedSpecialSpots, setMatchedSpecialSpots]);
+    setUnmatchedSpecialSpots(
+      getUnmatchedSpots(specialSpots, matchedSpecialSpots)
+    );
+  }, [matchedSpecialSpots, specialSpots, setMatchedSpecialSpots]);
 
   useEffect(() => {
     // Whenever matchedSpecialSpots updates, reset matchedSpots and selectedTeams
@@ -31,7 +44,13 @@ export default function Step2SpecialSpots() {
     setSelectedTeams({});
   }, [matchedSpecialSpots, setMatchedSpots, setSelectedTeams]);
 
-  const totalBonuses = aggregateActiveBonuses(matchedSpecialSpots);
+  useEffect(() => {
+    setTotalBonuses(aggregateBonuses(matchedSpecialSpots));
+  }, [matchedSpecialSpots]);
+
+  useEffect(() => {
+    setTotalInactiveBonuses(aggregateBonuses(unmatchedSpecialSpots));
+  }, [unmatchedSpecialSpots]);
 
   return (
     <Box sx={{ mt: 2 }}>
@@ -60,9 +79,10 @@ export default function Step2SpecialSpots() {
             })}
           </Box>
 
-          {matchedSpecialSpots.length > 0 && (
-            <TotalActiveBonuses bonuses={totalBonuses} />
-          )}
+          <Bonuses
+            activeBonuses={totalActiveBonuses}
+            inactiveBonuses={totalInactiveBonuses}
+          />
         </>
       )}
     </Box>
