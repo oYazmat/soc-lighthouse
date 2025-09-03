@@ -14,7 +14,6 @@ import {
   useTheme,
 } from "@mui/material";
 import { useState } from "react";
-import PeopleIcon from "@mui/icons-material/People";
 import RedditIcon from "@mui/icons-material/Reddit";
 import HistoryIcon from "@mui/icons-material/History";
 import UpdateIcon from "@mui/icons-material/Update";
