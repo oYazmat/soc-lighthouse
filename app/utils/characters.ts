@@ -172,6 +172,21 @@ export function getBestTeamForLeader(
   };
 }
 
+function addLeaderToTeamAndUpdatePowers(
+  leaderWithPower: CharacterWithPower,
+  team: FactionTeam
+): FactionTeam {
+  return {
+    ...team,
+    characters: [...team.characters, leaderWithPower],
+    basePowerSum: team.basePowerSum + leaderWithPower.basePower,
+    powerPercentSum: team.powerPercentSum + leaderWithPower.powerPercent,
+    combinedPower:
+      (team.basePowerSum + leaderWithPower.basePower) *
+      (1 + (team.powerPercentSum + leaderWithPower.powerPercent) / 100),
+  };
+}
+
 /**
  * Returns the best team (highest combinedPower) that does not contain the given leader and then adds him to it.
  */
@@ -181,10 +196,7 @@ export function getBestTeamWithoutLeaderAndAddHim(
   charactersState: CharactersState
 ): { team: FactionTeam | null; membersWithoutLeader: CharacterWithPower[] } {
   // Step 1: find the leader data
-  const leaderWithPower = getCharacterWithPowerById(
-    leaderId,
-    charactersState[leaderId]
-  );
+  const leaderWithPower = getCharacterWithPowerById(leaderId, charactersState);
 
   if (!leaderWithPower) return { team: null, membersWithoutLeader: [] };
 
@@ -203,15 +215,7 @@ export function getBestTeamWithoutLeaderAndAddHim(
   if (!bestTeam) return { team: null, membersWithoutLeader: [] };
 
   // Step 4: build new team with leader added
-  const updatedTeam: FactionTeam = {
-    ...bestTeam,
-    characters: [...bestTeam.characters, leaderWithPower],
-    basePowerSum: bestTeam.basePowerSum + leaderWithPower.basePower,
-    powerPercentSum: bestTeam.powerPercentSum + leaderWithPower.powerPercent,
-    combinedPower:
-      (bestTeam.basePowerSum + leaderWithPower.basePower) *
-      (1 + (bestTeam.powerPercentSum + leaderWithPower.powerPercent) / 100),
-  };
+  const updatedTeam = addLeaderToTeamAndUpdatePowers(leaderWithPower, bestTeam);
 
   return {
     team: updatedTeam,
@@ -236,7 +240,12 @@ export function buildLeaderTeams(
       charactersState
     );
   }
-  return buildLeaderTeamsNoOverlap(factionTeams, addLeaderToTeam);
+
+  return buildLeaderTeamsNoOverlap(
+    factionTeams,
+    addLeaderToTeam,
+    charactersState
+  );
 }
 
 /**
@@ -273,7 +282,8 @@ function buildLeaderTeamsWithOverlap(
  */
 function buildLeaderTeamsNoOverlap(
   factionTeams: FactionTeam[],
-  addLeaderToTeam: boolean
+  addLeaderToTeam: boolean,
+  charactersState: CharactersState
 ): LeaderTeams {
   const leaderTeamsMap: LeaderTeams = {};
 
@@ -282,27 +292,52 @@ function buildLeaderTeamsNoOverlap(
 
     const leadersWithBest = getSortedLeadersWithBestTeams(
       dest.leaders,
-      factionTeams
+      factionTeams,
+      addLeaderToTeam,
+      charactersState
     );
 
     for (const { leaderId } of leadersWithBest) {
+      const leaderWithPower = getCharacterWithPowerById(
+        leaderId,
+        charactersState
+      );
+
+      if (!leaderWithPower) continue;
+
       const exclusions = new Set(localUsedCharIds);
 
       const bestNonOverlap = getBestTeamForLeaderWithExclusions(
         leaderId,
         factionTeams,
-        exclusions
+        exclusions,
+        addLeaderToTeam,
+        dest.leaders
       );
 
       if (!bestNonOverlap.team) continue;
 
+      let teamWithLeader = bestNonOverlap.team;
+
+      if (addLeaderToTeam && bestNonOverlap) {
+        const leaderWithPower = getCharacterWithPowerById(
+          leaderId,
+          charactersState
+        );
+
+        teamWithLeader = addLeaderToTeamAndUpdatePowers(
+          leaderWithPower!,
+          bestNonOverlap.team
+        );
+      }
+
       leaderTeamsMap[leaderId] = {
         leaderId,
-        team: bestNonOverlap.team,
+        team: teamWithLeader,
         membersWithoutLeader: bestNonOverlap.membersWithoutLeader,
       };
 
-      bestNonOverlap.team.characters.forEach((c) => localUsedCharIds.add(c.id));
+      teamWithLeader.characters.forEach((c) => localUsedCharIds.add(c.id));
     }
   });
 
@@ -314,11 +349,19 @@ function buildLeaderTeamsNoOverlap(
  */
 function getSortedLeadersWithBestTeams(
   leaderIds: number[],
-  factionTeams: FactionTeam[]
+  factionTeams: FactionTeam[],
+  addLeaderToTeam: boolean,
+  charactersState: CharactersState
 ) {
   return leaderIds
     .map((leaderId) => {
-      const { team } = getBestTeamForLeader(leaderId, factionTeams);
+      const { team } = addLeaderToTeam
+        ? getBestTeamWithoutLeaderAndAddHim(
+            leaderId,
+            factionTeams,
+            charactersState
+          )
+        : getBestTeamForLeader(leaderId, factionTeams);
       return { leaderId, bestTeamPower: team?.combinedPower ?? 0 };
     })
     .filter((x) => x.bestTeamPower > 0)
@@ -332,13 +375,23 @@ function getSortedLeadersWithBestTeams(
 function getBestTeamForLeaderWithExclusions(
   leaderId: number,
   factionTeams: FactionTeam[],
-  excludeIds: Set<number>
+  excludeIds: Set<number>,
+  addLeaderToTeam: boolean,
+  leaderIds: number[]
 ): { team: FactionTeam | null; membersWithoutLeader: CharacterWithPower[] } {
   let best: FactionTeam | null = null;
 
   for (const team of factionTeams) {
-    // Must include the leader
-    if (!team.characters.some((ch) => ch.id === leaderId)) continue;
+    // Must include the leader if not addLeaderToTeam
+    if (!addLeaderToTeam && !team.characters.some((ch) => ch.id === leaderId))
+      continue;
+
+    // Must not include any leader if addLeaderToTeam
+    if (
+      addLeaderToTeam &&
+      team.characters.some((ch) => leaderIds.includes(ch.id))
+    )
+      continue;
 
     // Must not contain any excluded character IDs
     const overlaps = team.characters.some((ch) => excludeIds.has(ch.id));
