@@ -1,6 +1,4 @@
 import { Toolbar, AppBar, Typography, IconButton, Button } from "@mui/material";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
 
 interface HeaderProps {
   darkMode: boolean;
@@ -33,7 +31,21 @@ export default function Header({
           </Button>
 
           <IconButton color="inherit" onClick={handleDarkModeChange}>
-            {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+            {darkMode ? (
+              <img
+                src="/images/dark-mode/sun.png"
+                alt="Light Mode"
+                style={{ width: 24, height: 24 }}
+                color="inherit"
+              />
+            ) : (
+              <img
+                src="/images/dark-mode/moon.png"
+                alt="Dark Mode"
+                style={{ width: 24, height: 24 }}
+                color="inherit"
+              />
+            )}
           </IconButton>
         </div>
       </Toolbar>

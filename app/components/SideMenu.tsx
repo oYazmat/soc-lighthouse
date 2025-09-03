@@ -11,9 +11,9 @@ import {
   Button,
   Divider,
   Stack,
+  useTheme,
 } from "@mui/material";
 import { useState } from "react";
-import PeopleIcon from "@mui/icons-material/People";
 import RedditIcon from "@mui/icons-material/Reddit";
 import HistoryIcon from "@mui/icons-material/History";
 import UpdateIcon from "@mui/icons-material/Update";
@@ -26,6 +26,7 @@ const drawerWidth = 240;
 export default function SideMenu() {
   const lastUpdate = config.lastUpdate;
   const [openChangelog, setOpenChangelog] = useState(false);
+  const theme = useTheme();
 
   return (
     <>
@@ -51,7 +52,26 @@ export default function SideMenu() {
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                  <PeopleIcon />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: 32,
+                      height: 32,
+                      borderRadius: "50%", // circle style
+                      bgcolor:
+                        theme.palette.mode === "dark"
+                          ? "grey.700" // subtle but visible in dark mode
+                          : "grey.800", // strong contrast in light mode
+                    }}
+                  >
+                    <img
+                      src="/images/menu/my-characters.png"
+                      alt="My Characters"
+                      style={{ width: 20, height: 20 }}
+                    />
+                  </Box>
                 </ListItemIcon>
                 <ListItemText primary="My Characters" />
               </ListItemButton>
