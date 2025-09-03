@@ -23,6 +23,9 @@
     "1.4.0": [
       "Improvement: Increased recommendation modal width.",
       "Improvement: Reworked calculation process when team has 5 characters (unlocked by reaching lighthouse 33)."
+    ],
+    "1.4.1": [
+      "Improvement: Replaced generic icons with Sword of Convallaria–themed ones for better consistency across the app."
     ]
   }
 }
