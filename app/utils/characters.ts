@@ -16,6 +16,7 @@ import type { CharactersState } from "~/interfaces/CharactersState";
 import type { FilledCharacter } from "~/interfaces/FilledCharacter";
 import type { MatchedSpot } from "~/interfaces/MatchedSpot";
 import { buildLeaderTeamsBraindead } from "./braindead";
+import type { CharacterState } from "~/interfaces/CharacterState";
 
 export const RARITY_ORDER: Record<string, number> = {
   Legendary: 1,
@@ -24,31 +25,52 @@ export const RARITY_ORDER: Record<string, number> = {
   Common: 4,
 };
 
+function getCharacterWithPower(
+  character: Character,
+  charState: CharacterState
+): CharacterWithPower {
+  const basePower =
+    RANK_POWERS.find((r) => r.rank === charState.rank)?.power ?? 0;
+  const powerPercent =
+    RARITY_AND_STARS_POWERS.find(
+      (r) => r.rarity === character.rarity && r.stars === charState.stars
+    )?.powerPercent ?? 0;
+
+  // filter out ignored factions
+  const filteredFactions = character.factions.filter((f) =>
+    FACTIONS.find((fa) => fa.name === f && !fa.ignored)
+  );
+
+  return {
+    id: character.id,
+    name: character.name,
+    factions: filteredFactions,
+    basePower,
+    powerPercent,
+  };
+}
+
+function getCharacterWithPowerById(
+  charId: number,
+  charactersState: CharactersState
+): CharacterWithPower | null {
+  if (!charactersState[charId] || charactersState[charId].stars < 1)
+    return null;
+
+  const leader = CHARACTERS.find((c) => c.id === charId);
+
+  if (!leader) return null;
+
+  return getCharacterWithPower(leader, charactersState[charId]);
+}
+
 export function calculateOwnedCharacterPower(
   ownedCharacters: Character[],
   characterState: CharactersState
 ): CharacterWithPower[] {
   return ownedCharacters.map((char) => {
     const charState = characterState[char.id];
-    const basePower =
-      RANK_POWERS.find((r) => r.rank === charState.rank)?.power ?? 0;
-    const powerPercent =
-      RARITY_AND_STARS_POWERS.find(
-        (r) => r.rarity === char.rarity && r.stars === charState.stars
-      )?.powerPercent ?? 0;
-
-    // filter out ignored factions
-    const filteredFactions = char.factions.filter((f) =>
-      FACTIONS.find((fa) => fa.name === f && !fa.ignored)
-    );
-
-    return {
-      id: char.id,
-      name: char.name,
-      factions: filteredFactions,
-      basePower,
-      powerPercent,
-    };
+    return getCharacterWithPower(char, charState);
   });
 }
 
@@ -150,32 +172,93 @@ export function getBestTeamForLeader(
   };
 }
 
+/**
+ * Returns the best team (highest combinedPower) that does not contain the given leader and then adds him to it.
+ */
+export function getBestTeamWithoutLeaderAndAddHim(
+  leaderId: number,
+  factionTeams: FactionTeam[],
+  charactersState: CharactersState
+): { team: FactionTeam | null; membersWithoutLeader: CharacterWithPower[] } {
+  // Step 1: find the leader data
+  const leaderWithPower = getCharacterWithPowerById(
+    leaderId,
+    charactersState[leaderId]
+  );
+
+  if (!leaderWithPower) return { team: null, membersWithoutLeader: [] };
+
+  // Step 2: exclude teams that already contain the leader
+  const validTeams = factionTeams.filter(
+    (team) => !team.characters.some((char) => char.id === leaderWithPower.id)
+  );
+
+  // Step 3: pick best team by combinedPower
+  const bestTeam = validTeams.reduce(
+    (best, team) =>
+      !best || team.combinedPower > best.combinedPower ? team : best,
+    null as FactionTeam | null
+  );
+
+  if (!bestTeam) return { team: null, membersWithoutLeader: [] };
+
+  // Step 4: build new team with leader added
+  const updatedTeam: FactionTeam = {
+    ...bestTeam,
+    characters: [...bestTeam.characters, leaderWithPower],
+    basePowerSum: bestTeam.basePowerSum + leaderWithPower.basePower,
+    powerPercentSum: bestTeam.powerPercentSum + leaderWithPower.powerPercent,
+    combinedPower:
+      (bestTeam.basePowerSum + leaderWithPower.basePower) *
+      (1 + (bestTeam.powerPercentSum + leaderWithPower.powerPercent) / 100),
+  };
+
+  return {
+    team: updatedTeam,
+    membersWithoutLeader: bestTeam.characters, // leader wasn’t in original team
+  };
+}
+
 export function buildLeaderTeams(
   factionTeams: FactionTeam[],
   allowOverlap: boolean,
-  braindeadMode: boolean
+  braindeadMode: boolean,
+  addLeaderToTeam: boolean,
+  charactersState: CharactersState
 ): LeaderTeams {
   if (braindeadMode) {
-    return buildLeaderTeamsBraindead(factionTeams);
+    return buildLeaderTeamsBraindead(factionTeams, addLeaderToTeam);
   }
   if (allowOverlap) {
-    return buildLeaderTeamsWithOverlap(factionTeams);
+    return buildLeaderTeamsWithOverlap(
+      factionTeams,
+      addLeaderToTeam,
+      charactersState
+    );
   }
-  return buildLeaderTeamsNoOverlap(factionTeams);
+  return buildLeaderTeamsNoOverlap(factionTeams, addLeaderToTeam);
 }
 
 /**
  * Strategy 1: Allow overlap, simple greedy pick.
  */
-function buildLeaderTeamsWithOverlap(factionTeams: FactionTeam[]): LeaderTeams {
+function buildLeaderTeamsWithOverlap(
+  factionTeams: FactionTeam[],
+  addLeaderToTeam: boolean,
+  charactersState: CharactersState
+): LeaderTeams {
   const leaderTeamsMap: LeaderTeams = {};
 
   LIGHTHOUSE_DESTINATIONS.forEach((dest) => {
     dest.leaders.forEach((leaderId) => {
-      const { team, membersWithoutLeader } = getBestTeamForLeader(
-        leaderId,
-        factionTeams
-      );
+      const { team, membersWithoutLeader } = addLeaderToTeam
+        ? getBestTeamWithoutLeaderAndAddHim(
+            leaderId,
+            factionTeams,
+            charactersState
+          )
+        : getBestTeamForLeader(leaderId, factionTeams);
+
       if (team) {
         leaderTeamsMap[leaderId] = { leaderId, team, membersWithoutLeader };
       }
@@ -188,7 +271,10 @@ function buildLeaderTeamsWithOverlap(factionTeams: FactionTeam[]): LeaderTeams {
 /**
  * Strategy 2: No overlap, greedy within each destination.
  */
-function buildLeaderTeamsNoOverlap(factionTeams: FactionTeam[]): LeaderTeams {
+function buildLeaderTeamsNoOverlap(
+  factionTeams: FactionTeam[],
+  addLeaderToTeam: boolean
+): LeaderTeams {
   const leaderTeamsMap: LeaderTeams = {};
 
   LIGHTHOUSE_DESTINATIONS.forEach((dest) => {

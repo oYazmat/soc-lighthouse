@@ -132,7 +132,8 @@ function onePassSwap(
  * only top 2 leaders per destination.
  */
 export function buildLeaderTeamsBraindead(
-  factionTeams: FactionTeam[]
+  factionTeams: FactionTeam[],
+  addLeaderToTeam: boolean
 ): LeaderTeams {
   // 1. Pick 2 teams per destination using weighted round-robin
   let leaderTeams = buildLeaderTeamsWeightedRoundRobin(factionTeams, true);

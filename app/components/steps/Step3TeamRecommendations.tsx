@@ -61,16 +61,21 @@ export default function Step3TeamRecommendations() {
 
       const factionTeams = await calculateFactionTeams(
         charsWithPower,
-        charactersAllowed,
+        charactersAllowed < 5 ? charactersAllowed : 4, // Once 5 characters are unlocked, only 4 are used in the calculation
         lighthouseLevel
       );
+
       if (!active) return;
 
       const leaderTeamsMap = buildLeaderTeams(
         factionTeams,
         braindeadMode ? false : allowOverlap, // disallow overlap in Braindead mode
-        braindeadMode
+        braindeadMode,
+        charactersAllowed >= 5, // Once 5 characters are unlocked, since only 4 characters are used in the calculation, leader should be added to the team
+        charactersState
       );
+      console.log("🚀 ~ runCalc ~ leaderTeamsMap:", leaderTeamsMap)
+
       setLeaderTeams(leaderTeamsMap);
 
       // Select the leader with the highest combinedPower per destination
