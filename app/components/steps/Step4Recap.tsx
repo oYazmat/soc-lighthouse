@@ -18,6 +18,7 @@ import {
 } from "~/utils/spots";
 import type { TotalBonuses } from "~/interfaces/TotalBonuses";
 import Bonuses from "../Bonuses";
+import type { LighthouseSpot } from "~/interfaces/LighthouseSpot";
 
 export default function Step4Recap() {
   const {
@@ -28,15 +29,14 @@ export default function Step4Recap() {
     selectedTeams,
     charactersState,
   } = useSoCContext();
+  const [unmatchedSpecialSpots, setUnmatchedSpecialSpots] = useState<
+    LighthouseSpot[]
+  >([]);
   const [totalActiveBonuses, setTotalBonuses] = useState<TotalBonuses>();
   const [totalInactiveBonuses, setTotalInactiveBonuses] =
     useState<TotalBonuses>();
 
   const specialSpots = getSpecialSpots(lighthouseLevel);
-  const unmatchedSpecialSpots = getUnmatchedSpots(
-    specialSpots,
-    matchedSpecialSpots
-  );
 
   // All unlocked spots (up to current lighthouse level)
   const unlockedSpots = LIGHTHOUSE_SPOTS.filter(
@@ -92,6 +92,9 @@ export default function Step4Recap() {
 
   useEffect(() => {
     setTotalBonuses(aggregateBonuses(matchedSpecialSpots));
+    setUnmatchedSpecialSpots(
+      getUnmatchedSpots(specialSpots, matchedSpecialSpots)
+    );
   }, [matchedSpecialSpots]);
 
   useEffect(() => {
