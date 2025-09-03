@@ -2,10 +2,15 @@ import type { LeaderTeam } from "~/interfaces/LeaderTeam";
 import { FACTIONS } from "./data-loader";
 
 // Helper to get common faction (not ignored)
-export const getTeamFaction = (team: LeaderTeam | undefined) => {
+export const getTeamFaction = (
+  team: LeaderTeam | undefined,
+  ignoreLeader: boolean
+) => {
   if (!team || !team.team?.characters.length) return undefined;
 
-  const members = team.team.characters;
+  const members = ignoreLeader
+    ? team.membersWithoutLeader
+    : team.team.characters;
 
   // Only keep non-ignored factions
   const validFactions = FACTIONS.filter((f) => !f.ignored).map((f) => f.name);

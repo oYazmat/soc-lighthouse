@@ -115,7 +115,7 @@ export default function TeamsTable({
             const isCheckboxDisabled =
               isRowDisabled || membersWithoutLeader.length === 0;
 
-            const faction = getTeamFaction(leaderTeam);
+            const faction = getTeamFaction(leaderTeam, charactersAllowed >= 5);
 
             return (
               <TableRow key={leaderId}>
