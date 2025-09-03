@@ -2,6 +2,11 @@
 import type { FactionTeam } from "~/interfaces/FactionTeam";
 import { LIGHTHOUSE_DESTINATIONS } from "./data-loader";
 import type { LeaderTeams } from "~/interfaces/LeaderTeams";
+import type { CharactersState } from "~/interfaces/CharactersState";
+import {
+  addLeaderToTeamAndUpdatePowers,
+  getCharacterWithPowerById,
+} from "./characters";
 
 /**
  * Compute leader criticality: leaders with fewer team options are more critical.
@@ -28,7 +33,10 @@ function computeLeaderCriticality(
  */
 function buildLeaderTeamsWeightedRoundRobin(
   factionTeams: FactionTeam[],
-  useCriticality: boolean = true
+  useCriticality: boolean = true,
+  addLeaderToTeam: boolean,
+  charactersState: CharactersState,
+  lighthouseLevel: number | ""
 ): LeaderTeams {
   const leaderTeamsMap: LeaderTeams = {};
   const globalUsedCharIds = new Set<number>();
@@ -40,8 +48,28 @@ function buildLeaderTeamsWeightedRoundRobin(
   const leaderToTeams: Record<number, FactionTeam[]> = {};
   LIGHTHOUSE_DESTINATIONS.forEach((dest) => {
     dest.leaders.forEach((leaderId) => {
+      const leaderWithPower = getCharacterWithPowerById(
+        leaderId,
+        charactersState
+      );
+
+      if (!leaderWithPower) return;
+
       leaderToTeams[leaderId] = factionTeams
-        .filter((team) => team.characters.some((c) => c.id === leaderId))
+        .filter(
+          (t) =>
+            (!addLeaderToTeam && t.characters.some((c) => c.id === leaderId)) ||
+            (addLeaderToTeam && t.characters.every((c) => c.id !== leaderId))
+        )
+        .map((t) =>
+          addLeaderToTeam
+            ? addLeaderToTeamAndUpdatePowers(
+                leaderWithPower,
+                t,
+                lighthouseLevel
+              )
+            : t
+        )
         .sort((a, b) => b.combinedPower - a.combinedPower);
     });
   });
@@ -133,10 +161,18 @@ function onePassSwap(
  */
 export function buildLeaderTeamsBraindead(
   factionTeams: FactionTeam[],
-  addLeaderToTeam: boolean
+  addLeaderToTeam: boolean,
+  charactersState: CharactersState,
+  lighthouseLevel: number | ""
 ): LeaderTeams {
   // 1. Pick 2 teams per destination using weighted round-robin
-  let leaderTeams = buildLeaderTeamsWeightedRoundRobin(factionTeams, true);
+  let leaderTeams = buildLeaderTeamsWeightedRoundRobin(
+    factionTeams,
+    true,
+    addLeaderToTeam,
+    charactersState,
+    lighthouseLevel
+  );
 
   // 2. Get all unused faction teams (teams not already selected)
   const usedTeamIds = new Set(

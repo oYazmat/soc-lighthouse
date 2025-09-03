@@ -50,7 +50,7 @@ function getCharacterWithPower(
   };
 }
 
-function getCharacterWithPowerById(
+export function getCharacterWithPowerById(
   charId: number,
   charactersState: CharactersState
 ): CharacterWithPower | null {
@@ -175,7 +175,7 @@ export function getBestTeamForLeader(
   };
 }
 
-function addLeaderToTeamAndUpdatePowers(
+export function addLeaderToTeamAndUpdatePowers(
   leaderWithPower: CharacterWithPower,
   team: FactionTeam,
   lightouseLevel: number | ""
@@ -238,7 +238,12 @@ export function buildLeaderTeams(
   lighthouseLevel: number | ""
 ): LeaderTeams {
   if (braindeadMode) {
-    return buildLeaderTeamsBraindead(factionTeams, addLeaderToTeam);
+    return buildLeaderTeamsBraindead(
+      factionTeams,
+      addLeaderToTeam,
+      charactersState,
+      lighthouseLevel
+    );
   }
   if (allowOverlap) {
     return buildLeaderTeamsWithOverlap(
