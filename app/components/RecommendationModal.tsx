@@ -64,7 +64,7 @@ export default function RecommendationModal({
         onClose();
       }}
       fullWidth
-      maxWidth="lg"
+      maxWidth="xl"
     >
       <DialogTitle>Start Recommendation</DialogTitle>
 
