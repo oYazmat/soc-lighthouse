@@ -23,7 +23,22 @@ export default function ChangelogModal({ open, onClose }: ChangelogModalProps) {
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle sx={{ fontWeight: "bold" }}>📜 Changelog</DialogTitle>
+      <DialogTitle
+        sx={{
+          fontWeight: "bold",
+          display: "flex",
+          alignItems: "center",
+          gap: 1, // adds spacing between icon and text
+        }}
+      >
+        <img
+          src="/images/icons/book.png"
+          alt="Changelog"
+          style={{ width: 24, height: 24 }}
+        />
+        Changelog
+      </DialogTitle>
+
       <DialogContent dividers>
         {Object.entries(changelog)
           .sort(([a], [b]) => b.localeCompare(a, undefined, { numeric: true }))
