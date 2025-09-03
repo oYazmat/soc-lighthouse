@@ -18,9 +18,9 @@ import LoadingPage from "./components/LoadingPage";
 
 export const links: Route.LinksFunction = () => [
   {
-    rel: "shortcut icon",
-    type: "image/x-icon",
-    href: "favicon.ico",
+    rel: "icon",
+    type: "image/png",
+    href: "favicon.png",
   },
 ];
 
