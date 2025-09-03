@@ -72,7 +72,8 @@ export default function Step3TeamRecommendations() {
         braindeadMode ? false : allowOverlap, // disallow overlap in Braindead mode
         braindeadMode,
         charactersAllowed >= 5, // Once 5 characters are unlocked, since only 4 characters are used in the calculation, leader should be added to the team
-        charactersState
+        charactersState,
+        lighthouseLevel
       );
 
       setLeaderTeams(leaderTeamsMap);
