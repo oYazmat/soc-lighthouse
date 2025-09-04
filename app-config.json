@@ -1,5 +1,5 @@
 {
-  "lastUpdate": "2025-09-03",
+  "lastUpdate": "2025-09-04",
   "changelog": {
     "1.0.0": ["Initial release."],
     "1.0.1": [
@@ -26,6 +26,9 @@
     ],
     "1.4.1": [
       "Improvement: Replaced generic icons with Sword of Convallaria–themed ones for better consistency across the app."
+    ],
+    "1.4.2": [
+      "Improvement: Character names are now included when exporting or importing data on the My Characters page."
     ]
   }
 }
