@@ -1,334 +1,417 @@
 {
   "1": {
+    "name": "Acambe",
     "stars": 0,
     "rank": 0
   },
   "3": {
+    "name": "Agata",
     "stars": 5,
     "rank": 13
   },
   "5": {
+    "name": "Auguste",
     "stars": 5,
     "rank": 13
   },
   "7": {
+    "name": "Beryl",
     "stars": 3,
     "rank": 13
   },
   "9": {
+    "name": "Cocoa",
     "stars": 5,
     "rank": 13
   },
   "10": {
+    "name": "Col",
     "stars": 3,
     "rank": 13
   },
   "11": {
+    "name": "Dantalion",
     "stars": 3,
     "rank": 13
   },
   "12": {
+    "name": "Edda",
     "stars": 1,
     "rank": 13
   },
   "14": {
+    "name": "Faycal",
     "stars": 3,
     "rank": 13
   },
   "17": {
+    "name": "Gloria",
     "stars": 4,
     "rank": 13
   },
   "20": {
+    "name": "Homa",
     "stars": 5,
     "rank": 13
   },
   "22": {
+    "name": "Inanna",
     "stars": 3,
     "rank": 13
   },
   "23": {
+    "name": "Inanna of Convallaria",
     "stars": 3,
     "rank": 13
   },
   "24": {
+    "name": "Kiya",
     "stars": 1,
     "rank": 13
   },
   "25": {
+    "name": "Kvare",
     "stars": 3,
     "rank": 13
   },
   "26": {
+    "name": "Layla",
     "stars": 4,
     "rank": 13
   },
   "28": {
+    "name": "LilyWill",
     "stars": 3,
     "rank": 13
   },
   "29": {
+    "name": "Lutfi",
     "stars": 3,
     "rank": 13
   },
   "30": {
+    "name": "Luvata",
     "stars": 4,
     "rank": 13
   },
   "32": {
+    "name": "Maitha",
     "stars": 4,
     "rank": 13
   },
   "33": {
+    "name": "Miguel",
     "stars": 3,
     "rank": 13
   },
   "34": {
+    "name": "Momo",
     "stars": 3,
     "rank": 13
   },
   "37": {
+    "name": "Nungal",
     "stars": 3,
     "rank": 13
   },
   "38": {
+    "name": "Nydia",
     "stars": 2,
     "rank": 13
   },
   "39": {
+    "name": "Pamina",
     "stars": 3,
     "rank": 13
   },
   "40": {
+    "name": "Rawiyah",
     "stars": 3,
     "rank": 13
   },
   "41": {
+    "name": "Rawiyah Nostalgia",
     "stars": 5,
     "rank": 13
   },
   "42": {
+    "name": "Safiyyah",
     "stars": 4,
     "rank": 13
   },
   "43": {
+    "name": "Safiyyah Promise",
     "stars": 5,
     "rank": 13
   },
   "44": {
+    "name": "Samantha",
     "stars": 3,
     "rank": 13
   },
   "45": {
+    "name": "SchackLulu",
     "stars": 1,
     "rank": 13
   },
   "47": {
+    "name": "Taair",
     "stars": 4,
     "rank": 13
   },
   "48": {
+    "name": "Team Meteor",
     "stars": 3,
     "rank": 13
   },
   "50": {
+    "name": "Tristan",
     "stars": 4,
     "rank": 13
   },
   "52": {
+    "name": "Abyss",
     "stars": 5,
     "rank": 12
   },
   "53": {
+    "name": "Agile Eye",
     "stars": 5,
     "rank": 10
   },
   "54": {
+    "name": "Angel",
     "stars": 5,
     "rank": 10
   },
   "55": {
+    "name": "Ballista",
     "stars": 5,
     "rank": 10
   },
   "56": {
+    "name": "Bitterwort",
     "stars": 5,
     "rank": 0
   },
   "57": {
+    "name": "Blade",
     "stars": 5,
     "rank": 9
   },
   "58": {
+    "name": "Butterfly",
     "stars": 5,
     "rank": 9
   },
   "59": {
+    "name": "Candlelight",
     "stars": 5,
     "rank": 0
   },
   "60": {
+    "name": "Crimson Falcon",
     "stars": 5,
     "rank": 12
   },
   "61": {
+    "name": "Darkin",
     "stars": 5,
     "rank": 0
   },
   "62": {
+    "name": "Divine Grace",
     "stars": 5,
     "rank": 10
   },
   "63": {
+    "name": "Enforcer",
     "stars": 5,
     "rank": 9
   },
   "64": {
+    "name": "Flame Sorceress",
     "stars": 5,
     "rank": 10
   },
   "65": {
+    "name": "Flare",
     "stars": 5,
     "rank": 0
   },
   "66": {
+    "name": "Lash",
     "stars": 5,
     "rank": 10
   },
   "67": {
+    "name": "Lightning",
     "stars": 5,
     "rank": 8
   },
   "68": {
+    "name": "Might",
     "stars": 5,
     "rank": 10
   },
   "69": {
+    "name": "Night Raven",
     "stars": 5,
     "rank": 9
   },
   "70": {
+    "name": "Nightingale",
     "stars": 5,
     "rank": 9
   },
   "71": {
+    "name": "Spear of Iria \"Rayshot\"",
     "stars": 5,
     "rank": 0
   },
   "72": {
+    "name": "Stinger",
     "stars": 5,
     "rank": 9
   },
   "73": {
+    "name": "Stormbreaker",
     "stars": 5,
     "rank": 12
   },
   "74": {
+    "name": "Suppression",
     "stars": 5,
     "rank": 11
   },
   "75": {
+    "name": "Tempest",
     "stars": 5,
     "rank": 10
   },
   "76": {
+    "name": "Darklight Fire Priest",
     "stars": 5,
     "rank": 0
   },
   "77": {
+    "name": "Darklight Ice Priest",
     "stars": 5,
     "rank": 9
   },
   "78": {
+    "name": "K.A. Archer",
     "stars": 5,
     "rank": 0
   },
   "79": {
+    "name": "K.A. Fire Conjurer",
     "stars": 5,
     "rank": 11
   },
   "80": {
+    "name": "K.A. Guard",
     "stars": 5,
     "rank": 9
   },
   "81": {
+    "name": "K.A. Light Conjurer",
     "stars": 5,
     "rank": 12
   },
   "82": {
+    "name": "K.A. Pikeman",
     "stars": 5,
     "rank": 0
   },
   "83": {
+    "name": "Knighted Guard",
     "stars": 5,
     "rank": 10
   },
   "84": {
+    "name": "Knighted Pikeman",
     "stars": 5,
     "rank": 9
   },
   "85": {
+    "name": "Papal Guard",
     "stars": 5,
     "rank": 12
   },
   "86": {
+    "name": "Papal Ice Priest",
     "stars": 5,
     "rank": 12
   },
   "87": {
+    "name": "Papal Pikeman",
     "stars": 5,
     "rank": 9
   },
   "88": {
+    "name": "Vlderian Scout",
     "stars": 5,
     "rank": 10
   },
   "89": {
+    "name": "Outlaw Archer",
     "stars": 5,
     "rank": 9
   },
   "90": {
+    "name": "Outlaw Assassin",
     "stars": 5,
     "rank": 9
   },
   "91": {
+    "name": "Outlaw Axeman",
     "stars": 5,
     "rank": 0
   },
   "92": {
+    "name": "Outlaw Crossbowman",
     "stars": 5,
     "rank": 0
   },
   "93": {
+    "name": "Outlaw Guard",
     "stars": 5,
     "rank": 12
   },
   "94": {
+    "name": "Outlaw Pikeman",
     "stars": 5,
     "rank": 0
   },
   "95": {
+    "name": "Recruited Archer",
     "stars": 5,
     "rank": 0
   },
   "96": {
+    "name": "Recruited Assassin",
     "stars": 5,
     "rank": 12
   },
   "97": {
+    "name": "Recruited Guard",
     "stars": 5,
     "rank": 0
   },
   "98": {
+    "name": "Recruited Pikeman",
     "stars": 5,
     "rank": 0
   },
   "100": {
+    "name": "Senshi",
     "stars": 2,
     "rank": 12
   },
   "101": {
-    "stars": 1,
+    "name": "Marcille",
+    "stars": 2,
     "rank": 12
   }
 }

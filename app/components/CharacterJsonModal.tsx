@@ -7,13 +7,17 @@ import {
   TextField,
 } from "@mui/material";
 import { useState, useEffect, useRef } from "react";
+import type { CharactersState } from "~/interfaces/CharactersState";
+import type { CharacterState } from "~/interfaces/CharacterState";
+import type { CharacterStateExport } from "~/interfaces/CharacterStateExport";
+import { CHARACTERS } from "~/utils/data-loader";
 
 interface CharacterJsonModalProps {
   open: boolean;
   onClose: () => void;
   mode: "import" | "export";
-  data?: any; // only for export
-  onSave?: (json: any) => void; // only for import
+  data?: CharactersState; // only for export
+  onSave?: (json: CharactersState) => void; // only for import
 }
 
 export default function CharacterJsonModal({
@@ -28,7 +32,17 @@ export default function CharacterJsonModal({
 
   useEffect(() => {
     if (mode === "export" && data) {
-      setJsonText(JSON.stringify(data, null, 2));
+      const enriched: Record<number, CharacterStateExport> = {};
+
+      for (const [id, state] of Object.entries(data)) {
+        const character = CHARACTERS.find((c) => c.id === Number(id));
+        enriched[Number(id)] = {
+          name: character?.name ?? "Unknown",
+          ...state,
+        };
+      }
+
+      setJsonText(JSON.stringify(enriched, null, 2));
     } else {
       setJsonText(""); // clear for import
     }
@@ -38,7 +52,16 @@ export default function CharacterJsonModal({
     try {
       if (onSave) {
         const parsed = JSON.parse(jsonText);
-        onSave(parsed);
+
+        // Remove "name" from every entry
+        const cleaned: Record<number, CharacterState> = {};
+        for (const [id, state] of Object.entries(parsed)) {
+          const { name, ...rest } = state as CharacterStateExport;
+          cleaned[Number(id)] = rest;
+        }
+
+        onSave(cleaned);
+        alert("Character data has been successfully imported!");
       }
       onClose();
     } catch (err) {

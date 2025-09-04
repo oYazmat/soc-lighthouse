@@ -22,6 +22,7 @@ import { CHARACTERS } from "~/utils/data-loader";
 import { RARITY_ORDER } from "~/utils/characters";
 import CharacterJsonModal from "./CharacterJsonModal";
 import { toKebabCase } from "~/utils/string";
+import type { CharactersState } from "~/interfaces/CharactersState";
 
 export default function CharacterList() {
   const {
@@ -165,7 +166,7 @@ export default function CharacterList() {
           onClose={() => setModalOpen(false)}
           mode={modalMode}
           data={charactersState} // for export
-          onSave={(json) => {
+          onSave={(json: CharactersState) => {
             setCharactersState(json); // update context on import
           }}
         />
