@@ -1,5 +1,5 @@
 {
-  "lastUpdate": "2025-09-04",
+  "lastUpdate": "2025-09-05",
   "changelog": {
     "1.0.0": ["Initial release."],
     "1.0.1": [
@@ -29,6 +29,7 @@
     ],
     "1.4.2": [
       "Improvement: Character names are now included when exporting or importing data on the My Characters page."
-    ]
+    ],
+    "1.4.3": ["Improvement: Added strategy tips to step 3."]
   }
 }

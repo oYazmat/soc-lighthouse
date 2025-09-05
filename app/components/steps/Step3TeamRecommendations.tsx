@@ -16,6 +16,7 @@ import {
 import { CHARACTERS, LIGHTHOUSE_LEVELS } from "~/utils/data-loader";
 import LighthouseDestinationsTabs from "../LighthouseDestinationsTabs";
 import type { LeaderTeams } from "~/interfaces/LeaderTeams";
+import StrategyTipsAccordion from "../StrategyTipsAccordion";
 
 export default function Step3TeamRecommendations() {
   const {
@@ -168,6 +169,8 @@ export default function Step3TeamRecommendations() {
               }
               label="Allow overlapping characters"
             />
+
+            <StrategyTipsAccordion />
           </Box>
 
           <LighthouseDestinationsTabs
