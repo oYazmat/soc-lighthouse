@@ -77,7 +77,6 @@ export default function TeamsTable({
         <TableHead>
           <TableRow>
             {showCheckbox && <TableCell align="center" />}
-            <TableCell align="center">Faction</TableCell>
             <TableCell align="center">Leader</TableCell>
             {Array.from({ length: maxCharactersPerRow }).map((_, i) => (
               <TableCell
@@ -85,6 +84,7 @@ export default function TeamsTable({
                 align="center"
               >{`Character ${i + 1}`}</TableCell>
             ))}
+            <TableCell align="center">Bonus Faction</TableCell>
 
             {!showExpeditionPower && (
               <>
@@ -96,7 +96,7 @@ export default function TeamsTable({
 
             {showExpeditionPower && (
               <>
-                <TableCell align="center"> Team Power</TableCell>
+                <TableCell align="center">Team Power</TableCell>
                 <TableCell align="center">Logistics Power</TableCell>
                 <TableCell align="center">Total Expedition Power</TableCell>
               </>
@@ -135,22 +135,6 @@ export default function TeamsTable({
                     />
                   </TableCell>
                 )}
-
-                <TableCell align="center">
-                  {faction && (
-                    <Chip
-                      avatar={
-                        <Avatar
-                          alt={faction}
-                          src={`/images/factions/${toKebabCase(faction)}.png`}
-                        />
-                      }
-                      label={faction}
-                      variant="outlined"
-                    />
-                  )}
-                  {!faction && <>-</>}
-                </TableCell>
 
                 {/* Leader cell */}
                 <TableCell
@@ -229,6 +213,22 @@ export default function TeamsTable({
                     </TableCell>
                   );
                 })}
+
+                <TableCell align="center">
+                  {faction && (
+                    <Chip
+                      avatar={
+                        <Avatar
+                          alt={faction}
+                          src={`/images/factions/${toKebabCase(faction)}.png`}
+                        />
+                      }
+                      label={faction}
+                      variant="outlined"
+                    />
+                  )}
+                  {!faction && <>-</>}
+                </TableCell>
 
                 {/* Power columns */}
                 {!showExpeditionPower && (
