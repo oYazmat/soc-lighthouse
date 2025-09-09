@@ -1,5 +1,5 @@
 {
-  "lastUpdate": "2025-09-05",
+  "lastUpdate": "2025-09-09",
   "changelog": {
     "1.0.0": ["Initial release."],
     "1.0.1": [
@@ -30,6 +30,9 @@
     "1.4.2": [
       "Improvement: Character names are now included when exporting or importing data on the My Characters page."
     ],
-    "1.4.3": ["Improvement: Added strategy tips to step 3."]
+    "1.4.3": ["Improvement: Added strategy tips to step 3."],
+    "1.4.4": [
+      "Bugfix: Characters with 0 stars are now excluded from the JSON export."
+    ]
   }
 }
