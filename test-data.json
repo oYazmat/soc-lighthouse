@@ -1,9 +1,4 @@
 {
-  "1": {
-    "name": "Acambe",
-    "stars": 0,
-    "rank": 0
-  },
   "3": {
     "name": "Agata",
     "stars": 5,
@@ -116,7 +111,7 @@
   },
   "38": {
     "name": "Nydia",
-    "stars": 2,
+    "stars": 3,
     "rank": 13
   },
   "39": {
@@ -406,12 +401,12 @@
   },
   "100": {
     "name": "Senshi",
-    "stars": 2,
+    "stars": 3,
     "rank": 12
   },
   "101": {
     "name": "Marcille",
     "stars": 2,
-    "rank": 12
+    "rank": 13
   }
 }

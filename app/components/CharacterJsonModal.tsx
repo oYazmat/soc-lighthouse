@@ -36,10 +36,13 @@ export default function CharacterJsonModal({
 
       for (const [id, state] of Object.entries(data)) {
         const character = CHARACTERS.find((c) => c.id === Number(id));
-        enriched[Number(id)] = {
-          name: character?.name ?? "Unknown",
-          ...state,
-        };
+
+        if (state.stars > 0) {
+          enriched[Number(id)] = {
+            name: character?.name ?? "Unknown",
+            ...state,
+          };
+        }
       }
 
       setJsonText(JSON.stringify(enriched, null, 2));
