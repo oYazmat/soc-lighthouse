@@ -11,6 +11,7 @@ import {
   Button,
   Avatar,
 } from "@mui/material";
+import { CloudUpload, CloudDownload, Print } from "@mui/icons-material";
 import { useEffect, useMemo, useState } from "react";
 import StarsDropdown from "./StarsDropdown";
 import RankDropdown from "./RankDropdown";
@@ -23,6 +24,7 @@ import { RARITY_ORDER } from "~/utils/characters";
 import CharacterJsonModal from "./CharacterJsonModal";
 import { toKebabCase } from "~/utils/string";
 import type { CharactersState } from "~/interfaces/CharactersState";
+import PrintCollectionModal from "./PrintCollectionModal";
 
 export default function CharacterList() {
   const {
@@ -42,6 +44,7 @@ export default function CharacterList() {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState<"import" | "export">("export");
+  const [printModalOpen, setPrintModalOpen] = useState(false);
 
   // Collect all unique factions from the data
   const allFactions = useMemo(() => {
@@ -118,6 +121,7 @@ export default function CharacterList() {
 
   return (
     <>
+      {/* Top bar: filters on left, actions on right */}
       <Box
         sx={{
           display: "flex",
@@ -133,31 +137,38 @@ export default function CharacterList() {
           allFactions={allFactions}
         />
 
-        {/* Right: Import / Export */}
-        <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
+        {/* Right: Import / Export / Print */}
+        <Box sx={{ display: "flex", gap: 1 }}>
           <Button
             variant="outlined"
-            size="small"
-            sx={{ height: 40 }}
-            color="primary"
+            startIcon={<CloudUpload />}
             onClick={() => {
               setModalMode("import");
               setModalOpen(true);
             }}
           >
-            Import
+            IMPORT
           </Button>
+
           <Button
             variant="outlined"
-            size="small"
-            sx={{ height: 40 }}
             color="success"
+            startIcon={<CloudDownload />}
             onClick={() => {
               setModalMode("export");
               setModalOpen(true);
             }}
           >
-            Export
+            EXPORT
+          </Button>
+
+          <Button
+            variant="outlined"
+            color="secondary"
+            startIcon={<Print />}
+            onClick={() => setPrintModalOpen(true)}
+          >
+            PRINT MY COLLECTION
           </Button>
         </Box>
 
@@ -203,7 +214,9 @@ export default function CharacterList() {
                       avatar={
                         <Avatar
                           alt={character.rarity}
-                          src={`/images/rarities/${toKebabCase(character.rarity)}.png`}
+                          src={`/images/rarities/${toKebabCase(
+                            character.rarity
+                          )}.png`}
                         />
                       }
                       label={character.rarity}
@@ -231,7 +244,9 @@ export default function CharacterList() {
                           avatar={
                             <Avatar
                               alt={faction}
-                              src={`/images/factions/${toKebabCase(faction)}.png`}
+                              src={`/images/factions/${toKebabCase(
+                                faction
+                              )}.png`}
                             />
                           }
                           label={faction}
@@ -247,6 +262,13 @@ export default function CharacterList() {
           </TableBody>
         </Table>
       </TableContainer>
+
+      {/* Print Modal */}
+      <PrintCollectionModal
+        open={printModalOpen}
+        onClose={() => setPrintModalOpen(false)}
+        charactersState={charactersState}
+      />
     </>
   );
 }
