@@ -1,7 +1,8 @@
-import { Dialog, DialogTitle, DialogContent, Box } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, Box, Avatar } from "@mui/material";
 import CharacterAvatar from "./CharacterAvatar";
 import type { CharactersState } from "~/interfaces/CharactersState";
 import { CHARACTERS } from "~/utils/data-loader";
+import { toKebabCase } from "~/utils/string";
 
 interface PrintCollectionModalProps {
   open: boolean;
@@ -55,8 +56,37 @@ export default function PrintCollectionModal({
                   mx: "auto",
                 }}
               >
-                {/* Avatar centered */}
-                <CharacterAvatar name={character.name} size={60} />
+                <Box
+                  sx={{
+                    width: 150,
+                    height: 150,
+                    position: "absolute",
+                    left: 50,
+                    top: 68,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    overflow: "hidden", // clip the overflow
+                    mx: "auto",
+                  }}
+                >
+                  <Avatar
+                    src={`/images/character-faces/${toKebabCase(character.name)}.png`}
+                    alt={character.name}
+                    sx={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "contain", // keep full image visible
+                      objectPosition: "center", // default center, can tweak per image
+                      transform: "scale(1.5)", // can scale up or down
+                      bgcolor: "transparent",
+                    }}
+                    variant="square"
+                    onError={(e) => {
+                      e.currentTarget.style.display = "none";
+                    }}
+                  />
+                </Box>
 
                 {/* Name positioned absolutely inside the box */}
                 <Box
