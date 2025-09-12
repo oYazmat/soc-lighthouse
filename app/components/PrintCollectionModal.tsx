@@ -1,8 +1,7 @@
-import { Dialog, DialogTitle, DialogContent, Box, Grid } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, Box } from "@mui/material";
 import CharacterAvatar from "./CharacterAvatar";
 import type { CharactersState } from "~/interfaces/CharactersState";
 import { CHARACTERS } from "~/utils/data-loader";
-import { RARITY_ORDER } from "~/utils/characters";
 
 interface PrintCollectionModalProps {
   open: boolean;
@@ -15,19 +14,13 @@ export default function PrintCollectionModal({
   onClose,
   charactersState,
 }: PrintCollectionModalProps) {
-  // Only owned characters, sorted by rarity descending then stars descending
+  // Only owned Legendary characters, sorted by stars descending
   const ownedCharacters = CHARACTERS.filter(
-    (char) => (charactersState[char.id]?.stars || 0) > 0
+    (char) =>
+      char.rarity === "Legendary" && (charactersState[char.id]?.stars || 0) > 0
   ).sort((a, b) => {
     const stateA = charactersState[a.id];
     const stateB = charactersState[b.id];
-
-    // Sort by rarity descending (Legendary → Common)
-    if (RARITY_ORDER[a.rarity] !== RARITY_ORDER[b.rarity]) {
-      return RARITY_ORDER[a.rarity] - RARITY_ORDER[b.rarity];
-    }
-
-    // Then by stars descending
     return (stateB.stars || 0) - (stateA.stars || 0);
   });
 
@@ -35,26 +28,65 @@ export default function PrintCollectionModal({
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="lg">
       <DialogTitle>My Collection</DialogTitle>
       <DialogContent>
-        <Grid container spacing={2}>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(275px, 1fr))", // responsive wrapping
+            justifyContent: "center",
+            gap: 2,
+          }}
+        >
           {ownedCharacters.map((character) => {
             const state = charactersState[character.id];
             return (
-              <Grid
+              <Box
                 key={character.id}
-                size={{ xs: 6, sm: 4, md: 3, lg: 2 }}
-                sx={{ textAlign: "center" }}
+                sx={{
+                  width: 275,
+                  height: 275,
+                  position: "relative",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundImage: `url("/images/character-bg.png")`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "80% auto",
+                  backgroundPosition: "center",
+                  mx: "auto",
+                }}
               >
+                {/* Avatar centered */}
                 <CharacterAvatar name={character.name} size={60} />
-                <Box fontWeight="bold" mt={1}>
+
+                {/* Name positioned absolutely inside the box */}
+                <Box
+                  sx={{
+                    position: "absolute",
+                    bottom: 36,
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    fontWeight: "bold",
+                    fontSize: "0.8rem",
+                    color: "#f9f4e8",
+                    textShadow: "1px 1px 3px rgba(0,0,0,0.7)",
+                    whiteSpace: "nowrap",
+                  }}
+                >
                   {character.name}
                 </Box>
-                <Box fontSize="0.9rem" color="text.secondary">
+
+                {/* <Box
+                  fontSize="0.85rem"
+                  color="text.secondary"
+                  mt={0.5}
+                  textAlign="center"
+                >
                   ⭐ {state.stars} | ⬆️ {state.rank}
-                </Box>
-              </Grid>
+                </Box> */}
+              </Box>
             );
           })}
-        </Grid>
+        </Box>
       </DialogContent>
     </Dialog>
   );
