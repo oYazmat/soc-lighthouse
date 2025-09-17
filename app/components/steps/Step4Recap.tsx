@@ -166,10 +166,10 @@ export default function Step4Recap() {
                 leaderTeams={leaderTeamsForDest}
                 showCheckbox={false}
                 showExpeditionPower
-                lighthousePower={
+                lighthousePower={Math.round(
                   totalRankPower *
-                  (1 + (totalActiveBonuses?.bonusLogistics ?? 0) / 100)
-                }
+                    (1 + (totalActiveBonuses?.bonusLogistics ?? 0) / 100)
+                )}
               />
             </Box>
           );
