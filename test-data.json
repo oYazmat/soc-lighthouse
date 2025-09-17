@@ -31,7 +31,7 @@
   },
   "12": {
     "name": "Edda",
-    "stars": 1,
+    "stars": 2,
     "rank": 13
   },
   "14": {
@@ -56,7 +56,7 @@
   },
   "23": {
     "name": "Inanna of Convallaria",
-    "stars": 3,
+    "stars": 4,
     "rank": 13
   },
   "24": {
@@ -402,11 +402,16 @@
   "100": {
     "name": "Senshi",
     "stars": 3,
-    "rank": 12
+    "rank": 13
   },
   "101": {
     "name": "Marcille",
     "stars": 2,
+    "rank": 13
+  },
+  "102": {
+    "name": "Falin",
+    "stars": 1,
     "rank": 13
   }
 }

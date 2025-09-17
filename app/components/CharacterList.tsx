@@ -1,28 +1,13 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Chip,
-  Box,
-  Button,
-  Avatar,
-} from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
-import StarsDropdown from "./StarsDropdown";
-import RankDropdown from "./RankDropdown";
 import CharacterFilters from "./CharacterFilters";
 import { useSoCContext } from "../context/SoCContext";
-import CharacterAvatar from "./CharacterAvatar";
 import type { CharacterFilterValues } from "~/interfaces/CharacterFilterValues";
 import { CHARACTERS } from "~/utils/data-loader";
 import { RARITY_ORDER } from "~/utils/characters";
 import CharacterJsonModal from "./CharacterJsonModal";
-import { toKebabCase } from "~/utils/string";
 import type { CharactersState } from "~/interfaces/CharactersState";
+import CharacterTable from "./CharacterTable";
 
 export default function CharacterList() {
   const {
@@ -172,81 +157,12 @@ export default function CharacterList() {
         />
       </Box>
 
-      <TableContainer component={Paper} sx={{ mt: 2 }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Image</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Rarity</TableCell>
-              <TableCell sx={{ minWidth: 100 }}>Stars</TableCell>
-              <TableCell sx={{ minWidth: 80 }}>Rank</TableCell>
-              <TableCell>Factions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredCharacters.map((character) => {
-              const state = charactersState[character.id] || {
-                stars: 0,
-                rank: 0,
-              };
-              const isRankDisabled = !state.stars;
-
-              return (
-                <TableRow key={character.id}>
-                  <TableCell>
-                    <CharacterAvatar name={character.name} size={40} />
-                  </TableCell>
-                  <TableCell>{character.name}</TableCell>
-                  <TableCell>
-                    <Chip
-                      avatar={
-                        <Avatar
-                          alt={character.rarity}
-                          src={`/images/rarities/${toKebabCase(character.rarity)}.png`}
-                        />
-                      }
-                      label={character.rarity}
-                      variant="outlined"
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <StarsDropdown
-                      value={state.stars}
-                      onChange={(val) => handleStarsChange(character.id, val)}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <RankDropdown
-                      value={state.rank}
-                      onChange={(val) => handleRankChange(character.id, val)}
-                      disabled={isRankDisabled}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
-                      {character.factions.map((faction: string) => (
-                        <Chip
-                          key={faction}
-                          avatar={
-                            <Avatar
-                              alt={faction}
-                              src={`/images/factions/${toKebabCase(faction)}.png`}
-                            />
-                          }
-                          label={faction}
-                          variant="outlined"
-                          size="small"
-                        />
-                      ))}
-                    </Box>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <CharacterTable
+        characters={filteredCharacters}
+        charactersState={charactersState}
+        onStarsChange={handleStarsChange}
+        onRankChange={handleRankChange}
+      />
     </>
   );
 }
