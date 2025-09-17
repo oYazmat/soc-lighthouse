@@ -1,18 +1,18 @@
 {
-  "lastUpdate": "2025-09-09",
+  "lastUpdate": "2025-09-17",
   "changelog": {
     "1.0.0": ["Initial release."],
     "1.0.1": [
       "Improvement: Updated star selection behavior on the My Characters page."
     ],
     "1.1.0": [
-      "Feature: Introduced 'Allow Overlap' option to allow or prevent characters from being assigned to multiple teams within the same destination in step 3 of the recommendation process."
+      "New: Introduced 'Allow Overlap' option to allow or prevent characters from being assigned to multiple teams within the same destination in step 3 of the recommendation process."
     ],
     "1.2.0": [
-      "Feature: Introduced 'Braindead Mode' to automatically generate the two strongest non-overlapping teams for each destination in step 3 of the recommendation process."
+      "New: Introduced 'Braindead Mode' to automatically generate the two strongest non-overlapping teams for each destination in step 3 of the recommendation process."
     ],
     "1.3.0": [
-      "Feature: Added a modal to display the current version and changelog.",
+      "New: Added a modal to display the current version and changelog.",
       "Improvement: Reversed the order of the Rank dropdown on the My Characters page."
     ],
     "1.3.1": [
@@ -28,11 +28,15 @@
       "Improvement: Replaced generic icons with Sword of Convallaria–themed ones for better consistency across the app."
     ],
     "1.4.2": [
-      "Improvement: Character names are now included when exporting or importing data on the My Characters page."
+      "New: Character names are now included when exporting or importing data on the My Characters page."
     ],
-    "1.4.3": ["Improvement: Added strategy tips to step 3."],
+    "1.4.3": ["New: Added strategy tips to step 3."],
     "1.4.4": [
-      "Bugfix: Characters with 0 stars are now excluded from the JSON export."
+      "Fix: Characters with 0 stars are now excluded from the JSON export."
+    ],
+    "1.5.0": [
+      "New: You can now sort your characters by Stars or Rank in My Characters.",
+      "Fix: Logistics power values now display correctly."
     ]
   }
 }
