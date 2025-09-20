@@ -595,5 +595,11 @@
     "name": "Falin",
     "rarity": "Legendary",
     "factions": ["Drifter", "Fortitude"]
+  },
+  {
+    "id": 103,
+    "name": "Samantha - Everglow",
+    "rarity": "Legendary",
+    "factions": ["Papal States", "Aggression"]
   }
 ]
