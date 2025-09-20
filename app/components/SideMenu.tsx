@@ -20,6 +20,7 @@ import UpdateIcon from "@mui/icons-material/Update";
 import DiscordIcon from "./DiscordIcon";
 import ChangelogModal from "./ChangelogModal";
 import config from "../../app-config.json";
+import { Link } from "react-router";
 
 const drawerWidth = 240;
 
@@ -47,10 +48,10 @@ export default function SideMenu() {
       >
         <Toolbar />
         <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
-          {/* The actual list items */}
           <List sx={{ zIndex: 1 }}>
+            {/* My Characters */}
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton component={Link} to="/">
                 <ListItemIcon>
                   <Box
                     sx={{
@@ -61,9 +62,7 @@ export default function SideMenu() {
                       height: 32,
                       borderRadius: "50%", // circle style
                       bgcolor:
-                        theme.palette.mode === "dark"
-                          ? "grey.700" // subtle but visible in dark mode
-                          : "grey.800", // strong contrast in light mode
+                        theme.palette.mode === "dark" ? "grey.700" : "grey.800",
                     }}
                   >
                     <img
