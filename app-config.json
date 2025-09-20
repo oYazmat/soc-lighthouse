@@ -1,5 +1,5 @@
 {
-  "lastUpdate": "2025-09-17",
+  "lastUpdate": "2025-09-20",
   "changelog": {
     "1.0.0": ["Initial release."],
     "1.0.1": [
@@ -37,6 +37,7 @@
     "1.5.0": [
       "New: You can now sort your characters by Stars or Rank in My Characters.",
       "Fix: Logistics power values now display correctly."
-    ]
+    ],
+    "1.5.1": ["New: Added Samantha - Everglow."]
   }
 }
