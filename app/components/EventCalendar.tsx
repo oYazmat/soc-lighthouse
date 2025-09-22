@@ -2,41 +2,38 @@ import { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import type { EventContentArg } from "@fullcalendar/core";
+import { EVENTS } from "~/utils/data-loader";
+import type { Event } from "~/interfaces/Event";
+
+const EVENT_COLORS = ["#FF6B6B", "#4ECDC4", "#FFD93D", "#6A4C93", "#FFA07A"]; // 5 colors
 
 export default function EventCalendar() {
   const [mounted, setMounted] = useState(false);
+  const [events, setEvents] = useState<Event[]>([]);
 
   useEffect(() => {
-    setMounted(true); // only render calendar after mount
+    setMounted(true);
+    setEvents(EVENTS);
   }, []);
 
-  const events = [
-    {
-      title: "Dragon Quest X Event",
-      start: "2025-08-29",
-      end: "2025-09-11",
-      extendedProps: { image: "/images/events/test.png" },
-    },
-    {
-      title: "Early Access",
-      start: "2025-09-04",
-      end: "2025-09-17",
-      color: "orange",
-    },
-  ];
-
-  if (!mounted) return null; // don't render until mounted
+  if (!mounted) return null;
 
   return (
     <div style={{ height: "100vh" }}>
       <FullCalendar
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
-        events={events}
+        events={events.map((e, i) => ({
+          title: e.title,
+          start: e.start,
+          end: e.end,
+          extendedProps: { image: e.image },
+          color: EVENT_COLORS[i % EVENT_COLORS.length],
+        }))}
         eventContent={renderEventContent}
         height="100%"
         contentHeight="auto"
-        dayMaxEventRows={3}
+        dayMaxEventRows={Infinity} // show all events, no "+X more"
         headerToolbar={{
           left: "prev,next today",
           center: "title",
