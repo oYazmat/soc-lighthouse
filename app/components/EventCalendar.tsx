@@ -4,8 +4,20 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import type { EventContentArg } from "@fullcalendar/core";
 import { EVENTS } from "~/utils/data-loader";
 import type { Event } from "~/interfaces/Event";
+import { addDays, parseISO, formatISO } from "date-fns";
 
-const EVENT_COLORS = ["#FF6B6B", "#4ECDC4", "#FFD93D", "#6A4C93", "#FFA07A"]; // 5 colors
+const EVENT_COLORS = [
+  "#E63946", // warm red
+  "#457B9D", // muted blue
+  "#2A9D8F", // teal/green
+  "#8D99AE", // soft gray-blue
+  "#F4A261", // soft orange
+  "#6A4C93", // purple
+  "#1A535C", // dark cyan
+  "#FF7F50", // coral
+  "#4B3832", // brown
+  "#3B6978", // deep teal
+];
 
 export default function EventCalendar() {
   const [mounted, setMounted] = useState(false);
@@ -23,10 +35,14 @@ export default function EventCalendar() {
       <FullCalendar
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
+        firstDay={5}
+        fixedWeekCount={false}
         events={events.map((e, i) => ({
           title: e.title,
           start: e.start,
-          end: e.end,
+          end: formatISO(addDays(parseISO(e.end), 1), {
+            representation: "date",
+          }), // include last day
           extendedProps: { image: e.image },
           color: EVENT_COLORS[i % EVENT_COLORS.length],
         }))}
