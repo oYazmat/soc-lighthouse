@@ -1,6 +1,6 @@
 [
   {
-    "title": "Comeback Componion",
+    "title": "Comeback Companion",
     "start": "2025-07-30",
     "end": "2025-09-25"
   },
@@ -77,7 +77,7 @@
   {
     "title": "Collab Event: Sword of Convallaria × Delicious in Dungeon",
     "start": "2025-08-29",
-    "end": "2025-09-25"
+    "end": "2025-09-23"
   },
   {
     "title": "Summon Event: Marcille",
@@ -93,6 +93,11 @@
     "title": "Voyager's Conundrum",
     "start": "2025-08-29",
     "end": "2025-09-11"
+  },
+  {
+    "title": "Login Event: Adventurer's Gift",
+    "start": "2025-08-29",
+    "end": "2025-09-25"
   },
   {
     "title": "Summon Event: Safiyyah - Promise & Hasna",
@@ -113,6 +118,11 @@
     "title": "Voyage of Discovery",
     "start": "2025-09-12",
     "end": "2025-10-03"
+  },
+  {
+    "title": "Treasure Surge",
+    "start": "2025-09-19",
+    "end": "2025-09-25"
   },
   {
     "title": "Summon Event: Gloria & Dantalion",

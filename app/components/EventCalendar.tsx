@@ -35,7 +35,6 @@ export default function EventCalendar() {
       <FullCalendar
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
-        firstDay={5}
         fixedWeekCount={false}
         events={events.map((e, i) => ({
           title: e.title,
