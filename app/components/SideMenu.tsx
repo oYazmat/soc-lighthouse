@@ -75,6 +75,33 @@ export default function SideMenu() {
                 <ListItemText primary="My Characters" />
               </ListItemButton>
             </ListItem>
+
+            {/* Event Calendar */}
+            <ListItem disablePadding>
+              <ListItemButton component={Link} to="/events">
+                <ListItemIcon>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: 32,
+                      height: 32,
+                      borderRadius: "50%",
+                      bgcolor:
+                        theme.palette.mode === "dark" ? "grey.700" : "grey.800",
+                    }}
+                  >
+                    <img
+                      src="/images/menu/event-calendar.png"
+                      alt="Event Calendar"
+                      style={{ width: 20, height: 20 }}
+                    />
+                  </Box>
+                </ListItemIcon>
+                <ListItemText primary="Event Calendar" />
+              </ListItemButton>
+            </ListItem>
           </List>
 
           {/* Empty space background */}

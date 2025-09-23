@@ -21,7 +21,7 @@ export default function SoCLayout({ children }: SoCLayoutProps) {
   const [darkMode, setDarkMode] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
-  // Load dark mode from localStorage
+  // Load dark mode from localStorage (client only)
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedDark = localStorage.getItem(LOCAL_STORAGE_KEY_DARK);
@@ -36,6 +36,12 @@ export default function SoCLayout({ children }: SoCLayoutProps) {
     }
   }, [darkMode]);
 
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.documentElement.classList.toggle("dark", darkMode);
+    }
+  }, [darkMode]);
+
   const theme = useMemo(
     () =>
       createTheme({
@@ -47,7 +53,15 @@ export default function SoCLayout({ children }: SoCLayoutProps) {
   return (
     <ThemeProvider theme={theme}>
       <SoCProvider>
-        <Box sx={{ display: "flex" }}>
+        {/* outer root fills viewport and uses MUI background */}
+        <Box
+          sx={{
+            display: "flex",
+            minHeight: "100vh",
+            width: "100%",
+            bgcolor: "background.default", // MUI controls bg (light/dark)
+          }}
+        >
           <CssBaseline />
 
           <Header
@@ -58,7 +72,17 @@ export default function SoCLayout({ children }: SoCLayoutProps) {
 
           <SideMenu />
 
-          <Box component="main" sx={{ flexGrow: 1, p: 3, minHeight: "100vh" }}>
+          <Box
+            component="main"
+            sx={{
+              flexGrow: 1,
+              p: 3,
+              display: "flex",
+              flexDirection: "column",
+              minHeight: "100vh",
+              bgcolor: "background.default", // keep consistent
+            }}
+          >
             <Toolbar />
             {children}
           </Box>
