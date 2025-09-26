@@ -173,5 +173,20 @@
     "title": "Guild Event: Eternum Star Monument",
     "start": "2025-09-26",
     "end": "2025-10-09"
+  },
+  {
+    "title": "Missions Event: New Tarot Whispers",
+    "start": "2025-09-26",
+    "end": "2025-10-09"
+  },
+  {
+    "title": "Luminous Azure",
+    "start": "2025-10-03",
+    "end": "2025-10-28"
+  },
+  {
+    "title": "Proof of Strength",
+    "start": "2025-10-10",
+    "end": "2025-11-07"
   }
 ]
