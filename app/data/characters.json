@@ -601,5 +601,11 @@
     "name": "Samantha - Everglow",
     "rarity": "Legendary",
     "factions": ["Papal States", "Aggression"]
+  },
+  {
+    "id": 104,
+    "name": "Credenza",
+    "rarity": "Legendary",
+    "factions": ["Papal States", "Aggression"]
   }
 ]
