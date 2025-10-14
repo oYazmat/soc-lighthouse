@@ -1,4 +1,9 @@
 {
+  "2": {
+    "name": "Afra",
+    "stars": 1,
+    "rank": 13
+  },
   "3": {
     "name": "Agata",
     "stars": 5,
@@ -56,7 +61,7 @@
   },
   "23": {
     "name": "Inanna of Convallaria",
-    "stars": 4,
+    "stars": 5,
     "rank": 13
   },
   "24": {
@@ -411,12 +416,17 @@
   },
   "102": {
     "name": "Falin",
-    "stars": 2,
+    "stars": 3,
     "rank": 13
   },
   "103": {
     "name": "Samantha - Everglow",
     "stars": 2,
+    "rank": 13
+  },
+  "104": {
+    "name": "Credenza",
+    "stars": 1,
     "rank": 13
   }
 }
