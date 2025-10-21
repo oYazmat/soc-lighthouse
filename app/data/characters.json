@@ -607,5 +607,11 @@
     "name": "Credenza",
     "rarity": "Legendary",
     "factions": ["Papal States", "Aggression"]
+  },
+  {
+    "id": 105,
+    "name": "Camelot",
+    "rarity": "Legendary",
+    "factions": ["The Union", "Fortitude"]
   }
 ]
