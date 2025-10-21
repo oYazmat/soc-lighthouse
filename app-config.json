@@ -1,5 +1,5 @@
 {
-  "lastUpdate": "2025-10-02",
+  "lastUpdate": "2025-10-21",
   "changelog": {
     "1.0.0": ["Initial release."],
     "1.0.1": [
@@ -44,6 +44,7 @@
       "Fix: Favicon not displaying on the events page.",
       "Fix: Incorrect end date for the guild event 'Eternum Star Monument'."
     ],
-    "1.6.2": ["New: Added Credenza."]
+    "1.6.2": ["New: Added Credenza."],
+    "1.6.3": ["New: Added Camelot."]
   }
 }

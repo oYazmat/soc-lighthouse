@@ -220,7 +220,7 @@
     "end": "2025-11-06"
   },
   {
-    "title": "Astral Imprint: ???",
+    "title": "Astral Imprint: Surtr the Darkfire Axe",
     "start": "2025-10-24",
     "end": "2025-11-06"
   },
@@ -228,5 +228,15 @@
     "title": "Feast of Warriors",
     "start": "2025-10-24",
     "end": "2025-11-20"
+  },
+  {
+    "title": "Guild Event: Voyager's Conundrum",
+    "start": "2025-10-24",
+    "end": "2025-11-06"
+  },
+  {
+    "title": "Universal Derivation",
+    "start": "2025-10-24",
+    "end": "2025-11-13"
   }
 ]
