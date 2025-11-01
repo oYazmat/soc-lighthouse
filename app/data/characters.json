@@ -613,5 +613,11 @@
     "name": "Camelot",
     "rarity": "Legendary",
     "factions": ["The Union", "Fortitude"]
+  },
+  {
+    "id": 106,
+    "name": "Yserinde",
+    "rarity": "Legendary",
+    "factions": ["The Union", "Discipline"]
   }
 ]

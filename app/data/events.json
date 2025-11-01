@@ -253,5 +253,25 @@
     "title": "Missions Event: New Unique Ascensions",
     "start": "2025-11-03",
     "end": "2026-01-25"
+  },
+  {
+    "title": "Summon Event: Yserinde",
+    "start": "2025-11-07",
+    "end": "2025-11-20"
+  },
+  {
+    "title": "Tower of Adversity",
+    "start": "2025-11-07",
+    "end": "2025-12-04"
+  },
+  {
+    "title": "Festival Keepsake",
+    "start": "2025-11-11",
+    "end": "2025-11-25"
+  },
+  {
+    "title": "Stellar Echoes",
+    "start": "2025-11-14",
+    "end": "2025-11-27"
   }
 ]
