@@ -9,6 +9,11 @@
     "stars": 5,
     "rank": 13
   },
+  "4": {
+    "name": "Alexei",
+    "stars": 1,
+    "rank": 13
+  },
   "5": {
     "name": "Auguste",
     "stars": 5,
@@ -426,7 +431,12 @@
   },
   "104": {
     "name": "Credenza",
-    "stars": 3,
+    "stars": 2,
+    "rank": 13
+  },
+  "106": {
+    "name": "Yserinde",
+    "stars": 1,
     "rank": 13
   }
 }
