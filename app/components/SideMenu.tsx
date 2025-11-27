@@ -77,7 +77,7 @@ export default function SideMenu() {
             </ListItem>
 
             {/* Event Calendar */}
-            <ListItem disablePadding>
+            {/*<ListItem disablePadding>
               <ListItemButton component={Link} to="/events">
                 <ListItemIcon>
                   <Box
@@ -101,7 +101,7 @@ export default function SideMenu() {
                 </ListItemIcon>
                 <ListItemText primary="Event Calendar" />
               </ListItemButton>
-            </ListItem>
+            </ListItem>*/}
           </List>
 
           {/* Empty space background */}
