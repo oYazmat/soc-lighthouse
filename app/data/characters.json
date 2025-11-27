@@ -619,5 +619,29 @@
     "name": "Yserinde",
     "rarity": "Legendary",
     "factions": ["The Union", "Discipline"]
+  },
+  {
+    "id": 107,
+    "name": "Geralt",
+    "rarity": "Legendary",
+    "factions": ["Fortitude"]
+  },
+  {
+    "id": 108,
+    "name": "Ciri",
+    "rarity": "Legendary",
+    "factions": ["Alacrity"]
+  },
+  {
+    "id": 109,
+    "name": "Yennefer",
+    "rarity": "Legendary",
+    "factions": ["Discipline"]
+  },
+  {
+    "id": 110,
+    "name": "Triss",
+    "rarity": "Legendary",
+    "factions": ["Aggression"]
   }
 ]
