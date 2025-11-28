@@ -582,19 +582,19 @@
     "id": 100,
     "name": "Senshi",
     "rarity": "Legendary",
-    "factions": ["Drifter", "Discipline"]
+    "factions": ["Dimension Traveler", "Drifter", "Discipline"]
   },
   {
     "id": 101,
     "name": "Marcille",
     "rarity": "Legendary",
-    "factions": ["Drifter", "Aggression"]
+    "factions": ["Dimension Traveler", "Drifter", "Aggression"]
   },
   {
     "id": 102,
     "name": "Falin",
     "rarity": "Legendary",
-    "factions": ["Drifter", "Fortitude"]
+    "factions": ["Dimension Traveler", "Drifter", "Fortitude"]
   },
   {
     "id": 103,
@@ -624,24 +624,24 @@
     "id": 107,
     "name": "Geralt",
     "rarity": "Legendary",
-    "factions": ["Fortitude"]
+    "factions": ["Dimension Traveler", "Drifter", "Fortitude"]
   },
   {
     "id": 108,
     "name": "Ciri",
     "rarity": "Legendary",
-    "factions": ["Alacrity"]
+    "factions": ["Dimension Traveler", "Drifter", "Alacrity"]
   },
   {
     "id": 109,
     "name": "Yennefer",
     "rarity": "Legendary",
-    "factions": ["Discipline"]
+    "factions": ["Dimension Traveler", "Drifter", "Discipline"]
   },
   {
     "id": 110,
     "name": "Triss",
     "rarity": "Legendary",
-    "factions": ["Aggression"]
+    "factions": ["Dimension Traveler", "Drifter", "Aggression"]
   }
 ]

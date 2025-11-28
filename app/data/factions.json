@@ -9,5 +9,6 @@
   { "name": "Papal States", "ignored": false },
   { "name": "Sword of Convallaria", "ignored": false },
   { "name": "Vlder", "ignored": false },
-  { "name": "Night Crimson", "ignored": false }
+  { "name": "Night Crimson", "ignored": false },
+  { "name": "Dimension Traveler", "ignored": true }
 ]
