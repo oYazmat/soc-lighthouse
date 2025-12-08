@@ -22,7 +22,8 @@ export default function CharacterList() {
     name: "",
     rarity: [],
     factions: [],
-    ownership: "All", // default value
+    ownership: "All",
+    factionMode: "inclusive",
   });
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -45,9 +46,19 @@ export default function CharacterList() {
       const matchesRarity =
         filters.rarity.length === 0 || filters.rarity.includes(c.rarity);
 
-      const matchesFaction =
-        filters.factions.length === 0 ||
-        filters.factions.some((f) => c.factions.includes(f));
+      let matchesFaction = true;
+
+      if (filters.factions.length > 0) {
+        if (filters.factionMode === "inclusive") {
+          // match ANY selected faction
+          matchesFaction = filters.factions.some((f) => c.factions.includes(f));
+        } else {
+          // exclusive mode → match ALL selected factions
+          matchesFaction = filters.factions.every((f) =>
+            c.factions.includes(f)
+          );
+        }
+      }
 
       const stars = charactersState[c.id]?.stars || 0;
       const matchesOwnership =

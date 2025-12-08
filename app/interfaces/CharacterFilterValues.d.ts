@@ -3,4 +3,5 @@ export interface CharacterFilterValues {
   rarity: string[];
   factions: string[];
   ownership?: "All" | "Owned" | "Not Owned";
+  factionMode?: "inclusive" | "exclusive";
 }

@@ -10,6 +10,8 @@ import {
   InputAdornment,
   IconButton,
   Avatar,
+  FormControlLabel,
+  Checkbox,
 } from "@mui/material";
 import type { CharacterFilterValues } from "~/interfaces/CharacterFilterValues";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -99,49 +101,68 @@ export default function CharacterFilters({
       </FormControl>
 
       {/* Factions filter */}
-      <FormControl size="small" sx={{ minWidth: 150 }}>
-        <InputLabel>Factions</InputLabel>
-        <Select
-          multiple
-          value={filters.factions}
-          onChange={(e) =>
-            onChange({ ...filters, factions: e.target.value as string[] })
-          }
-          input={<OutlinedInput label="Factions" />}
-          renderValue={(selected) => (
-            <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap" }}>
-              {(selected as string[]).map((value) => (
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+        <FormControl size="small" sx={{ minWidth: 150 }}>
+          <InputLabel>Factions</InputLabel>
+          <Select
+            multiple
+            value={filters.factions}
+            onChange={(e) =>
+              onChange({ ...filters, factions: e.target.value as string[] })
+            }
+            input={<OutlinedInput label="Factions" />}
+            renderValue={(selected) => (
+              <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap" }}>
+                {(selected as string[]).map((value) => (
+                  <Chip
+                    key={value}
+                    avatar={
+                      <Avatar
+                        alt={value}
+                        src={`/images/factions/${toKebabCase(value)}.png`}
+                      />
+                    }
+                    label={value}
+                    size="small"
+                  />
+                ))}
+              </Box>
+            )}
+          >
+            {allFactions.map((faction) => (
+              <MenuItem key={faction} value={faction}>
                 <Chip
-                  key={value}
                   avatar={
                     <Avatar
-                      alt={value}
-                      src={`/images/factions/${toKebabCase(value)}.png`}
+                      alt={faction}
+                      src={`/images/factions/${toKebabCase(faction)}.png`}
                     />
                   }
-                  label={value}
-                  size="small"
+                  label={faction}
+                  variant="outlined"
                 />
-              ))}
-            </Box>
-          )}
-        >
-          {allFactions.map((faction) => (
-            <MenuItem key={faction} value={faction}>
-              <Chip
-                avatar={
-                  <Avatar
-                    alt={faction}
-                    src={`/images/factions/${toKebabCase(faction)}.png`}
-                  />
-                }
-                label={faction}
-                variant="outlined"
-              />
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        {/* Inclusive / Exclusive checkbox */}
+        <FormControlLabel
+          control={
+            <Checkbox
+              size="small"
+              checked={filters.factionMode === "exclusive"}
+              onChange={(e) =>
+                onChange({
+                  ...filters,
+                  factionMode: e.target.checked ? "exclusive" : "inclusive",
+                })
+              }
+            />
+          }
+          label="Match all"
+        />
+      </Box>
 
       {/* Ownership filter */}
       <FormControl size="small" sx={{ minWidth: 120 }}>
