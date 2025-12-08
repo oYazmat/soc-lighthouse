@@ -1,5 +1,6 @@
+import * as htmlToImage from "html-to-image";
 import { Box, Button } from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import CharacterFilters from "./CharacterFilters";
 import { useSoCContext } from "../context/SoCContext";
 import type { CharacterFilterValues } from "~/interfaces/CharacterFilterValues";
@@ -29,6 +30,8 @@ export default function CharacterList() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState<"import" | "export">("export");
 
+  const tableRef = useRef<HTMLDivElement>(null);
+
   // Collect all unique factions from the data
   const allFactions = useMemo(() => {
     const set = new Set<string>();
@@ -50,10 +53,8 @@ export default function CharacterList() {
 
       if (filters.factions.length > 0) {
         if (filters.factionMode === "inclusive") {
-          // match ANY selected faction
           matchesFaction = filters.factions.some((f) => c.factions.includes(f));
         } else {
-          // exclusive mode → match ALL selected factions
           matchesFaction = filters.factions.every((f) =>
             c.factions.includes(f)
           );
@@ -77,7 +78,6 @@ export default function CharacterList() {
   }, [filters, charactersState]);
 
   useEffect(() => {
-    // Whenever charactersState changes, clear dependent context states
     setMatchedSpots([]);
     setMatchedSpecialSpots([]);
     setSelectedTeams({});
@@ -96,7 +96,7 @@ export default function CharacterList() {
         ...prev,
         [id]: {
           stars,
-          rank: stars === 0 ? 0 : prevState.rank, // reset rank if stars is 0
+          rank: stars === 0 ? 0 : prevState.rank,
         },
       };
     });
@@ -110,6 +110,26 @@ export default function CharacterList() {
         rank,
       },
     }));
+  };
+
+  const handleScreenshot = async () => {
+    if (!tableRef.current) return;
+
+    try {
+      const dataUrl = await htmlToImage.toPng(tableRef.current, {
+        pixelRatio: 2,
+        cacheBust: true,
+        quality: 1,
+        skipFonts: true,
+      });
+
+      const link = document.createElement("a");
+      link.download = "characters-table.png";
+      link.href = dataUrl;
+      link.click();
+    } catch (e) {
+      console.error("Screenshot failed:", e);
+    }
   };
 
   return (
@@ -129,7 +149,7 @@ export default function CharacterList() {
           allFactions={allFactions}
         />
 
-        {/* Right: Import / Export */}
+        {/* Right: Import / Export / Screenshot */}
         <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
           <Button
             variant="outlined"
@@ -143,6 +163,7 @@ export default function CharacterList() {
           >
             Import
           </Button>
+
           <Button
             variant="outlined"
             size="small"
@@ -155,25 +176,37 @@ export default function CharacterList() {
           >
             Export
           </Button>
+
+          <Button
+            variant="outlined"
+            size="small"
+            sx={{ height: 40 }}
+            color="secondary"
+            onClick={handleScreenshot}
+          >
+            Take Screenshot
+          </Button>
         </Box>
 
         <CharacterJsonModal
           open={modalOpen}
           onClose={() => setModalOpen(false)}
           mode={modalMode}
-          data={charactersState} // for export
+          data={charactersState}
           onSave={(json: CharactersState) => {
-            setCharactersState(json); // update context on import
+            setCharactersState(json);
           }}
         />
       </Box>
 
-      <CharacterTable
-        characters={filteredCharacters}
-        charactersState={charactersState}
-        onStarsChange={handleStarsChange}
-        onRankChange={handleRankChange}
-      />
+      <div ref={tableRef}>
+        <CharacterTable
+          characters={filteredCharacters}
+          charactersState={charactersState}
+          onStarsChange={handleStarsChange}
+          onRankChange={handleRankChange}
+        />
+      </div>
     </>
   );
 }

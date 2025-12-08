@@ -49,7 +49,8 @@
     "1.6.4": ["New: Added Yserinde."],
     "1.6.5": ["New: Added The Witcher 3 collab units."],
     "1.7.0": [
-      "New: Added 'Match all factions' option, allowing users to switch between inclusive (ANY) or exclusive (ALL) faction filtering on the My Characters page."
+      "New: Added 'Match all factions' option, allowing users to switch between inclusive (ANY) or exclusive (ALL) faction filtering on the My Characters page.",
+      "New: Added 'Take Screenshot' button on the My Characters page that captures the filtered character table as an image."
     ]
   }
 }
