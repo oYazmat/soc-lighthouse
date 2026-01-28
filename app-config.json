@@ -1,5 +1,5 @@
 {
-  "lastUpdate": "2025-12-08",
+  "lastUpdate": "2026-01-28",
   "changelog": {
     "1.0.0": ["Initial release."],
     "1.0.1": [
@@ -51,6 +51,7 @@
     "1.7.0": [
       "New: Added 'Match all factions' option, allowing users to switch between inclusive (ANY) or exclusive (ALL) faction filtering on the My Characters page.",
       "New: Added 'Take Screenshot' button on the My Characters page that captures the filtered character table as an image."
-    ]
+    ],
+    "1.7.1": ["New: Added Full-Armored Maitha."]
   }
 }

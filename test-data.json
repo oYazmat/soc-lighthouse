@@ -1,7 +1,7 @@
 {
   "2": {
     "name": "Afra",
-    "stars": 2,
+    "stars": 3,
     "rank": 13
   },
   "3": {
@@ -11,7 +11,7 @@
   },
   "4": {
     "name": "Alexei",
-    "stars": 1,
+    "stars": 2,
     "rank": 13
   },
   "5": {
@@ -21,7 +21,7 @@
   },
   "6": {
     "name": "Ayishah",
-    "stars": 1,
+    "stars": 3,
     "rank": 13
   },
   "7": {
@@ -47,6 +47,11 @@
   "12": {
     "name": "Edda",
     "stars": 3,
+    "rank": 13
+  },
+  "13": {
+    "name": "Estra",
+    "stars": 1,
     "rank": 13
   },
   "14": {
@@ -96,7 +101,7 @@
   },
   "29": {
     "name": "Lutfi",
-    "stars": 3,
+    "stars": 4,
     "rank": 13
   },
   "30": {
@@ -446,12 +451,22 @@
   },
   "107": {
     "name": "Geralt",
-    "stars": 2,
+    "stars": 3,
     "rank": 13
   },
   "108": {
     "name": "Ciri",
-    "stars": 2,
+    "stars": 4,
+    "rank": 13
+  },
+  "109": {
+    "name": "Yennefer",
+    "stars": 3,
+    "rank": 13
+  },
+  "110": {
+    "name": "Triss",
+    "stars": 3,
     "rank": 13
   }
 }

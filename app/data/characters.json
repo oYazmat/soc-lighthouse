@@ -643,5 +643,11 @@
     "name": "Triss",
     "rarity": "Legendary",
     "factions": ["Dimension Traveler", "Drifter", "Aggression"]
+  },
+  {
+    "id": 111,
+    "name": "Full-Armored Maitha",
+    "rarity": "Legendary",
+    "factions": ["Sword of Convallaria", "Iria", "Fortitude"]
   }
 ]
