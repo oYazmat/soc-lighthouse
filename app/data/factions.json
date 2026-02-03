@@ -10,5 +10,6 @@
   { "name": "Sword of Convallaria", "ignored": false },
   { "name": "Vlder", "ignored": false },
   { "name": "Night Crimson", "ignored": false },
-  { "name": "Dimension Traveler", "ignored": true }
+  { "name": "Dimension Traveler", "ignored": true },
+  { "name": "Elaman", "ignored": true }
 ]

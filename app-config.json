@@ -1,5 +1,5 @@
 {
-  "lastUpdate": "2026-01-28",
+  "lastUpdate": "2026-02-03",
   "changelog": {
     "1.0.0": ["Initial release."],
     "1.0.1": [
@@ -52,6 +52,10 @@
       "New: Added 'Match all factions' option, allowing users to switch between inclusive (ANY) or exclusive (ALL) faction filtering on the My Characters page.",
       "New: Added 'Take Screenshot' button on the My Characters page that captures the filtered character table as an image."
     ],
-    "1.7.1": ["New: Added Full-Armored Maitha."]
+    "1.7.1": ["New: Added Full-Armored Maitha."],
+    "1.7.2": [
+      "New: Added Nungal the Spear of Legacy.",
+      "New: Added Elaman faction."
+    ]
   }
 }

@@ -3,7 +3,7 @@
     "id": 1,
     "name": "Acambe",
     "rarity": "Legendary",
-    "factions": ["Drifter", "Discipline"]
+    "factions": ["Drifter", "Elaman", "Discipline"]
   },
   {
     "id": 2,
@@ -111,13 +111,13 @@
     "id": 19,
     "name": "Hasna",
     "rarity": "Legendary",
-    "factions": ["Drifter", "Alacrity"]
+    "factions": ["Drifter", "Elaman", "Alacrity"]
   },
   {
     "id": 20,
     "name": "Homa",
     "rarity": "Legendary",
-    "factions": ["Drifter", "Aggression"]
+    "factions": ["Drifter", "Elaman", "Aggression"]
   },
   {
     "id": 21,
@@ -649,5 +649,11 @@
     "name": "Full-Armored Maitha",
     "rarity": "Legendary",
     "factions": ["Sword of Convallaria", "Iria", "Fortitude"]
+  },
+  {
+    "id": 112,
+    "name": "Nungal the Spear of Legacy",
+    "rarity": "Legendary",
+    "factions": ["Sword of Convallaria", "Iria", "Alacrity"]
   }
 ]
