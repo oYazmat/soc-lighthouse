@@ -655,5 +655,11 @@
     "name": "Nungal the Spear of Legacy",
     "rarity": "Legendary",
     "factions": ["Sword of Convallaria", "Iria", "Alacrity"]
+  },
+  {
+    "id": 113,
+    "name": "Faycal - Arrow of the Homeland",
+    "rarity": "Legendary",
+    "factions": ["Sword of Convallaria", "Iria", "Discipline"]
   }
 ]

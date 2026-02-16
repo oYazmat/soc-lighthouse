@@ -11,7 +11,7 @@
   },
   "4": {
     "name": "Alexei",
-    "stars": 2,
+    "stars": 3,
     "rank": 13
   },
   "5": {
@@ -101,7 +101,7 @@
   },
   "29": {
     "name": "Lutfi",
-    "stars": 4,
+    "stars": 5,
     "rank": 13
   },
   "30": {
@@ -476,6 +476,11 @@
   },
   "111": {
     "name": "Full-Armored Maitha",
+    "stars": 2,
+    "rank": 13
+  },
+  "112": {
+    "name": "Nungal the Spear of Legacy",
     "stars": 2,
     "rank": 13
   }
