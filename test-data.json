@@ -1,4 +1,9 @@
 {
+  "1": {
+    "name": "Acambe",
+    "stars": 1,
+    "rank": 13
+  },
   "2": {
     "name": "Afra",
     "stars": 3,
@@ -476,11 +481,16 @@
   },
   "111": {
     "name": "Full-Armored Maitha",
-    "stars": 2,
+    "stars": 3,
     "rank": 13
   },
   "112": {
     "name": "Nungal the Spear of Legacy",
+    "stars": 2,
+    "rank": 13
+  },
+  "113": {
+    "name": "Faycal - Arrow of the Homeland",
     "stars": 2,
     "rank": 13
   }

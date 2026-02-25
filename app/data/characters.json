@@ -661,5 +661,11 @@
     "name": "Faycal - Arrow of the Homeland",
     "rarity": "Legendary",
     "factions": ["Sword of Convallaria", "Iria", "Discipline"]
+  },
+  {
+    "id": 114,
+    "name": "Parsifal",
+    "rarity": "Legendary",
+    "factions": ["Drifter", "The Union", "Alacrity"]
   }
 ]
