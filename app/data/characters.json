@@ -673,5 +673,35 @@
     "name": "Lukamar",
     "rarity": "Legendary",
     "factions": ["Elaman", "Alacrity"]
+  },
+  {
+    "id": 116,
+    "name": "The Undying Mask \"Dread Husk\"",
+    "rarity": "Epic",
+    "factions": ["Elaman", "Drifter"]
+  },
+  {
+    "id": 117,
+    "name": "Desert Merchant \"Crimson Sand\"",
+    "rarity": "Epic",
+    "factions": ["Elaman", "Drifter"]
+  },
+  {
+    "id": 118,
+    "name": "Elamanian Elite Guard",
+    "rarity": "Rare",
+    "factions": ["Elaman", "Drifter"]
+  },
+  {
+    "id": 119,
+    "name": "Elamanian Desert Dancer",
+    "rarity": "Rare",
+    "factions": ["Elaman", "Drifter"]
+  },
+  {
+    "id": 120,
+    "name": "Elamanian Heavy Axe Warrior",
+    "rarity": "Rare",
+    "factions": ["Elaman", "Drifter"]
   }
 ]

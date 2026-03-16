@@ -59,6 +59,13 @@
     ],
     "1.7.3": ["New: Added Faycal - Arrow of the Homeland."],
     "1.7.4": ["New: Added Parsifal."],
-    "1.7.5": ["New: Added Lukamar."]
+    "1.7.5": [
+      "New: Added Lukamar.",
+      "New: Added The Undying Mask \"Dread Husk\".",
+      "New: Added Desert Merchant \"Crimson Sand\".",
+      "New: Added Elamanian Elite Guard.",
+      "New: Added Elamanian Desert Dancer.",
+      "New: Added Elamanian Heavy Axe Warrior."
+    ]
   }
 }
