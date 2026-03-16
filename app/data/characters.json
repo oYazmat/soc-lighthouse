@@ -667,5 +667,11 @@
     "name": "Parsifal",
     "rarity": "Legendary",
     "factions": ["Drifter", "The Union", "Alacrity"]
+  },
+  {
+    "id": 115,
+    "name": "Lukamar",
+    "rarity": "Legendary",
+    "factions": ["Elaman", "Alacrity"]
   }
 ]
