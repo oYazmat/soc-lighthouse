@@ -1,5 +1,5 @@
 {
-  "lastUpdate": "2026-03-16",
+  "lastUpdate": "2026-03-23",
   "changelog": {
     "1.0.0": ["Initial release."],
     "1.0.1": [
@@ -67,6 +67,7 @@
       "New: Added Elamanian Desert Dancer.",
       "New: Added Elamanian Heavy Axe Warrior.",
       "New: Added Elamanian Caravan Scout."
-    ]
+    ],
+    "1.7.6": ["Fix: Corrected the names of new Elaman non-legendary units."]
   }
 }

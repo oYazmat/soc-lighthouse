@@ -56,7 +56,7 @@
   },
   "13": {
     "name": "Estra",
-    "stars": 1,
+    "stars": 2,
     "rank": 13
   },
   "14": {
@@ -481,7 +481,7 @@
   },
   "111": {
     "name": "Full-Armored Maitha",
-    "stars": 3,
+    "stars": 4,
     "rank": 13
   },
   "112": {
@@ -493,5 +493,30 @@
     "name": "Faycal - Arrow of the Homeland",
     "stars": 3,
     "rank": 13
+  },
+  "115": {
+    "name": "Lukamar",
+    "stars": 1,
+    "rank": 13
+  },
+  "117": {
+    "name": "Desert Merchant \"Crimson Sand\"",
+    "stars": 1,
+    "rank": 0
+  },
+  "118": {
+    "name": "Elamanian Elite Guard",
+    "stars": 2,
+    "rank": 0
+  },
+  "120": {
+    "name": "Elamanian Heavy Axe Warrior",
+    "stars": 2,
+    "rank": 0
+  },
+  "121": {
+    "name": "Elamanian Caravan Scout",
+    "stars": 1,
+    "rank": 0
   }
 }
