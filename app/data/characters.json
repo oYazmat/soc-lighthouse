@@ -709,5 +709,17 @@
     "name": "Elaman Caravan Scout",
     "rarity": "Common",
     "factions": ["Drifter", "Elaman"]
+  },
+  {
+    "id": 122,
+    "name": "Pooch Runrun",
+    "rarity": "Legendary",
+    "factions": ["Elaman", "Vlder", "Fortitude"]
+  },
+  {
+    "id": 123,
+    "name": "Shams",
+    "rarity": "Legendary",
+    "factions": ["Elaman", "Fortitude"]
   }
 ]
