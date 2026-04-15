@@ -1,7 +1,7 @@
 {
   "1": {
     "name": "Acambe",
-    "stars": 1,
+    "stars": 2,
     "rank": 13
   },
   "2": {
@@ -67,6 +67,11 @@
   "17": {
     "name": "Gloria",
     "stars": 4,
+    "rank": 13
+  },
+  "18": {
+    "name": "Guzman",
+    "stars": 1,
     "rank": 13
   },
   "20": {
@@ -496,7 +501,7 @@
   },
   "115": {
     "name": "Lukamar",
-    "stars": 2,
+    "stars": 3,
     "rank": 13
   },
   "117": {
@@ -506,17 +511,27 @@
   },
   "118": {
     "name": "Elaman Shieldguard",
-    "stars": 2,
+    "stars": 3,
+    "rank": 0
+  },
+  "119": {
+    "name": "Elaman Desert Dancer",
+    "stars": 3,
     "rank": 0
   },
   "120": {
     "name": "Elaman Axe Warrior",
-    "stars": 3,
+    "stars": 5,
     "rank": 0
   },
   "121": {
     "name": "Elaman Caravan Scout",
-    "stars": 1,
+    "stars": 4,
     "rank": 0
+  },
+  "122": {
+    "name": "Pooch Runrun",
+    "stars": 1,
+    "rank": 13
   }
 }
