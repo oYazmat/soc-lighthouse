@@ -1,7 +1,7 @@
 {
   "1": {
     "name": "Acambe",
-    "stars": 2,
+    "stars": 3,
     "rank": 13
   },
   "2": {
@@ -136,7 +136,7 @@
   },
   "36": {
     "name": "NonoWill",
-    "stars": 1,
+    "stars": 3,
     "rank": 13
   },
   "37": {
@@ -486,7 +486,7 @@
   },
   "111": {
     "name": "Full-Armored Maitha",
-    "stars": 4,
+    "stars": 5,
     "rank": 13
   },
   "112": {
@@ -516,7 +516,7 @@
   },
   "119": {
     "name": "Elaman Desert Dancer",
-    "stars": 3,
+    "stars": 5,
     "rank": 0
   },
   "120": {
@@ -532,6 +532,11 @@
   "122": {
     "name": "Pooch Runrun",
     "stars": 1,
+    "rank": 13
+  },
+  "123": {
+    "name": "Shams",
+    "stars": 3,
     "rank": 13
   }
 }

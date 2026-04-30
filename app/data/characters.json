@@ -721,5 +721,11 @@
     "name": "Shams",
     "rarity": "Legendary",
     "factions": ["Elaman", "Fortitude"]
+  },
+  {
+    "id": 124,
+    "name": "Clara",
+    "rarity": "Legendary",
+    "factions": ["Drifter", "The Union", "Discipline"]
   }
 ]
