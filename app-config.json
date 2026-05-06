@@ -1,5 +1,5 @@
 {
-  "lastUpdate": "2026-04-30",
+  "lastUpdate": "2026-05-06",
   "changelog": {
     "1.0.0": ["Initial release."],
     "1.0.1": [
@@ -70,6 +70,7 @@
     ],
     "1.7.6": ["Fix: Corrected the names of new Elaman non-legendary units."],
     "1.7.7": ["New: Added Pooch Runrun.", "New: Added Shams."],
-    "1.7.8": ["New: Added Clara."]
+    "1.7.8": ["New: Added Clara."],
+    "1.7.9": ["New: Added Selina."]
   }
 }

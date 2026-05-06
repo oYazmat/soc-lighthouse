@@ -504,6 +504,11 @@
     "stars": 3,
     "rank": 13
   },
+  "116": {
+    "name": "Dread Husk",
+    "stars": 1,
+    "rank": 0
+  },
   "117": {
     "name": "Crimson Sand",
     "stars": 1,
@@ -511,7 +516,7 @@
   },
   "118": {
     "name": "Elaman Shieldguard",
-    "stars": 3,
+    "stars": 5,
     "rank": 0
   },
   "119": {
@@ -526,7 +531,7 @@
   },
   "121": {
     "name": "Elaman Caravan Scout",
-    "stars": 4,
+    "stars": 5,
     "rank": 0
   },
   "122": {
@@ -537,6 +542,11 @@
   "123": {
     "name": "Shams",
     "stars": 3,
+    "rank": 13
+  },
+  "124": {
+    "name": "Clara",
+    "stars": 2,
     "rank": 13
   }
 }

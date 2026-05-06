@@ -727,5 +727,11 @@
     "name": "Clara",
     "rarity": "Legendary",
     "factions": ["Drifter", "The Union", "Discipline"]
+  },
+  {
+    "id": 125,
+    "name": "Selina",
+    "rarity": "Legendary",
+    "factions": ["Drifter", "The Union", "Aggression"]
   }
 ]
