@@ -733,5 +733,11 @@
     "name": "Selina",
     "rarity": "Legendary",
     "factions": ["Drifter", "The Union", "Aggression"]
+  },
+  {
+    "id": 126,
+    "name": "Yegāneh",
+    "rarity": "Legendary",
+    "factions": ["Elaman", "Discipline"]
   }
 ]
