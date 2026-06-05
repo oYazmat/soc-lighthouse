@@ -1,5 +1,5 @@
 {
-  "lastUpdate": "2026-05-26",
+  "lastUpdate": "2026-06-05",
   "changelog": {
     "1.0.0": ["Initial release."],
     "1.0.1": [
@@ -72,6 +72,7 @@
     "1.7.7": ["New: Added Pooch Runrun.", "New: Added Shams."],
     "1.7.8": ["New: Added Clara."],
     "1.7.9": ["New: Added Selina."],
-    "1.7.10": ["New: Added Yegāneh."]
+    "1.7.10": ["New: Added Yegāneh."],
+    "1.7.11": ["New: Added Heshan, Shahnaz, and Kianshir."]
   }
 }

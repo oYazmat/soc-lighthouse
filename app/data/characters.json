@@ -739,5 +739,23 @@
     "name": "Yegāneh",
     "rarity": "Legendary",
     "factions": ["Elaman", "Discipline"]
+  },
+  {
+    "id": 127,
+    "name": "Heshan",
+    "rarity": "Legendary",
+    "factions": ["Elaman", "Vlder", "Alacrity"]
+  },
+  {
+    "id": 128,
+    "name": "Shahnaz",
+    "rarity": "Legendary",
+    "factions": ["Elaman", "Aggression"]
+  },
+  {
+    "id": 129,
+    "name": "Kianshir",
+    "rarity": "Legendary",
+    "factions": ["Elaman", "Discipline"]
   }
 ]
