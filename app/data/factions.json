@@ -11,5 +11,6 @@
   { "name": "Vlder", "ignored": false },
   { "name": "Night Crimson", "ignored": false },
   { "name": "Dimension Traveler", "ignored": true },
-  { "name": "Elaman", "ignored": true }
+  { "name": "Elaman", "ignored": true },
+  { "name": "Luccia", "ignored": true }
 ]

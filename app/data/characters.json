@@ -9,19 +9,19 @@
     "id": 2,
     "name": "Afra",
     "rarity": "Legendary",
-    "factions": ["Drifter", "Fortitude"]
+    "factions": ["Drifter", "Luccia", "Fortitude"]
   },
   {
     "id": 3,
     "name": "Agata",
     "rarity": "Legendary",
-    "factions": ["Drifter", "Alacrity"]
+    "factions": ["Drifter", "Luccia", "Alacrity"]
   },
   {
     "id": 4,
     "name": "Alexei",
     "rarity": "Legendary",
-    "factions": ["Drifter", "Aggression"]
+    "factions": ["Drifter", "Luccia", "Aggression"]
   },
   {
     "id": 5,
@@ -576,7 +576,7 @@
     "id": 99,
     "name": "Rico",
     "rarity": "Legendary",
-    "factions": ["Drifter", "Aggression"]
+    "factions": ["Drifter", "Luccia", "Aggression"]
   },
   {
     "id": 100,
@@ -757,5 +757,59 @@
     "name": "Kianshir",
     "rarity": "Legendary",
     "factions": ["Elaman", "Discipline"]
+  },
+  {
+    "id": 130,
+    "name": "Anna",
+    "rarity": "Legendary",
+    "factions": ["Drifter", "Luccia", "Discipline"]
+  },
+  {
+    "id": 131,
+    "name": "Alexei - Snowstride",
+    "rarity": "Legendary",
+    "factions": ["Drifter", "Luccia", "Fortitude"]
+  },
+  {
+    "id": 132,
+    "name": "Rogneda",
+    "rarity": "Legendary",
+    "factions": ["Luccia", "Alacrity"]
+  },
+  {
+    "id": 133,
+    "name": "Ulya",
+    "rarity": "Legendary",
+    "factions": ["Drifter", "Luccia", "Aggression"]
+  },
+  {
+    "id": 134,
+    "name": "Ivan",
+    "rarity": "Legendary",
+    "factions": ["Luccia", "Fortitude"]
+  },
+  {
+    "id": 135,
+    "name": "Finn",
+    "rarity": "Legendary",
+    "factions": ["Drifter", "Luccia", "Discipline"]
+  },
+  {
+    "id": 136,
+    "name": "Sena",
+    "rarity": "Legendary",
+    "factions": ["Drifter", "Luccia", "Aggression"]
+  },
+  {
+    "id": 137,
+    "name": "Agata - Polaris of Winter",
+    "rarity": "Legendary",
+    "factions": ["Luccia", "Alacrity"]
+  },
+  {
+    "id": 138,
+    "name": "Arman",
+    "rarity": "Legendary",
+    "factions": ["Luccia", "Fortitude"]
   }
 ]

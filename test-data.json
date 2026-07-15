@@ -56,7 +56,7 @@
   },
   "13": {
     "name": "Estra",
-    "stars": 2,
+    "stars": 3,
     "rank": 13
   },
   "14": {
@@ -71,7 +71,7 @@
   },
   "18": {
     "name": "Guzman",
-    "stars": 1,
+    "stars": 3,
     "rank": 13
   },
   "20": {
@@ -91,7 +91,7 @@
   },
   "24": {
     "name": "Kiya",
-    "stars": 2,
+    "stars": 3,
     "rank": 13
   },
   "25": {
@@ -197,6 +197,11 @@
   "50": {
     "name": "Tristan",
     "stars": 4,
+    "rank": 13
+  },
+  "51": {
+    "name": "Xavier",
+    "stars": 2,
     "rank": 13
   },
   "52": {
@@ -506,12 +511,12 @@
   },
   "116": {
     "name": "Dread Husk",
-    "stars": 1,
+    "stars": 4,
     "rank": 0
   },
   "117": {
     "name": "Crimson Sand",
-    "stars": 1,
+    "stars": 2,
     "rank": 0
   },
   "118": {
@@ -547,6 +552,21 @@
   "124": {
     "name": "Clara",
     "stars": 3,
+    "rank": 13
+  },
+  "127": {
+    "name": "Heshan",
+    "stars": 3,
+    "rank": 13
+  },
+  "128": {
+    "name": "Shahnaz",
+    "stars": 2,
+    "rank": 13
+  },
+  "129": {
+    "name": "Kianshir",
+    "stars": 1,
     "rank": 13
   }
 }
