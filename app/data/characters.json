@@ -826,25 +826,25 @@
   },
   {
     "id": 141,
-    "name": "Luccian Wildfox Pikeman",
+    "name": "Wildfox Pikeman",
     "rarity": "Rare",
     "factions": ["Luccia"]
   },
   {
     "id": 142,
-    "name": "Luccian Silverwolf Hunter",
+    "name": "Silverwolf Hunter",
     "rarity": "Rare",
     "factions": ["Luccia"]
   },
   {
     "id": 143,
-    "name": "Luccian Brutebear Shieldguard",
+    "name": "Brutebear Shieldguard",
     "rarity": "Rare",
     "factions": ["Luccia"]
   },
   {
     "id": 144,
-    "name": "Luccian Snowdeer Priestess",
+    "name": "Snowdeer Priestess",
     "rarity": "Rare",
     "factions": ["Luccia"]
   }

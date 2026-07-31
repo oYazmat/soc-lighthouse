@@ -441,7 +441,7 @@
   },
   "99": {
     "name": "Rico",
-    "stars": 1,
+    "stars": 2,
     "rank": 13
   },
   "100": {
@@ -516,12 +516,12 @@
   },
   "116": {
     "name": "Dread Husk",
-    "stars": 4,
+    "stars": 5,
     "rank": 0
   },
   "117": {
     "name": "Crimson Sand",
-    "stars": 2,
+    "stars": 3,
     "rank": 0
   },
   "118": {
@@ -571,7 +571,27 @@
   },
   "129": {
     "name": "Kianshir",
-    "stars": 1,
+    "stars": 2,
     "rank": 13
+  },
+  "130": {
+    "name": "Anna",
+    "stars": 2,
+    "rank": 13
+  },
+  "141": {
+    "name": "Luccian Wildfox Pikeman",
+    "stars": 2,
+    "rank": 0
+  },
+  "142": {
+    "name": "Luccian Silverwolf Hunter",
+    "stars": 1,
+    "rank": 0
+  },
+  "143": {
+    "name": "Luccian Brutebear Shieldguard",
+    "stars": 3,
+    "rank": 0
   }
 }
