@@ -1,5 +1,5 @@
 {
-  "lastUpdate": "2026-07-27",
+  "lastUpdate": "2026-07-31",
   "changelog": {
     "1.0.0": ["Initial release."],
     "1.0.1": [
@@ -75,6 +75,7 @@
     "1.7.10": ["New: Added Yegāneh."],
     "1.7.11": ["New: Added Heshan, Shahnaz, and Kianshir."],
     "1.8.0": ["New: Added Luccian legendary units."],
-    "1.9.0": ["New: Added Elaman & Luccia to supported team factions."]
+    "1.9.0": ["New: Added Elaman & Luccia to supported team factions."],
+    "1.10.0": ["New: Added Luccian Epic & Rare units."]
   }
 }

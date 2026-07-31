@@ -811,5 +811,41 @@
     "name": "Arman",
     "rarity": "Legendary",
     "factions": ["Luccia", "Fortitude"]
+  },
+  {
+    "id": 139,
+    "name": "Tundra Brawler \"Fangs\"",
+    "rarity": "Epic",
+    "factions": ["Luccia", "Fortitude"]
+  },
+  {
+    "id": 140,
+    "name": "Frostguard \"Wild Mane\"",
+    "rarity": "Epic",
+    "factions": ["Luccia", "Discipline"]
+  },
+  {
+    "id": 141,
+    "name": "Luccian Wildfox Pikeman",
+    "rarity": "Rare",
+    "factions": ["Luccia"]
+  },
+  {
+    "id": 142,
+    "name": "Luccian Silverwolf Hunter",
+    "rarity": "Rare",
+    "factions": ["Luccia"]
+  },
+  {
+    "id": 143,
+    "name": "Luccian Brutebear Shieldguard",
+    "rarity": "Rare",
+    "factions": ["Luccia"]
+  },
+  {
+    "id": 144,
+    "name": "Luccian Snowdeer Priestess",
+    "rarity": "Rare",
+    "factions": ["Luccia"]
   }
 ]
