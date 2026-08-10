@@ -104,6 +104,11 @@
     "stars": 4,
     "rank": 13
   },
+  "27": {
+    "name": "Leonide",
+    "stars": 1,
+    "rank": 13
+  },
   "28": {
     "name": "LilyWill",
     "stars": 3,
@@ -441,7 +446,7 @@
   },
   "99": {
     "name": "Rico",
-    "stars": 2,
+    "stars": 3,
     "rank": 13
   },
   "100": {
@@ -566,7 +571,7 @@
   },
   "128": {
     "name": "Shahnaz",
-    "stars": 3,
+    "stars": 4,
     "rank": 13
   },
   "129": {
@@ -576,22 +581,27 @@
   },
   "130": {
     "name": "Anna",
-    "stars": 2,
+    "stars": 3,
     "rank": 13
   },
   "141": {
-    "name": "Luccian Wildfox Pikeman",
+    "name": "Wildfox Pikeman",
     "stars": 2,
     "rank": 0
   },
   "142": {
-    "name": "Luccian Silverwolf Hunter",
+    "name": "Silverwolf Hunter",
     "stars": 1,
     "rank": 0
   },
   "143": {
-    "name": "Luccian Brutebear Shieldguard",
-    "stars": 3,
+    "name": "Brutebear Shieldguard",
+    "stars": 4,
+    "rank": 0
+  },
+  "144": {
+    "name": "Snowdeer Priestess",
+    "stars": 1,
     "rank": 0
   }
 }
