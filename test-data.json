@@ -106,7 +106,7 @@
   },
   "27": {
     "name": "Leonide",
-    "stars": 1,
+    "stars": 3,
     "rank": 13
   },
   "28": {
@@ -522,12 +522,12 @@
   "116": {
     "name": "Dread Husk",
     "stars": 5,
-    "rank": 0
+    "rank": 9
   },
   "117": {
     "name": "Crimson Sand",
-    "stars": 3,
-    "rank": 0
+    "stars": 4,
+    "rank": 9
   },
   "118": {
     "name": "Elaman Shieldguard",
@@ -537,7 +537,7 @@
   "119": {
     "name": "Elaman Desert Dancer",
     "stars": 5,
-    "rank": 0
+    "rank": 7
   },
   "120": {
     "name": "Elaman Axe Warrior",
@@ -571,12 +571,12 @@
   },
   "128": {
     "name": "Shahnaz",
-    "stars": 4,
+    "stars": 5,
     "rank": 13
   },
   "129": {
     "name": "Kianshir",
-    "stars": 2,
+    "stars": 3,
     "rank": 13
   },
   "130": {
@@ -584,24 +584,39 @@
     "stars": 3,
     "rank": 13
   },
+  "131": {
+    "name": "Alexei - Snowstride",
+    "stars": 2,
+    "rank": 13
+  },
+  "132": {
+    "name": "Rogneda",
+    "stars": 3,
+    "rank": 13
+  },
+  "139": {
+    "name": "Tundra Brawler \"Fangs\"",
+    "stars": 3,
+    "rank": 9
+  },
   "141": {
     "name": "Wildfox Pikeman",
-    "stars": 2,
-    "rank": 0
+    "stars": 4,
+    "rank": 7
   },
   "142": {
     "name": "Silverwolf Hunter",
-    "stars": 1,
-    "rank": 0
+    "stars": 3,
+    "rank": 7
   },
   "143": {
     "name": "Brutebear Shieldguard",
-    "stars": 4,
-    "rank": 0
+    "stars": 5,
+    "rank": 7
   },
   "144": {
     "name": "Snowdeer Priestess",
-    "stars": 1,
-    "rank": 0
+    "stars": 3,
+    "rank": 7
   }
 }
