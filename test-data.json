@@ -486,7 +486,7 @@
   },
   "105": {
     "name": "Camelot",
-    "stars": 2,
+    "stars": 3,
     "rank": 13
   },
   "106": {
@@ -506,7 +506,7 @@
   },
   "109": {
     "name": "Yennefer",
-    "stars": 3,
+    "stars": 4,
     "rank": 13
   },
   "110": {
@@ -626,6 +626,11 @@
   },
   "137": {
     "name": "Agata - Polaris of Winter",
+    "stars": 2,
+    "rank": 13
+  },
+  "138": {
+    "name": "Arman",
     "stars": 1,
     "rank": 13
   },

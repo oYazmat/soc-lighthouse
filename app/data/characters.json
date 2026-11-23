@@ -847,5 +847,29 @@
     "name": "Snowdeer Priestess",
     "rarity": "Rare",
     "factions": ["Luccia"]
+  },
+  {
+    "id": 145,
+    "name": "Beryl I the Magician",
+    "rarity": "Legendary",
+    "factions": ["Sword of Convallaria", "Dimension Traveler", "Aggression"]
+  },
+  {
+    "id": 146,
+    "name": "Perlevit",
+    "rarity": "Legendary",
+    "factions": ["Luccia", "Fortitude"]
+  },
+  {
+    "id": 147,
+    "name": "Finalter",
+    "rarity": "Legendary",
+    "factions": ["Sword of Convallaria", "Dimension Traveler", "Discipline"]
+  },
+  {
+    "id": 148,
+    "name": "Col - Shadow of Daybreak",
+    "rarity": "Legendary",
+    "factions": ["Sword of Convallaria", "Drifter", "Alacrity"]
   }
 ]
